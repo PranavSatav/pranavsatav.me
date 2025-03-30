@@ -1,173 +1,104 @@
 <!DOCTYPE html>
-<html> 
+<html lang="en">
 <head>
-  <title>HEhe UwU</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=375, user-scalable=no">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Cozy Corner</title>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
-*, *:after, *:before {
-  box-sizing: border-box;
-}
-
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Inconsolata);
+html,
 body {
-  font-family: "DM Sans", sans-serif;
-  line-height: 1.5;
-  background-color: #f1f3fb;
-  padding: 0 2rem;
+  background: rgb(22, 22, 22);
+  font-family: 'Inconsolata', sans-serif;
 }
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-input {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border-radius: 0;
-}
-
-.card {
-  margin: 2rem auto;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 425px;
-  background-color: #FFF;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px 0 rgba(153, 153, 153, 0.25);
-  padding: 0.75rem;
-}
-
-.card-image {
-  border-radius: 8px;
-  overflow: hidden;
-  padding-bottom: 65%;
-  background-image: url("https://assets.codepen.io/285131/coffee_1.jpg");
-  background-repeat: no-repeat;
-  background-size: 150%;
-  background-position: 0 5%;
-  position: relative;
-}
-
-.card-heading {
+.wrap {
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 200px;
+  margin-left: -200px;
+  margin-top: -100px;
   position: absolute;
-  left: 10%;
-  top: 15%;
-  right: 10%;
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #735400;
-  line-height: 1.222;
 }
-.card-heading small {
-  display: block;
-  font-size: 0.75em;
-  font-weight: 400;
-  margin-top: 0.25em;
+code {
+  color: white;
 }
-
-.card-form {
-  padding: 2rem 1rem 0;
+span.blue {
+  color: #48beef;
+}
+span.comment {
+  color: #7f8c8d;
+  margin-top: 5px;
+}
+span.load {
+  color: #f39c12;
 }
 
-.input {
-  display: flex;
-  flex-direction: column-reverse;
-  position: relative;
-  padding-top: 1.5rem;
-}
-.input + .input {
-  margin-top: 1.5rem;
-}
-
-.input-label {
-  color: #8597a3;
-  position: absolute;
-  top: 1.5rem;
-  transition: 0.25s ease;
-}
-
-.input-field {
-  border: 0;
-  z-index: 1;
-  background-color: transparent;
-  border-bottom: 2px solid #eee;
-  font: inherit;
-  font-size: 1.125rem;
-  padding: 0.25rem 0;
-}
-.input-field:focus, .input-field:valid {
-  outline: 0;
-  border-bottom-color: #6658d3;
-}
-.input-field:focus + .input-label, .input-field:valid + .input-label {
-  color: #6658d3;
-  transform: translateY(-1.5rem);
-}
-
-.action {
-  margin-top: 0.5rem;
-}
-
-.action-button {
-  font: inherit;
-  font-size: 1.25rem;
-  padding: 1em;
-  width: 100%;
-  font-weight: 500;
-  background-color: #6658d3;
-  border-radius: 6px;
-  color: #FFF;
-  border: 0;
-}
-.action-button:focus {
-  outline: 0;
-}
-
-.card-info {
-
-  text-align: center;
-  font-size: 0.875rem;
-  color: #8597a3;
-}
-.card-info a {
-  display: block;
-  color: #6658d3;
+    /* Custom styles for the status indicator */
+    .online::before,
+    .offline::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+      margin-top: 8px;
+    }
+    .online::before {
+      background-color: #34D399; /* Green for online */
+    }
+    .offline::before {
+      background-color: #F87171; /* Red for offline */
+    }
+    a:link,
+a:visited,
+a:hover,
+a:active {
+  color: white !important;
   text-decoration: none;
 }
-</style>
+
+  </style>
 </head>
-<body>
+<body><!-- *This is a css translation of a 404 image of the site: http://retromodular.com/ -->
 
-  <div class="container">
-    <!-- code here -->
-    <div class="card">
-      <div class="card-image">	
-        <h2 class="card-heading">
-          Get started
-          <small>Chiggas ^_^</small>
-        </h2>
-      </div><div class="card-info">
-        <p>UwU - Website under development <br>hehe</p>
+    <div class="wrap">
+      <div class="404">
+        <pre><code>
+          (<span class="blue">function</span>( isDev ) {
+               <span class="blue">function</span> bootSequence() {
+                  <span class="blue">if</span>( isDev ) {
+                      <span class="blue">return</span>;
+                  }
+                  console.log >> <span id="status" class="comment">("Please wait till we fetch status of your cloud..:)</span>
+                  console.log <span class="comment">("Access my portfolio here >> <a href="#">...</a>")</span>
+                  console.log <span class="comment">("Access private cloud >> <a href="https://cloud.pranavsatav.me/">NextCloud</a>")</span> 
+            }
+          window.addEventListner( <span class="load">'load'</span>, bootSequence );
+          }( <span class="blue">true</span> ));
+        </code></pre>
       </div>
-      <div class="action">
-        <button class="action-button">My Portfolio (Coming Soon)</button>
-      </div>
-      <div class="action">
-    <button class="action-button" onclick="window.location.href='https://cloud.pranavsatav.me';">
-        Access Cloud Server
-    </button>
-</div>
+    </div><script>
+        async function checkServerStatus() {
+            try {
+                let response = await fetch("https://cloud.pranavsatav.me/status.php", { method: "GET" });
 
+                if (response.ok) {
+                    document.getElementById("status").innerHTML = "Cloud is Online";
+                    document.getElementById("status").classList.add("online");
+                    document.getElementById("status").classList.remove("offline");
+                } else {
+                    throw new Error("Server unreachable");
+                }
+            } catch (error) {
+                document.getElementById("status").innerHTML = "Cloud is not reachable";
+                document.getElementById("status").classList.add("offline");
+                document.getElementById("status").classList.remove("online");
+            }
+        }
 
-      
-    </div>
-  </div>
-  
-</body>
-</html>
+        checkServerStatus();
+        setInterval(checkServerStatus, 5000); // Check every 5 seconds
+    </script></body>
