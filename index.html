@@ -2,103 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>My Cozy Corner</title>
 
   <style>
-    @import url(https://fonts.googleapis.com/css?family=Inconsolata);
-html,
-body {
-  background: rgb(22, 22, 22);
-  font-family: 'Inconsolata', sans-serif;
-}
-.wrap {
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 200px;
-  margin-left: -200px;
-  margin-top: -100px;
-  position: absolute;
-}
-code {
-  color: white;
-}
-span.blue {
-  color: #48beef;
-}
-span.comment {
-  color: #7f8c8d;
-  margin-top: 5px;
-}
-span.load {
-  color: #f39c12;
-}
+    @import url('https://fonts.googleapis.com/css?family=Inconsolata');
 
-    /* Custom styles for the status indicator */
-    .online::before,
-    .offline::before {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: rgb(22, 22, 22);
+      font-family: 'Inconsolata', sans-serif;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrap {
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    code {
+      color: white;
+      font-size: 14px;
+      display: block;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    span.blue { color: #48beef; }
+    span.comment { color: #7f8c8d; margin-top: 5px; }
+    span.load { color: #f39c12; }
+
+    .online::before, .offline::before {
       content: "";
       display: inline-block;
       width: 10px;
       height: 10px;
       border-radius: 50%;
       margin-right: 8px;
-      margin-top: 8px;
     }
-    .online::before {
-      background-color: #34D399; /* Green for online */
+
+    .online::before { background-color: #34D399; }
+    .offline::before { background-color: #F87171; }
+
+    a {
+      color: white !important;
+      text-decoration: none;
     }
-    .offline::before {
-      background-color: #F87171; /* Red for offline */
-    }
-    a:link,
-a:visited,
-a:hover,
-a:active {
-  color: white !important;
-  text-decoration: none;
-}
 
   </style>
 </head>
-<body><!-- *This is a css translation of a 404 image of the site: http://retromodular.com/ -->
+<body>
 
-    <div class="wrap">
-      <div class="404">
-        <pre><code>
-          (<span class="blue">function</span>( isDev ) {
-               <span class="blue">function</span> bootSequence() {
-                  <span class="blue">if</span>( isDev ) {
-                      <span class="blue">return</span>;
-                  }
-                  console.log >> <span id="status" class="comment">("Please wait till we fetch status of your cloud..:)</span>
-                  console.log <span class="comment">("Access my portfolio here >> <a href="#">...</a>")</span>
-                  console.log <span class="comment">("Access private cloud >> <a href="https://cloud.pranavsatav.me/">NextCloud</a>")</span> 
-            }
-          window.addEventListner( <span class="load">'load'</span>, bootSequence );
-          }( <span class="blue">true</span> ));
-        </code></pre>
-      </div>
-    </div><script>
-        async function checkServerStatus() {
-            try {
-                let response = await fetch("https://cloud.pranavsatav.me/status.php", { method: "GET" });
-
-                if (response.ok) {
-                    document.getElementById("status").innerHTML = "Cloud is Online";
-                    document.getElementById("status").classList.add("online");
-                    document.getElementById("status").classList.remove("offline");
-                } else {
-                    throw new Error("Server unreachable");
-                }
-            } catch (error) {
-                document.getElementById("status").innerHTML = "Cloud is not reachable";
-                document.getElementById("status").classList.add("offline");
-                document.getElementById("status").classList.remove("online");
-            }
+  <div class="wrap">
+    <pre><code>
+      (<span class="blue">function</span>( isDev ) {
+           <span class="blue">function</span> bootSequence() {
+              <span class="blue">if</span>( isDev ) {
+                  <span class="blue">return</span>;
+              }
+              console.log >> <span id="status" class="comment">("Please wait till we fetch status of your cloud..:)</span>
+              console.log <span class="comment">("Access my portfolio here >> <a href='#'>...</a>")</span>
+              console.log <span class="comment">("Access private cloud >> <a href='https://cloud.pranavsatav.me/'>NextCloud</a>")</span> 
         }
+      window.addEventListener( <span class="load">'load'</span>, bootSequence );
+      }( <span class="blue">true</span> ));
+    </code></pre>
+  </div>
 
-        checkServerStatus();
-        setInterval(checkServerStatus, 5000); // Check every 5 seconds
-    </script></body>
+  <script>
+    async function checkServerStatus() {
+        try {
+            let response = await fetch("https://cloud.pranavsatav.me/status.php", { method: "GET" });
+
+            if (response.ok) {
+                document.getElementById("status").innerHTML = "Cloud is Online";
+                document.getElementById("status").classList.add("online");
+                document.getElementById("status").classList.remove("offline");
+            } else {
+                throw new Error("Server unreachable");
+            }
+        } catch (error) {
+            document.getElementById("status").innerHTML = "Cloud is not reachable";
+            document.getElementById("status").classList.add("offline");
+            document.getElementById("status").classList.remove("online");
+        }
+    }
+
+    checkServerStatus();
+    setInterval(checkServerStatus, 5000);
+  </script>
+
+</body>
+</html>
