@@ -23,22 +23,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 10px;
     }
 
     .wrap {
-      width: 90%;
+      width: 100%;
       max-width: 400px;
       text-align: left;
-      white-space: pre;
       overflow: hidden;
     }
 
-    code {
+    pre {
       color: white;
-      font-size: 14px;
+      font-size: min(3.5vw, 14px);
       display: block;
-      white-space: pre;
-      font-family: 'Inconsolata', monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     span.blue { color: #48beef; }
@@ -67,7 +68,7 @@
 <body>
 
   <div class="wrap">
-    <pre><code>
+    <pre>
 (<span class="blue">function</span>( isDev ) {
      <span class="blue">function</span> bootSequence() {
         <span class="blue">if</span>( isDev ) {
@@ -79,7 +80,7 @@
   }
 window.addEventListener( <span class="load">'load'</span>, bootSequence );
 }( <span class="blue">true</span> ));
-    </code></pre>
+    </pre>
   </div>
 
   <script>
