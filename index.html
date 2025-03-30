@@ -22,7 +22,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 10px;
       background: rgb(22, 22, 22);
       color: white;
       transition: background 0.5s ease, color 0.5s ease;
@@ -107,12 +106,14 @@
         <span class="blue">if</span>( isDev ) {
             <span class="blue">return</span>;
         }
-        console.log <span class="comment">("Access my portfolio here >> <a href='#'>...</a>")</span>
-        console.log <span class="comment">("Access private cloud >> <a href='https://cloud.pranavsatav.me/'>NextCloud</a>")</span> 
-        console.log <span class="comment">("Cloud Status: <span id='cloud-log-status'>Checking...</span>")</span> 
-  }
-window.addEventListener( <span class="load">'load'</span>, bootSequence );
-}( <span class="blue">true</span> ));
+        
+        <span class="comment">"Access my portfolio here >> <a href='#'>...</a>"</span>
+        <span class="comment">"Access private cloud >> <a href='https://cloud.pranavsatav.me/'>NextCloud</a>"</span> 
+        <span class="comment">"Cloud Status: <span id='cloud-log-status'>Checking...</span>"</span> 
+     }
+
+     window.addEventListener( <span class="load">'load'</span>, bootSequence );
+}( <span class="blue">false</span> )); 
     </pre>
 
     <!-- Theme Toggle Button -->
@@ -135,19 +136,21 @@ window.addEventListener( <span class="load">'load'</span>, bootSequence );
             let response = await fetch("https://cloud.pranavsatav.me/status.php", { method: "GET" });
 
             if (response.ok) {
-                document.getElementById("cloud-status").innerText = "✅ Cloud is Online";
-                document.getElementById("cloud-log-status").innerText = "✅ Cloud is Online";
+                document.getElementById("cloud-log-status").innerText = "Online";
             } else {
                 throw new Error("Server unreachable");
             }
         } catch (error) {
-            document.getElementById("cloud-status").innerText = "❌ Cloud is Offline";
-            document.getElementById("cloud-log-status").innerText = "❌ Cloud is Offline";
+            document.getElementById("cloud-log-status").innerText = "Offline";
         }
     }
-    
-    setInterval(checkServerStatus, 5000);
-    checkServerStatus();
+
+    function bootSequence() {
+        checkServerStatus(); // Ensure the status is checked on load
+        setInterval(checkServerStatus, 5000); // Keep checking every 5s
+    }
+
+    window.addEventListener('load', bootSequence);
 
     function toggleTheme() {
         document.body.classList.toggle("light-mode");
