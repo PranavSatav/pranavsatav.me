@@ -16,7 +16,7 @@
 
     html, body {
       background: rgb(22, 22, 22);
-      font-family: 'Inconsolata', sans-serif;
+      font-family: 'Inconsolata', monospace;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
@@ -28,19 +28,21 @@
     .wrap {
       width: 90%;
       max-width: 400px;
-      text-align: center;
+      text-align: left;
+      white-space: pre;
+      overflow: hidden;
     }
 
     code {
       color: white;
       font-size: 14px;
       display: block;
-      white-space: pre-wrap;
-      word-wrap: break-word;
+      white-space: pre;
+      font-family: 'Inconsolata', monospace;
     }
 
     span.blue { color: #48beef; }
-    span.comment { color: #7f8c8d; margin-top: 5px; }
+    span.comment { color: #7f8c8d; }
     span.load { color: #f39c12; }
 
     .online::before, .offline::before {
@@ -66,17 +68,17 @@
 
   <div class="wrap">
     <pre><code>
-      (<span class="blue">function</span>( isDev ) {
-           <span class="blue">function</span> bootSequence() {
-              <span class="blue">if</span>( isDev ) {
-                  <span class="blue">return</span>;
-              }
-              console.log >> <span id="status" class="comment">("Please wait till we fetch status of your cloud..:)</span>
-              console.log <span class="comment">("Access my portfolio here >> <a href='#'>...</a>")</span>
-              console.log <span class="comment">("Access private cloud >> <a href='https://cloud.pranavsatav.me/'>NextCloud</a>")</span> 
+(<span class="blue">function</span>( isDev ) {
+     <span class="blue">function</span> bootSequence() {
+        <span class="blue">if</span>( isDev ) {
+            <span class="blue">return</span>;
         }
-      window.addEventListener( <span class="load">'load'</span>, bootSequence );
-      }( <span class="blue">true</span> ));
+        console.log >> <span id="status" class="comment">("Please wait till we fetch status of your cloud..:)</span>
+        console.log <span class="comment">("Access my portfolio here >> <a href='#'>...</a>")</span>
+        console.log <span class="comment">("Access private cloud >> <a href='https://cloud.pranavsatav.me/'>NextCloud</a>")</span> 
+  }
+window.addEventListener( <span class="load">'load'</span>, bootSequence );
+}( <span class="blue">true</span> ));
     </code></pre>
   </div>
 
