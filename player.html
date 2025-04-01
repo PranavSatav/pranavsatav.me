@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UwU Movies Player</title>
+  <link rel="shortcut icon" href="https://movies.uwu.app/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: black;
+    }
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+    .top-bar {
+      background-color: rgba(31,31,31,0.15);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 1rem rgba(0,0,0,0.2);
+      position: absolute;
+      top: 0;
+      color: white;
+      width: 100%;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      font-size: 30px;
+      font-weight: bold;
+      font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu;
+      z-index: 1;
+      padding: 0 20px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    @media (max-width:600px) {
+      .top-bar {
+        font-size: 20px;
+      }
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    label {
+      font-size: 16px;
+    }
+    select, input {
+      font-size: 16px;
+      padding: 5px;
+    }
+    .tv-controls {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .tv-controls input {
+      width: 60px;
+    }
+    .tv-controls button {
+      padding: 5px 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div id="headerText">UwU Movies</div>
+    <div class="controls">
+      <!-- TV series season/episode controls will be shown if applicable -->
+      <div class="tv-controls" id="tvControls">
+        <label for="seasonInput">Season:</label>
+        <input type="number" id="seasonInput" min="1" value="1">
+        <label for="episodeInput">Episode:</label>
+        <input type="number" id="episodeInput" min="1" value="1">
+        <button id="updateEpisode">Update Episode</button>
+      </div>
+      <div>
+        <label for="sourceSelect">Choose Source:</label>
+        <select id="sourceSelect">
+          <!-- Options populated by script -->
+        </select>
+      </div>
+    </div>
+  </div>
+  <iframe sandbox="allow-scripts allow-same-origin allow-presentation" id="videoFrame" scrolling="yes" allowfullscreen="true" src=""></iframe>
+  <script>
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const mediaUrl = urlParams.get('aurl');
+      const seriesParam = urlParams.get('series');
+      const episodeParam = urlParams.get('episode');
+      const iframe = document.getElementById('videoFrame');
+      const tvControls = document.getElementById('tvControls');
+      const seasonInput = document.getElementById('seasonInput');
+      const episodeInput = document.getElementById('episodeInput');
+      const updateEpisodeButton = document.getElementById('updateEpisode');
+      const sourceSelect = document.getElementById('sourceSelect');
+      let embedSources = [];
+      
+      if (!mediaUrl) {
+        console.error("No media URL provided");
+        return;
+      }
+      
+      // Expected format: tmdb-movie-{id}-{slug} or tmdb-tv-{id}-{slug}
+      const mediaPattern = /tmdb-(movie|tv)-(\d+)(?:-[^\/]*)?(?:\/(\d+)\/(\d+))?/;
+      const matches = mediaUrl.match(mediaPattern);
+      if (!matches) {
+        console.error("Invalid media URL format");
+        return;
+      }
+      
+      const type = matches[1];
+      const id = matches[2];
+      let season = seriesParam || matches[3] || '1';
+      let episode = episodeParam || matches[4] || '1';
+      
+      // Function to build embed sources based on type and (for tv) season/episode.
+      function buildEmbedSources() {
+        if (type === 'movie') {
+          embedSources = [
+            { name: "Source 1", url: `https://111movies.com/movie/${id}` },
+            { name: "Source 2", url: `https://vidjoy.pro/embed/movie/${id}` },
+            { name: "Source 3", url: `https://player.videasy.net/movie/${id}` }
+          ];
+        } else if (type === 'tv') {
+          embedSources = [
+            { name: "Source 1", url: `https://111movies.com/tv/${id}/${season}/${episode}` },
+            { name: "Source 2", url: `https://vidjoy.pro/embed/tv/${id}/${season}/${episode}` },
+            { name: "Source 3", url: `https://player.videasy.net/tv/${id}/${season}/${episode}` }
+          ];
+        }
+      }
+      
+      // Initially build embed sources.
+      buildEmbedSources();
+      
+      // If TV series, show the season/episode controls.
+      if (type === 'tv') {
+        tvControls.style.display = 'flex';
+        seasonInput.value = season;
+        episodeInput.value = episode;
+      }
+      
+      // Populate source dropdown.
+      function populateSourceDropdown() {
+        sourceSelect.innerHTML = "";
+        embedSources.forEach((source, index) => {
+          const option = document.createElement('option');
+          option.value = index;
+          option.textContent = source.name;
+          sourceSelect.appendChild(option);
+        });
+      }
+      
+      populateSourceDropdown();
+      
+      // Function to load the selected source.
+      function loadSource(index) {
+        if (index >= 0 && index < embedSources.length) {
+          iframe.src = embedSources[index].url;
+        }
+      }
+      
+      // Initially load first source.
+      loadSource(0);
+      
+      // When source dropdown changes, load the chosen source.
+      sourceSelect.addEventListener('change', function() {
+        loadSource(parseInt(this.value, 10));
+      });
+      
+      // For TV series: update season/episode and rebuild sources.
+      if (type === 'tv') {
+        updateEpisodeButton.addEventListener('click', function() {
+          season = seasonInput.value || '1';
+          episode = episodeInput.value || '1';
+          buildEmbedSources();
+          populateSourceDropdown();
+          // Load currently selected source or default to first.
+          loadSource(sourceSelect.value ? parseInt(sourceSelect.value, 10) : 0);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
