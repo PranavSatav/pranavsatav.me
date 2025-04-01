@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>My Cozy Corner</title>
-
   <style>
     @import url('https://fonts.googleapis.com/css?family=Inconsolata');
 
@@ -54,6 +53,7 @@
       max-width: 400px;
       text-align: left;
       overflow: hidden;
+      position: relative;
     }
 
     pre {
@@ -61,6 +61,7 @@
       white-space: pre-wrap;
       word-wrap: break-word;
       overflow-wrap: break-word;
+      padding: 4px 40px;
     }
 
     .blue { color: #48beef; }
@@ -96,6 +97,90 @@
     }
 
     a { color: white !important; }
+
+    /* --- New Movie Search Styles --- */
+    .movie-search-container {
+      margin-top: 10px;
+      padding: 5px 40px;
+      
+    }
+    .movie-search-title {
+      font-size: 10px;
+      margin-bottom: 3px;
+      color: #48beef;
+    }
+    .movie-search-wrapper {
+      position: relative;
+    }
+    .movie-search-input {
+      width: 100%;
+      padding: 4px 6px;
+      margin-top: 5px;
+      font-size: 10px;
+      border: 1px solid #333;
+      border-radius: 99px;
+      background: transparent;
+      color: white;
+      font-family: 'Inconsolata', monospace;
+    }
+    .movie-suggestions {
+      position: absolute;
+      top: 24px;
+      left: 0;
+      right: 0;
+      background: rgb(22, 22, 22);
+      border: 1px solid #333;
+      z-index: 100;
+      display: none;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+    .movie-suggestion-item {
+      display: flex;
+      align-items: center;
+      padding: 3px 4px;
+      cursor: pointer;
+      border-bottom: 1px solid #333;
+    }
+    .movie-suggestion-item:last-child {
+      border-bottom: none;
+    }
+    .movie-suggestion-item:hover {
+      background: #333;
+    }
+    .movie-suggestion-item img {
+      width: 20px;
+      height: auto;
+      margin-right: 4px;
+    }
+    .movie-suggestion-item .movie-title {
+      font-size: 10px;
+    }
+    /* Updated Light Mode Styles */
+.light-mode .movie-search-input {
+  background: white;
+  color: black;
+  border: 1px solid #ccc;
+}
+
+.light-mode .movie-suggestions {
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.light-mode .movie-suggestion-item {
+  border-bottom: 1px solid #ddd;
+  color: black;
+}
+
+.light-mode .movie-suggestion-item:hover {
+  background: #f5f5f5;
+}
+
+.light-mode .movie-title {
+  color: black;
+}
+
   </style>
 </head>
 <body>
@@ -117,6 +202,15 @@
 }( <span class="blue">false</span> )); 
     </pre>
 
+    <!-- New Movie Search Block -->
+    <div class="movie-search-container">
+      <div class="movie-search-title">Watch Movies </div>
+      <div class="movie-search-wrapper">
+        <input type="text" id="movieSearchInput" class="movie-search-input" placeholder="Search movies &amp; TV..." autocomplete="off">
+        <div class="movie-suggestions" id="movieSuggestions"></div>
+      </div>
+    </div>
+
     <!-- Theme Toggle Button -->
     <button class="theme-toggle" onclick="toggleTheme()">
       <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
@@ -135,7 +229,6 @@
     async function checkServerStatus() {
         try {
             let response = await fetch("https://cloud.pranavsatav.me/status.php", { method: "GET" });
-
             if (response.ok) {
                 document.getElementById("cloud-log-status").innerText = "Online";
             } else {
@@ -147,28 +240,25 @@
     }
 
     function bootSequence() {
-        checkServerStatus(); // Ensure the status is checked on load
-        setInterval(checkServerStatus, 5000); // Keep checking every 5s
+        checkServerStatus();
+        setInterval(checkServerStatus, 5000);
     }
 
     window.addEventListener('load', bootSequence);
 
     function toggleTheme() {
-        document.body.classList.toggle("light-mode");
+  document.body.classList.toggle("light-mode");
+  const iconPath = document.getElementById("icon-path");
+  const isLightMode = document.body.classList.contains("light-mode");
 
-        // Get SVG elements
-        const iconPath = document.getElementById("icon-path");
-        const isLightMode = document.body.classList.contains("light-mode");
-
-        // Change the SVG icon dynamically
-        if (isLightMode) {
-            iconPath.setAttribute("d", "M12 3V5 M12 19V21 M5 12H3 M21 12h-2 M16.5 7.5l1.5-1.5M7.5 16.5L6 18 M18 18l-1.5-1.5 M6 6l1.5 1.5");
-            iconPath.setAttribute("stroke", "black");
-        } else {
-            iconPath.setAttribute("d", "M12 3V5 M12 19V21 M12 12m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0");
-            iconPath.setAttribute("stroke", "white");
-        }
-    }
+  if (isLightMode) {
+    iconPath.setAttribute("d", "M12 3V5 M12 19V21 M5 12H3 M21 12h-2 M16.5 7.5l1.5-1.5M7.5 16.5L6 18 M18 18l-1.5-1.5 M6 6l1.5 1.5");
+    iconPath.setAttribute("stroke", "black");
+  } else {
+    iconPath.setAttribute("d", "M12 3V5 M12 19V21 M12 12m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0");
+    iconPath.setAttribute("stroke", "white");
+  }
+}
 
     new QRCode(document.getElementById("qrCanvas"), {
         text: "https://cloud.pranavsatav.me/",
@@ -176,6 +266,95 @@
         height: 100
     });
   </script>
+
+
+<script>
+  // TMDB read token (for demo purposes)
+  const tmdbToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2QyMWU2NDIxNDAwNTdjZDYzNjJiZjI5ZjlhMzNkMiIsIm5iZiI6MTY5MTkzOTQxNi45OTUwMDAxLCJzdWIiOiI2NGQ4ZjI1ODAwMWJiZDAwYzZjN2FmZjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.1iAwqbg9q-TXSi6Sb8DPXAAcw29zd02GJarwO7QodcU"; // (Truncated for security)
+  const searchInput = document.getElementById("movieSearchInput");
+  const suggestionsBox = document.getElementById("movieSuggestions");
+  let searchDebounce;
+
+  function slugify(text) {
+    return text.toString().toLowerCase()
+               .replace(/\s+/g, '-')
+               .replace(/[^\w\-]+/g, '')
+               .replace(/\-\-+/g, '-')
+               .replace(/^-+/, '')
+               .replace(/-+$/, '');
+  }
+
+  function performMovieSearch(query) {
+    if (!query) {
+      suggestionsBox.style.display = "none";
+      suggestionsBox.innerHTML = "";
+      return;
+    }
+    fetch(`https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(query)}&language=en-US&page=1`, {
+      headers: {
+        Authorization: 'Bearer ' + tmdbToken,
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Filter results to include only movies or TV shows with valid posters
+      const results = data.results.filter(item => 
+        (item.media_type === "movie" || item.media_type === "tv") && item.poster_path
+      );
+      renderMovieSuggestions(results);
+    })
+    .catch(err => console.error("Error fetching movie search:", err));
+  }
+
+  function renderMovieSuggestions(results) {
+    suggestionsBox.innerHTML = "";
+    if (results.length === 0) {
+      suggestionsBox.style.display = "none";
+      return;
+    }
+    results.forEach(item => {
+      const suggestion = document.createElement("div");
+      suggestion.className = "movie-suggestion-item";
+
+      const img = document.createElement("img");
+      img.src = "https://image.tmdb.org/t/p/w92" + item.poster_path;
+      suggestion.appendChild(img);
+
+      const titleDiv = document.createElement("div");
+      titleDiv.className = "movie-title";
+      titleDiv.textContent = item.title || item.name;
+      suggestion.appendChild(titleDiv);
+
+      suggestion.addEventListener("click", () => {
+        const slug = slugify(item.title || item.name);
+        let aurlParam = "";
+        if (item.media_type === "movie") {
+          aurlParam = encodeURIComponent(`tmdb-movie-${item.id}-${slug}`);
+          window.location.href = `player.html?aurl=${aurlParam}`;
+        } else if (item.media_type === "tv") {
+          aurlParam = encodeURIComponent(`tmdb-tv-${item.id}-${slug}`);
+          window.location.href = `player.html?aurl=${aurlParam}&series=1&episode=1`;
+        }
+      });
+      suggestionsBox.appendChild(suggestion);
+    });
+    suggestionsBox.style.display = "block";
+  }
+
+  searchInput.addEventListener("input", () => {
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => {
+      performMovieSearch(searchInput.value.trim());
+    }, 300);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!document.querySelector(".movie-search-wrapper").contains(e.target)) {
+      suggestionsBox.style.display = "none";
+    }
+  });
+</script>
 
 </body>
 </html>
