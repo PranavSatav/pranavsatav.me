@@ -2,95 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>UwU Movies Player</title>
+  <title>Movies Player</title>
   <link rel="shortcut icon" href="https://movies.uwu.app/favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: black;
+      background-color: #121212;
+      font-family: 'Open Sans', sans-serif;
+      color: white;
     }
     iframe {
       width: 100%;
-      height: 100vh;
+      height: calc(100vh - 60px);
       border: none;
+      display: block;
     }
-    .top-bar {
-      background-color: rgba(31,31,31,0.15);
-      backdrop-filter: blur(5px);
-      box-shadow: 0 0 1rem rgba(0,0,0,0.2);
-      position: absolute;
-      top: 0;
-      color: white;
+    .controls-container {
+      background: #1e1e1e;
+      padding: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      position: fixed;
+      bottom: 0;
       width: 100%;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      font-size: 30px;
-      font-weight: bold;
-      font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu;
-      z-index: 1;
-      padding: 0 20px;
-      justify-content: space-between;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
       flex-wrap: wrap;
-    }
-    @media (max-width:600px) {
-      .top-bar {
-        font-size: 20px;
-      }
-    }
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    label {
-      font-size: 16px;
-    }
-    select, input {
-      font-size: 16px;
-      padding: 5px;
     }
     .tv-controls {
       display: none;
       align-items: center;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 8px;
     }
-    .tv-controls input {
+    .tv-controls .label {
+      font-size: 14px;
+      color: #bbb;
+      text-align: center;
       width: 60px;
     }
-    .tv-controls button {
-      padding: 5px 10px;
-      font-size: 16px;
+    input, select, button {
+      font-size: 14px;
+      padding: 6px 8px;
+      border: none;
+      border-radius: 5px;
+      background: #282828;
+      color: white;
+      outline: none;
+      transition: all 0.3s ease;
+      text-align: center;
+      min-width: 50px;
+      max-width: 100px;
+    }
+    input::placeholder {
+      color: #bbb;
+    }
+    select {
+      max-width: 120px;
+    }
+    select:hover, input:hover, button:hover {
+      background: #3a3a3a;
+    }
+    button {
+      background: #ff5722;
+      font-weight: bold;
       cursor: pointer;
+    }
+    button:hover {
+      background: #e64a19;
     }
   </style>
 </head>
 <body>
-  <div class="top-bar">
-    <div id="headerText">UwU Movies</div>
-    <div class="controls">
-      <!-- TV series season/episode controls will be shown if applicable -->
-      <div class="tv-controls" id="tvControls">
-        <label for="seasonInput">Season:</label>
-        <input type="number" id="seasonInput" min="1" value="1">
-        <label for="episodeInput">Episode:</label>
-        <input type="number" id="episodeInput" min="1" value="1">
-        <button id="updateEpisode">Update Episode</button>
-      </div>
-      <div>
-        <label for="sourceSelect">Choose Source:</label>
-        <select id="sourceSelect">
-          <!-- Options populated by script -->
-        </select>
-      </div>
+  <iframe sandbox="allow-scripts allow-same-origin allow-presentation" id="videoFrame" scrolling="yes" allowfullscreen></iframe>
+  <div class="controls-container">
+    <div id="tvControls" class="tv-controls">
+      <div class="label">Season</div>
+      <input type="number" id="seasonInput" min="1" value="1" placeholder="S">
+      <div class="label">Episode</div>
+      <input type="number" id="episodeInput" min="1" value="1" placeholder="E">
+      <button id="updateEpisode">▶</button>
     </div>
+    <select id="sourceSelect"></select>
   </div>
-  <iframe sandbox="allow-scripts allow-same-origin allow-presentation" id="videoFrame" scrolling="yes" allowfullscreen="true" src=""></iframe>
   <script>
     (function() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -98,32 +96,30 @@
       const seriesParam = urlParams.get('series');
       const episodeParam = urlParams.get('episode');
       const iframe = document.getElementById('videoFrame');
-      const tvControls = document.getElementById('tvControls');
       const seasonInput = document.getElementById('seasonInput');
       const episodeInput = document.getElementById('episodeInput');
       const updateEpisodeButton = document.getElementById('updateEpisode');
       const sourceSelect = document.getElementById('sourceSelect');
+      const tvControls = document.getElementById('tvControls');
       let embedSources = [];
-      
+
       if (!mediaUrl) {
         console.error("No media URL provided");
         return;
       }
-      
-      // Expected format: tmdb-movie-{id}-{slug} or tmdb-tv-{id}-{slug}
+
       const mediaPattern = /tmdb-(movie|tv)-(\d+)(?:-[^\/]*)?(?:\/(\d+)\/(\d+))?/;
       const matches = mediaUrl.match(mediaPattern);
       if (!matches) {
         console.error("Invalid media URL format");
         return;
       }
-      
+
       const type = matches[1];
       const id = matches[2];
       let season = seriesParam || matches[3] || '1';
       let episode = episodeParam || matches[4] || '1';
-      
-      // Function to build embed sources based on type and (for tv) season/episode.
+
       function buildEmbedSources() {
         if (type === 'movie') {
           embedSources = [
@@ -137,20 +133,12 @@
             { name: "Source 2", url: `https://vidjoy.pro/embed/tv/${id}/${season}/${episode}` },
             { name: "Source 3", url: `https://player.videasy.net/tv/${id}/${season}/${episode}` }
           ];
+          tvControls.style.display = 'flex';
         }
       }
-      
-      // Initially build embed sources.
+
       buildEmbedSources();
-      
-      // If TV series, show the season/episode controls.
-      if (type === 'tv') {
-        tvControls.style.display = 'flex';
-        seasonInput.value = season;
-        episodeInput.value = episode;
-      }
-      
-      // Populate source dropdown.
+
       function populateSourceDropdown() {
         sourceSelect.innerHTML = "";
         embedSources.forEach((source, index) => {
@@ -160,35 +148,28 @@
           sourceSelect.appendChild(option);
         });
       }
-      
+
       populateSourceDropdown();
-      
-      // Function to load the selected source.
+
       function loadSource(index) {
         if (index >= 0 && index < embedSources.length) {
           iframe.src = embedSources[index].url;
         }
       }
-      
-      // Initially load first source.
+
       loadSource(0);
-      
-      // When source dropdown changes, load the chosen source.
+
       sourceSelect.addEventListener('change', function() {
         loadSource(parseInt(this.value, 10));
       });
-      
-      // For TV series: update season/episode and rebuild sources.
-      if (type === 'tv') {
-        updateEpisodeButton.addEventListener('click', function() {
-          season = seasonInput.value || '1';
-          episode = episodeInput.value || '1';
-          buildEmbedSources();
-          populateSourceDropdown();
-          // Load currently selected source or default to first.
-          loadSource(sourceSelect.value ? parseInt(sourceSelect.value, 10) : 0);
-        });
-      }
+
+      updateEpisodeButton.addEventListener('click', function() {
+        season = seasonInput.value || '1';
+        episode = episodeInput.value || '1';
+        buildEmbedSources();
+        populateSourceDropdown();
+        loadSource(sourceSelect.value ? parseInt(sourceSelect.value, 10) : 0);
+      });
     })();
   </script>
 </body>
