@@ -99,6 +99,21 @@ footer {
     display: none;
 }
       </style>
+      <style>
+        .nes-field.is-inline {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nes-btn i {
+            margin-right: 5px;
+        }
+    </style>    
 </head>
 <body>
 
@@ -150,9 +165,9 @@ footer {
                 </p>
                 <div class="row middle-xs">
                   <i class="nes-icon trophy"></i>
-                  <a href="#"
+                  <a href="https://cloud.pranavsatav.me/"
                      class="nes-text is-error" >
-                     - Yapper-Dapper</a>
+                     - NextCloud</a>
                 </div>
                 <div class="row middle-xs">
                   <i class="nes-icon trophy"></i>
@@ -214,7 +229,7 @@ footer {
                   </script>
                   
                   <div class="row middle-xs">
-                    <div class="col-md-4 col-xs-12">Cloud Server</div>
+                    <div class="col-md-4 col-xs-12">Cloud Server -</div>
                     <div class="col-md-8 col-xs-12">
                         <span id="server-status-text" style="margin-left: 10px; font-weight: bold;">checkinghhh!! </span>
                       <progress id="server-status" class="nes-progress is-success" value="100" max="100"></progress>
@@ -244,7 +259,7 @@ footer {
                   </script>
                 <div class="row middle-xs">
                   <div class="col-md-4 col-xs-12">
-                    Device Stats
+                    Device Stats - 
                   </div>
                   <div class="col-md-8 col-xs-12">
                     <span id="fps-counter">FPS: 0</span> | <span id="cursor-pos">X: 0, Y: 0</span>
@@ -367,39 +382,66 @@ footer {
                 });
               </script>
            
-           <!--
-         <section class="showcase">
-              <div class="nes-container is-dark with-title">
-                <p class="title">
-                  DevOps Knowledge
-                </p>
-                <div class="row middle-xs">
-                  <div class="col-md-4 col-xs-12">
-                    Ansible
-                  </div>
-                  <div class="col-md-8 col-xs-12">
-                    <progress class="nes-progress is-warning" value="80" max="100"></progress>
-                  </div>
+           
+           <section class="showcase">
+            <div class="nes-container is-dark with-title">
+                <p class="title">Search Monkey</p>
+                
+                <div class="nes-field is-inline">
+                    <input type="text" id="query" class="nes-input search-input" placeholder="What would you like to search google?">
+                    <button id="search-button" class="nes-btn is-primary"> Search</button>
+                    <button id="reset-button" class="nes-btn is-error"> Reset</button>
                 </div>
-                <div class="row middle-xs">
-                  <div class="col-md-4 col-xs-12">
-                    Amazon Web Services
-                  </div>
-                  <div class="col-md-8 col-xs-12">
-                    <progress class="nes-progress is-warning" value="70" max="100"></progress>
-                  </div>
+                
+                <h4>Select your preferred type to search..</h4>
+                <div id="search-options" class="button-group">
+                    <button class="nes-btn search-type" data-search-str="+(mkv|mp4|avi) intitle:index.of">
+                        <i class="nes-icon play"></i> Movies</button>
+                    <button class="nes-btn search-type" data-search-str="+(exe|zip|apk) intitle:index.of">
+                        <i class="nes-icon download"></i> Apps</button>
+                    <button class="nes-btn search-type" data-search-str="+(mp3|wav) intitle:index.of">
+                        <i class="nes-icon sound"></i> Audio</button>
+                    <button class="nes-btn search-type" data-search-str="+(pdf|doc) intitle:index.of">
+                        <i class="nes-icon file"></i> Documents</button>
+                    <button class="nes-btn search-type" data-search-str="+(jpg|png) intitle:index.of">
+                        <i class="nes-icon image"></i> Images</button>
+                    <button class="nes-btn search-type" data-search-str="site:drive.google.com">
+                        <i class="nes-icon folder"></i> Google Drive</button>
                 </div>
-                <div class="row middle-xs">
-                  <div class="col-md-4 col-xs-12">
-                    Jenkins
-                  </div>
-                  <div class="col-md-8 col-xs-12">
-                    <progress class="nes-progress is-error" value="50" max="100"></progress>
-                  </div>
-                </div>
-              </div>
+                <div id="selected-search" class="nes-text"></div>
+            </div>
+            <script>
+                const searchButtons = document.querySelectorAll('.search-type');
+                const queryInput = document.getElementById('query');
+                const searchButton = document.getElementById('search-button');
+                const resetButton = document.getElementById('reset-button');
+                let selectedType = null;
+        
+                searchButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        selectedType = button.getAttribute('data-search-str');
+                        document.getElementById('selected-search').textContent = `Currently Selected: ${button.textContent}`;
+                    });
+                });
+        
+                searchButton.addEventListener('click', () => {
+                    const query = queryInput.value.trim();
+                    if (!query || !selectedType) {
+                        alert('Please enter a search query and select a search type!');
+                        return;
+                    }
+                    const searchQuery = encodeURIComponent(`${query} ${selectedType}`);
+                    window.open(`https://www.google.com/search?q=${searchQuery}`, '_blank');
+                });
+        
+                resetButton.addEventListener('click', () => {
+                    queryInput.value = '';
+                    selectedType = null;
+                    document.getElementById('selected-search').textContent = '';
+                });
+            </script>
             </section>
-            <section id="experience" class="showcase">
+           <!-- <section id="experience" class="showcase">
               <div class="nes-container with-title">
                 <p class="title">
                   Experience
