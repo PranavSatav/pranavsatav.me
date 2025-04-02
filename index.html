@@ -1,360 +1,430 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>My Cozy Corner</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Inconsolata');
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      font-family: 'Inconsolata', monospace;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      background: rgb(22, 22, 22);
-      color: white;
-      transition: background 0.5s ease, color 0.5s ease;
-    }
-
-    .light-mode {
-      background: white;
-      color: black;
-    }
-
-    .light-mode a {
-      color: black !important;
-    }
-
-    .light-mode .blue {
-      color: #007acc;
-    }
-
-    .light-mode .comment {
-      color: #666;
-    }
-
-    .light-mode .load {
-      color: #e67e22;
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: 400px;
-      text-align: left;
-      overflow: hidden;
-      position: relative;
-    }
-
-    pre {
-      font-size: min(3.5vw, 12px);
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      padding: 4px 40px;
-    }
-
-    .blue { color: #48beef; }
-    .comment { color: #7f8c8d; }
-    .load { color: #f39c12; }
-
-    .theme-toggle {
-      cursor: pointer;
-      background: none;
-      border: none;
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-    }
-
-    .theme-toggle svg {
-      width: 32px;
-      height: 32px;
-      transition: transform 0.5s ease;
-    }
-
-    .light-mode .theme-toggle svg {
-      transform: rotate(180deg);
-    }
-
-    .qr-code {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-    }
-
-    a { color: white !important; }
-
-    /* --- New Movie Search Styles --- */
-    .movie-search-container {
-      margin-top: 10px;
-      padding: 5px 40px;
-      
-    }
-    .movie-search-title {
-      font-size: 10px;
-      margin-bottom: 3px;
-      color: #48beef;
-    }
-    .movie-search-wrapper {
-      position: relative;
-    }
-    .movie-search-input {
-      width: 100%;
-      padding: 4px 6px;
-      margin-top: 5px;
-      font-size: 10px;
-      border: 1px solid #333;
-      border-radius: 99px;
-      background: transparent;
-      color: white;
-      font-family: 'Inconsolata', monospace;
-    }
-    .movie-suggestions {
-      position: absolute;
-      top: 24px;
-      left: 0;
-      right: 0;
-      background: rgb(22, 22, 22);
-      border: 1px solid #333;
-      z-index: 100;
-      display: none;
-      max-height: 150px;
-      overflow-y: auto;
-    }
-    .movie-suggestion-item {
-      display: flex;
-      align-items: center;
-      padding: 3px 4px;
-      cursor: pointer;
-      border-bottom: 1px solid #333;
-    }
-    .movie-suggestion-item:last-child {
-      border-bottom: none;
-    }
-    .movie-suggestion-item:hover {
-      background: #333;
-    }
-    .movie-suggestion-item img {
-      width: 20px;
-      height: auto;
-      margin-right: 4px;
-    }
-    .movie-suggestion-item .movie-title {
-      font-size: 10px;
-    }
-    /* Updated Light Mode Styles */
-.light-mode .movie-search-input {
-  background: white;
-  color: black;
-  border: 1px solid #ccc;
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+@import url("https://unpkg.com/nes.css@latest/css/nes.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css");
+html,
+body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.light-mode .movie-suggestions {
-  background: white;
-  border: 1px solid #ccc;
+nav {
+  border-bottom: 4px solid #ccc;
+  padding: 10px;
+  margin-bottom: 60px;
+  flex: 0 0;
 }
 
-.light-mode .movie-suggestion-item {
-  border-bottom: 1px solid #ddd;
-  color: black;
+main {
+  flex: 1 0;
 }
 
-.light-mode .movie-suggestion-item:hover {
-  background: #f5f5f5;
+nav h2 {
+  margin-bottom: 0;
 }
 
-.light-mode .movie-title {
-  color: black;
+footer {
+  display: flex;
+  align-items: center;
+  flex: 0 0;
+
+  color: #ccc;
+  font-size: 14px;
+  padding: 20px;
 }
 
-  </style>
+.showcase {
+  margin-bottom: 50px;
+}
+
+.nes-progress {
+  height: 30px;
+}
+
+.is-dark .nes-progress {
+  height: 35px;
+}
+
+.social,
+.social:hover,
+.social:active {
+  text-decoration: none;
+}
+
+    </style>
+    <style>
+        .movie-search-container {
+          margin-top: 20px;
+        }
+        .movie-search-wrapper {
+          position: relative;
+        }
+        .movie-suggestions {
+          position: absolute;
+          top: 40px;
+          width: 99%;
+          background: white;
+          z-index: 1000;
+          padding: 5px;
+          max-height: 300px;
+          overflow-y: auto;
+        }
+        .movie-suggestion-item {
+          display: flex;
+          align-items: center;
+          padding: 5px;
+          cursor: pointer;
+          border-bottom: 1px solid #ccc;
+        }
+        .movie-suggestion-item img {
+          margin-right: 10px;
+          border-radius: 4px;
+          width: 80px;
+          height: auto;
+        }
+        .movie-title {
+          font-size: 14px;
+          font-family: 'Press Start 2P', cursive;
+        }
+        .nes-avatar.is-medium2 {
+    width: 58px;
+    height: 68px;
+        }
+        ::-webkit-scrollbar {
+    display: none;
+}
+      </style>
 </head>
 <body>
 
-  <div class="wrap">
-    <pre>
-(<span class="blue">function</span>( isDev ) {
-     <span class="blue">function</span> bootSequence() {
-        <span class="blue">if</span>( isDev ) {
-            <span class="blue">return</span>;
-        }
-        
-        <span class="comment">"Access my portfolio here >> <a href='#'>....</a>"</span>
-        <span class="comment">"Access private <a href='https://cloud.pranavsatav.me/'>Cloud</a>"</span> 
-        <span class="comment">"Cloud Status: <span id='cloud-log-status'>Checking...</span>"</span> 
-     }
-
-     window.addEventListener( <span class="load">'load'</span>, boot );
-}( <span class="blue">false</span> )); 
-    </pre>
-
-    <!-- New Movie Search Block -->
-    <div class="movie-search-container">
-      <div class="movie-search-title">Watch Movies </div>
-      <div class="movie-search-wrapper">
-        <input type="text" id="movieSearchInput" class="movie-search-input" placeholder="Search movies &amp; TV..." autocomplete="off">
-        <div class="movie-suggestions" id="movieSuggestions"></div>
-      </div>
-    </div>
-
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" onclick="toggleTheme()">
-      <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-        <path id="icon-path" d="M12 3V5 M12 19V21 M12 12m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-
-    <div class="qr-code">
-      <canvas id="qrCanvas"></canvas>
-    </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-  <script>
-    async function checkServerStatus() {
-        try {
-            let response = await fetch("https://cloud.pranavsatav.me/status.php", { method: "GET" });
-            if (response.ok) {
-                document.getElementById("cloud-log-status").innerText = "Online";
-            } else {
-                throw new Error("Server unreachable");
-            }
-        } catch (error) {
-            document.getElementById("cloud-log-status").innerText = "Offline";
-        }
-    }
-
-    function bootSequence() {
-        checkServerStatus();
-        setInterval(checkServerStatus, 5000);
-    }
-
-    window.addEventListener('load', bootSequence);
-
-    function toggleTheme() {
-  document.body.classList.toggle("light-mode");
-  const iconPath = document.getElementById("icon-path");
-  const isLightMode = document.body.classList.contains("light-mode");
-
-  if (isLightMode) {
-    iconPath.setAttribute("d", "M12 3V5 M12 19V21 M5 12H3 M21 12h-2 M16.5 7.5l1.5-1.5M7.5 16.5L6 18 M18 18l-1.5-1.5 M6 6l1.5 1.5");
-    iconPath.setAttribute("stroke", "black");
-  } else {
-    iconPath.setAttribute("d", "M12 3V5 M12 19V21 M12 12m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0");
-    iconPath.setAttribute("stroke", "white");
-  }
-}
-
-    new QRCode(document.getElementById("qrCanvas"), {
-        text: "https://cloud.pranavsatav.me/",
-        width: 100,
-        height: 100
-    });
-  </script>
-
-
-<script>
-  // TMDB read token (for demo purposes)
-  const tmdbToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2QyMWU2NDIxNDAwNTdjZDYzNjJiZjI5ZjlhMzNkMiIsIm5iZiI6MTY5MTkzOTQxNi45OTUwMDAxLCJzdWIiOiI2NGQ4ZjI1ODAwMWJiZDAwYzZjN2FmZjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.1iAwqbg9q-TXSi6Sb8DPXAAcw29zd02GJarwO7QodcU"; // (Truncated for security)
-  const searchInput = document.getElementById("movieSearchInput");
-  const suggestionsBox = document.getElementById("movieSuggestions");
-  let searchDebounce;
-
-  function slugify(text) {
-    return text.toString().toLowerCase()
-               .replace(/\s+/g, '-')
-               .replace(/[^\w\-]+/g, '')
-               .replace(/\-\-+/g, '-')
-               .replace(/^-+/, '')
-               .replace(/-+$/, '');
-  }
-
-  function performMovieSearch(query) {
-    if (!query) {
-      suggestionsBox.style.display = "none";
-      suggestionsBox.innerHTML = "";
-      return;
-    }
-    fetch(`https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(query)}&language=en-US&page=1`, {
-      headers: {
-        Authorization: 'Bearer ' + tmdbToken,
-        'Content-Type': 'application/json;charset=utf-8'
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      // Filter results to include only movies or TV shows with valid posters
-      const results = data.results.filter(item => 
-        (item.media_type === "movie" || item.media_type === "tv") && item.poster_path
-      );
-      renderMovieSuggestions(results);
-    })
-    .catch(err => console.error("Error fetching movie search:", err));
-  }
-
-  function renderMovieSuggestions(results) {
-    suggestionsBox.innerHTML = "";
-    if (results.length === 0) {
-      suggestionsBox.style.display = "none";
-      return;
-    }
-    results.forEach(item => {
-      const suggestion = document.createElement("div");
-      suggestion.className = "movie-suggestion-item";
-
-      const img = document.createElement("img");
-      img.src = "https://image.tmdb.org/t/p/w92" + item.poster_path;
-      suggestion.appendChild(img);
-
-      const titleDiv = document.createElement("div");
-      titleDiv.className = "movie-title";
-      titleDiv.textContent = item.title || item.name;
-      suggestion.appendChild(titleDiv);
-
-      suggestion.addEventListener("click", () => {
-        const slug = slugify(item.title || item.name);
-        let aurlParam = "";
-        if (item.media_type === "movie") {
-          aurlParam = encodeURIComponent(`tmdb-movie-${item.id}-${slug}`);
-          window.location.href = `player.html?aurl=${aurlParam}`;
-        } else if (item.media_type === "tv") {
-          aurlParam = encodeURIComponent(`tmdb-tv-${item.id}-${slug}`);
-          window.location.href = `player.html?aurl=${aurlParam}&series=1&episode=1`;
-        }
-      });
-      suggestionsBox.appendChild(suggestion);
-    });
-    suggestionsBox.style.display = "block";
-  }
-
-  searchInput.addEventListener("input", () => {
-    clearTimeout(searchDebounce);
-    searchDebounce = setTimeout(() => {
-      performMovieSearch(searchInput.value.trim());
-    }, 300);
-  });
-
-  document.addEventListener("click", (e) => {
-    if (!document.querySelector(".movie-search-wrapper").contains(e.target)) {
-      suggestionsBox.style.display = "none";
-    }
-  });
-</script>
-
+    <nav>
+        <div class="container">
+          <h2>
+            <i class="nes-icon star"></i>
+            Pranav (ME) UwU
+          </h2>
+        </div>
+      </nav>
+      <main class="container">
+        <section class="row showcase">
+          <div class="first-sm last-xs">
+            <i class="nes-octocat" style="margin-left: 15px;"></i>
+          </div>
+          <div class="col-sm-9 col-xs-12" style="padding-left: 1rem;">
+            <div class="nes-balloon from-left">
+              <p>
+                Hi, I'm <span class="nes-text is-primary">Pranav</span>. This page is about me and for myself hehe!
+                <i class="nes-icon heart is-small"></i>
+              </p>
+            </div>
+          </div>
+        </section>
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <section class="showcase">
+              <div class="nes-container with-title">
+                <p class="title">
+                  Things I do
+                </p>
+                <ul class="nes-list is-disc">
+                  <li>Play Games</li>
+                  <li>Chat-GPTer</li>
+                  <li>Frontend iGuess</li>
+                  <li>Act Weirdly</li>
+                  <li>Goes to a JOB</li>
+                </ul>
+                <p>
+                  I do a lot of things~
+                </p>
+              </div>
+            </section>
+            <section class="showcase">
+              <div class="nes-container is-dark with-title">
+                <p class="title">
+                  Noteworthies
+                </p>
+                <div class="row middle-xs">
+                  <i class="nes-icon trophy"></i>
+                  <a href="#"
+                     class="nes-text is-error" >
+                     - Yapper-Dapper</a>
+                </div>
+                <div class="row middle-xs">
+                  <i class="nes-icon trophy"></i>
+                  <a href="#"
+                     class="nes-text is-error" >
+                    - Bought a PS5</a>
+                </div>
+                <div class="row middle-xs">
+                  <i class="nes-icon trophy"></i>
+                  <a href="#" class="nes-text is-error"
+                     >
+                     - Knows Arigato</a>
+                </div>
+              </div>
+            </section>
+            <section class="showcase">
+              <div class="nes-container with-title">
+                <p class="title">
+                  My socials
+                </p>
+                
+                
+                <a href="https://www.instagram.com/pranv_satv/" class="social" target="_blank">
+                  <i class="nes-icon instagram is-large"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/pranav-satav-b187102a5/" class="social" target="_blank">
+                  <i class="nes-icon linkedin is-large"></i>
+                </a>
+              </div>
+            </section>
+          </div>
+          <div class="col-md-8 col-xs-12">
+            <section class="showcase">
+              <div class="nes-container with-title">
+                <p class="title">
+                  System Monitor
+                </p>
+                <script>
+                    function checkServerStatus() {
+                      fetch("https://cloud.pranavsatav.me/status.php", { method: "GET", cache: "no-store" })
+                        .then(response => {
+                          if (response.ok) {
+                            document.getElementById("server-status").classList.remove("is-error");
+                            document.getElementById("server-status").classList.add("is-success");
+                            document.getElementById("server-status-text").innerText = "Yay! Online";
+                          } else {
+                            throw new Error("Server unreachable");
+                          }
+                        })
+                        .catch(() => {
+                          document.getElementById("server-status").classList.remove("is-success");
+                          document.getElementById("server-status").classList.add("is-error");
+                          document.getElementById("server-status-text").innerText = "Bruh forgot to turn on PI";
+                        });
+                    }
+                  
+                    setInterval(checkServerStatus, 5000);
+                    checkServerStatus(); // Run once on page load
+                  </script>
+                  
+                  <div class="row middle-xs">
+                    <div class="col-md-4 col-xs-12">Cloud Server</div>
+                    <div class="col-md-8 col-xs-12">
+                        <span id="server-status-text" style="margin-left: 10px; font-weight: bold;">checkinghhh!! </span>
+                      <progress id="server-status" class="nes-progress is-success" value="100" max="100"></progress>
+                      
+                    </div>
+                  </div>
+                  </br>
+                  <script>
+                    let fps = 0, lastTime = performance.now();
+                  
+                    function updateFPS() {
+                      const now = performance.now();
+                      fps = Math.round(1000 / (now - lastTime));
+                      lastTime = now;
+                      requestAnimationFrame(updateFPS);
+                    }
+                  
+                    document.addEventListener("mousemove", (event) => {
+                      document.getElementById("cursor-pos").innerText = `X: ${event.clientX}, Y: ${event.clientY}`;
+                    });
+                  
+                    setInterval(() => {
+                      document.getElementById("fps-counter").innerText = `FPS: ${fps}`;
+                    }, 1000);
+                  
+                    requestAnimationFrame(updateFPS);
+                  </script>
+                <div class="row middle-xs">
+                  <div class="col-md-4 col-xs-12">
+                    Device Stats
+                  </div>
+                  <div class="col-md-8 col-xs-12">
+                    <span id="fps-counter">FPS: 0</span> | <span id="cursor-pos">X: 0, Y: 0</span>
+                  </div>
+                </div>
+                
+              </div>
+            </section>
+            <section id="experience" class="showcase">
+                <div class="nes-container with-title">
+                    <div class="movie-search-title title nes-text is-primary">Watch Something?</div>
+                  <div class="row">
+                    <div class="col-md-2 col-xs-12">
+                        <i class="nes-bcrikko"></i>
+                      </div>
+                    <div class="col-md-10 col-xs-12">
+                      <h3>Search your Fav Movie / TV Show</h3>
+                      No Ads / No BS,  <div class="nes-badge">
+                        <span class="is-success">hehe</span>
+                      </div> ^_^
+                        
+                      
+                      <!-- NES Style Search Bar -->
+                      <div class="movie-search-container">
+                        
+                        <div class="movie-search-wrapper">
+                          <input type="text" id="movieSearchInput" class="nes-input" placeholder="Search Here..." autocomplete="off">
+                          <div class="movie-suggestions nes-container is-rounded" id="movieSuggestions" style="display: none;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              
+              <script>
+                const tmdbToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2QyMWU2NDIxNDAwNTdjZDYzNjJiZjI5ZjlhMzNkMiIsIm5iZiI6MTY5MTkzOTQxNi45OTUwMDAxLCJzdWIiOiI2NGQ4ZjI1ODAwMWJiZDAwYzZjN2FmZjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.1iAwqbg9q-TXSi6Sb8DPXAAcw29zd02GJarwO7QodcU"; // Replace with your TMDB API token
+                const searchInput = document.getElementById("movieSearchInput");
+                const suggestionsBox = document.getElementById("movieSuggestions");
+                let searchDebounce;
+              
+                function slugify(text) {
+                  return text.toString().toLowerCase()
+                             .replace(/\s+/g, '-')
+                             .replace(/[^\w\-]+/g, '')
+                             .replace(/\-\-+/g, '-')
+                             .replace(/^-+/, '')
+                             .replace(/-+$/, '');
+                }
+              
+                function performMovieSearch(query) {
+                  if (!query) {
+                    suggestionsBox.style.display = "none";
+                    suggestionsBox.innerHTML = "";
+                    return;
+                  }
+                  fetch(`https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(query)}&language=en-US&page=1`, {
+                    headers: {
+                      Authorization: 'Bearer ' + tmdbToken,
+                      'Content-Type': 'application/json;charset=utf-8'
+                    }
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                    const results = data.results.filter(item => 
+                      (item.media_type === "movie" || item.media_type === "tv") && item.poster_path
+                    );
+                    renderMovieSuggestions(results);
+                  })
+                  .catch(err => console.error("Error fetching movie search:", err));
+                }
+              
+                function renderMovieSuggestions(results) {
+                  suggestionsBox.innerHTML = "";
+                  if (results.length === 0) {
+                    suggestionsBox.style.display = "none";
+                    return;
+                  }
+                  results.forEach(item => {
+                    const suggestion = document.createElement("div");
+                    suggestion.className = "nes-container is-rounded movie-suggestion-item";
+              
+                    const img = document.createElement("img");
+                    img.src = "https://image.tmdb.org/t/p/w92" + item.poster_path;
+                    img.className = "nes-avatar is-medium2";
+                    suggestion.appendChild(img);
+              
+                    const titleDiv = document.createElement("div");
+                    titleDiv.className = "nes-text is-primary movie-title";
+                    titleDiv.textContent = item.title || item.name;
+                    suggestion.appendChild(titleDiv);
+              
+                    suggestion.addEventListener("click", () => {
+                      const slug = slugify(item.title || item.name);
+                      let aurlParam = "";
+                      if (item.media_type === "movie") {
+                        aurlParam = encodeURIComponent(`tmdb-movie-${item.id}-${slug}`);
+                        window.location.href = `player.html?aurl=${aurlParam}`;
+                      } else if (item.media_type === "tv") {
+                        aurlParam = encodeURIComponent(`tmdb-tv-${item.id}-${slug}`);
+                        window.location.href = `player.html?aurl=${aurlParam}&series=1&episode=1`;
+                      }
+                    });
+                    suggestionsBox.appendChild(suggestion);
+                  });
+                  suggestionsBox.style.display = "block";
+                }
+              
+                searchInput.addEventListener("input", () => {
+                  clearTimeout(searchDebounce);
+                  searchDebounce = setTimeout(() => {
+                    performMovieSearch(searchInput.value.trim());
+                  }, 300);
+                });
+              
+                document.addEventListener("click", (e) => {
+                  if (!document.querySelector(".movie-search-wrapper").contains(e.target)) {
+                    suggestionsBox.style.display = "none";
+                  }
+                });
+              </script>
+           
+           <!--
+         <section class="showcase">
+              <div class="nes-container is-dark with-title">
+                <p class="title">
+                  DevOps Knowledge
+                </p>
+                <div class="row middle-xs">
+                  <div class="col-md-4 col-xs-12">
+                    Ansible
+                  </div>
+                  <div class="col-md-8 col-xs-12">
+                    <progress class="nes-progress is-warning" value="80" max="100"></progress>
+                  </div>
+                </div>
+                <div class="row middle-xs">
+                  <div class="col-md-4 col-xs-12">
+                    Amazon Web Services
+                  </div>
+                  <div class="col-md-8 col-xs-12">
+                    <progress class="nes-progress is-warning" value="70" max="100"></progress>
+                  </div>
+                </div>
+                <div class="row middle-xs">
+                  <div class="col-md-4 col-xs-12">
+                    Jenkins
+                  </div>
+                  <div class="col-md-8 col-xs-12">
+                    <progress class="nes-progress is-error" value="50" max="100"></progress>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="experience" class="showcase">
+              <div class="nes-container with-title">
+                <p class="title">
+                  Experience
+                </p>
+                <div class="row">
+                  <div class="col-md-2 col-xs-12">
+                    <i class="nes-bcrikko"></i>
+                  </div>
+                  <div class="col-md-10 col-xs-12">
+                    <h3>Advanced World Systems</h3>
+                    <p>Senior Associate Research and Development Engineer</p>
+      
+                    <div class="nes-badge">
+                      <span class="is-success">6+ years</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section> -->
+          </div>
+        </div>
+      </main>
+      <footer class="container center-xs">
+        &copy; To be very honest, I rarely play NES games. ¯\_(ツ)_/¯
+      </footer>
+  
 </body>
 </html>
