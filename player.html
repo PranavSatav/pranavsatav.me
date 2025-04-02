@@ -75,20 +75,13 @@
       display: none;
       align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .control-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      flex-wrap: nowrap;
     }
     
     .label {
       font-size: 14px;
       color: var(--text-muted);
-      min-width: auto;
+      margin-right: 2px;
     }
     
     input, select, button {
@@ -100,12 +93,11 @@
       color: var(--text-light);
       outline: none;
       transition: all 0.3s ease;
-      min-width: 60px;
     }
     
     input {
       text-align: center;
-      width: 60px;
+      width: 50px;
     }
     
     input::placeholder {
@@ -139,24 +131,17 @@
         padding: 10px;
       }
       
-      .tv-controls {
-        width: 100%;
-        justify-content: center;
-      }
-      
-      .control-group {
-        width: 100%;
-        justify-content: center;
-        margin-bottom: 8px;
-      }
-      
       select {
         width: 100%;
         max-width: none;
       }
       
       input, button {
-        padding: 10px;
+        padding: 8px;
+      }
+      
+      .tv-controls {
+        width: auto;
       }
     }
   </style>
@@ -165,15 +150,11 @@
   <div class="container">
     <div class="controls-container">
       <div id="tvControls" class="tv-controls">
-        <div class="control-group">
-          <span class="label">Season</span>
-          <input type="number" id="seasonInput" min="1" value="1" placeholder="S">
-        </div>
-        <div class="control-group">
-          <span class="label">Episode</span>
-          <input type="number" id="episodeInput" min="1" value="1" placeholder="E">
-        </div>
-        <button id="updateEpisode">Play</button>
+        <span class="label">S</span>
+        <input type="number" id="seasonInput" min="1" value="1" placeholder="S">
+        <span class="label">E</span>
+        <input type="number" id="episodeInput" min="1" value="1" placeholder="E">
+        <button id="updateEpisode">▶</button>
       </div>
       <select id="sourceSelect"></select>
     </div>
@@ -220,17 +201,18 @@
       episodeInput.value = episode;
       
       function buildEmbedSources() {
+        // Using your original working URLs
         if (type === 'movie') {
           embedSources = [
-            { name: "Source 1", url: `https://111movies.com/movie/${id}` },
-            { name: "Source 2", url: `https://vidjoy.pro/embed/movie/${id}` },
-            { name: "Source 3", url: `https://player.videasy.net/movie/${id}` }
+            { name: "Source 1", url: `https://player.videasy.net/movie/${id}` }
+            { name: "Source 2", url: `https://111movies.com/movie/${id}` },
+            { name: "Source 3", url: `https://vidjoy.pro/embed/movie/${id}` },
           ];
         } else if (type === 'tv') {
           embedSources = [
-            { name: "Source 1", url: `https://111movies.com/tv/${id}/${season}/${episode}` },
-            { name: "Source 2", url: `https://vidjoy.pro/embed/tv/${id}/${season}/${episode}` },
-            { name: "Source 3", url: `https://player.videasy.net/tv/${id}/${season}/${episode}` }
+            { name: "Source 1", url: `https://player.videasy.net/tv/${id}/${season}/${episode}` }
+            { name: "Source 2", url: `https://111movies.com/tv/${id}/${season}/${episode}` },
+            { name: "Source 3", url: `https://vidjoy.pro/embed/tv/${id}/${season}/${episode}` },
           ];
           tvControls.style.display = 'flex';
         }
