@@ -204,15 +204,15 @@
         // Using your original working URLs
         if (type === 'movie') {
           embedSources = [
-            { name: "Source 1", url: `https://player.videasy.net/movie/${id}` }
-            { name: "Source 2", url: `https://111movies.com/movie/${id}` },
-            { name: "Source 3", url: `https://vidjoy.pro/embed/movie/${id}` },
+            { name: "Source 1", url: `https://111movies.com/movie/${id}` },
+            { name: "Source 2", url: `https://vidjoy.pro/embed/movie/${id}` },
+            { name: "Source 3", url: `https://player.videasy.net/movie/${id}` }
           ];
         } else if (type === 'tv') {
           embedSources = [
-            { name: "Source 1", url: `https://player.videasy.net/tv/${id}/${season}/${episode}` }
-            { name: "Source 2", url: `https://111movies.com/tv/${id}/${season}/${episode}` },
-            { name: "Source 3", url: `https://vidjoy.pro/embed/tv/${id}/${season}/${episode}` },
+            { name: "Source 1", url: `https://111movies.com/tv/${id}/${season}/${episode}` },
+            { name: "Source 2", url: `https://vidjoy.pro/embed/tv/${id}/${season}/${episode}` },
+            { name: "Source 3", url: `https://player.videasy.net/tv/${id}/${season}/${episode}` }
           ];
           tvControls.style.display = 'flex';
         }
