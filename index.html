@@ -1,511 +1,406 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<style>
-    @import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
-@import url("https://unpkg.com/nes.css@latest/css/nes.min.css");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css");
-html,
-body {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geometric Hero Section</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-nav {
-  border-bottom: 4px solid #ccc;
-  padding: 10px;
-  margin-bottom: 60px;
-  flex: 0 0;
-}
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
 
-main {
-  flex: 1 0;
-}
+    .hero-container {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background-color: #030303;
+    }
 
-nav h2 {
-  margin-bottom: 0;
-}
+    .bg-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom right, rgba(99, 102, 241, 0.05), transparent, rgba(244, 63, 94, 0.05));
+      filter: blur(3rem);
+    }
 
-footer {
-  display: flex;
-  align-items: center;
-  flex: 0 0;
+    .shapes-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
 
-  color: #ccc;
-  font-size: 14px;
-  padding: 20px;
-}
+    .elegant-shape {
+      position: absolute;
+      opacity: 0;
+      transform: translateY(-150px) rotate(0deg);
+      animation-name: shapeAppear;
+      animation-duration: 2.4s;
+      animation-fill-mode: forwards;
+      animation-timing-function: cubic-bezier(0.23, 0.86, 0.39, 0.96);
+    }
 
-.showcase {
-  margin-bottom: 50px;
-}
+    .shape-inner {
+      position: relative;
+      animation-name: shapeFloat;
+      animation-duration: 12s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+    }
 
-.nes-progress {
-  height: 30px;
-}
+    .shape-design {
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(2px);
+    }
 
-.is-dark .nes-progress {
-  height: 35px;
-}
+    .shape-design::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), transparent 70%);
+    }
 
-.social,
-.social:hover,
-.social:active {
-  text-decoration: none;
-}
+    .shape-1 {
+      left: -10%;
+      top: 15%;
+      animation-delay: 0.3s;
+    }
 
-    </style>
-    <style>
-        .movie-search-container {
-          margin-top: 20px;
-        }
-        .movie-search-wrapper {
-          position: relative;
-        }
-        .movie-suggestions {
-          position: absolute;
-          top: 40px;
-          width: 99%;
-          background: white;
-          z-index: 1000;
-          padding: 5px;
-          max-height: 300px;
-          overflow-y: auto;
-        }
-        .movie-suggestion-item {
-          display: flex;
-          align-items: center;
-          padding: 5px;
-          cursor: pointer;
-          border-bottom: 1px solid #ccc;
-        }
-        .movie-suggestion-item img {
-          margin-right: 10px;
-          border-radius: 4px;
-          width: 80px;
-          height: auto;
-        }
-        .movie-title {
-          font-size: 14px;
-          font-family: 'Press Start 2P', cursive;
-        }
-        .nes-avatar.is-medium2 {
-    width: 58px;
-    height: 68px;
-        }
-        ::-webkit-scrollbar {
-    display: none;
-}
-      </style>
-      <style>
-        .nes-field.is-inline {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .nes-btn i {
-            margin-right: 5px;
-        }
-        #pikachu {
-  width: 100px;
-  height: 118px;
-  margin-left: -25px;
-  margin-bottom: 25px;
-  position: relative;
-}
-#pikachu::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  display: block;
-  left: -8px;
-  position: absolute;
-}
-#pikachu::after {
-  -webkit-animation: pikachu-frames 0.2s steps(1) infinite;
-          animation: pikachu-frames 0.2s steps(1) infinite;
-}
-@-webkit-keyframes pikachu-frames {
-  0% {
-    box-shadow: 40px 8px #181818, 48px 8px #181818, 8px 16px #181818, 16px 16px #181818, 24px 16px #181818, 32px 16px #181818, 40px 16px #181818, 48px 16px #181818, 56px 16px #181818, 64px 16px #181818, 72px 16px #181818, 8px 24px #181818, 16px 24px #fefe00, 24px 24px #fefe00, 32px 24px #fefe00, 40px 24px #181818, 48px 24px #181818, 56px 24px #181818, 64px 24px #fefe00, 72px 24px #fefe00, 80px 24px #181818, 88px 24px #181818, 96px 24px #181818, 16px 32px #181818, 24px 32px #fefe00, 32px 32px #fefe00, 40px 32px #fefe00, 48px 32px #181818, 56px 32px #fefe00, 64px 32px #fefe00, 72px 32px #fefe00, 80px 32px #fefe00, 88px 32px #fefe00, 96px 32px #fefe00, 104px 32px #181818, 24px 40px #181818, 32px 40px #fefe00, 40px 40px #fefe00, 48px 40px #181818, 56px 40px #181818, 64px 40px #fefe00, 72px 40px #fefe00, 80px 40px #fefe00, 88px 40px #fefe00, 96px 40px #fefe00, 104px 40px #fefe00, 112px 40px #181818, 32px 48px #181818, 40px 48px #fefe00, 48px 48px #fefe00, 56px 48px #181818, 64px 48px #fefe00, 72px 48px #fefe00, 80px 48px #fefe00, 88px 48px #fefe00, 96px 48px #fefe00, 104px 48px #fefe00, 112px 48px #181818, 16px 56px #181818, 24px 56px #181818, 32px 56px #181818, 40px 56px #fefe00, 48px 56px #181818, 56px 56px #fefe00, 64px 56px #fefe00, 72px 56px #fefe00, 80px 56px #fefe00, 88px 56px #fefe00, 96px 56px #181818, 104px 56px #fefe00, 112px 56px #fefe00, 120px 56px #181818, 16px 64px #181818, 24px 64px #fefe00, 32px 64px #fefe00, 40px 64px #181818, 48px 64px #181818, 56px 64px #fefe00, 64px 64px #fefe00, 72px 64px #fefe00, 80px 64px #fe4100, 88px 64px #fefe00, 96px 64px #fefe00, 104px 64px #fefe00, 112px 64px #fefe00, 120px 64px #181818, 24px 72px #181818, 32px 72px #823e00, 40px 72px #181818, 48px 72px #823e00, 56px 72px #823e00, 64px 72px #823e00, 72px 72px #fefe00, 80px 72px #fefe00, 88px 72px #fefe00, 96px 72px #fefe00, 104px 72px #fefe00, 112px 72px #181818, 16px 80px #181818, 24px 80px #823e00, 32px 80px #823e00, 40px 80px #181818, 48px 80px #fefe00, 56px 80px #fefe00, 64px 80px #fefe00, 72px 80px #fefe00, 80px 80px #fefe00, 88px 80px #fefe00, 96px 80px #181818, 104px 80px #fefe00, 112px 80px #181818, 24px 88px #181818, 32px 88px #823e00, 40px 88px #181818, 48px 88px #823e00, 56px 88px #823e00, 64px 88px #823e00, 72px 88px #fefe00, 80px 88px #fefe00, 88px 88px #181818, 96px 88px #181818, 104px 88px #fefe00, 112px 88px #181818, 32px 96px #181818, 40px 96px #181818, 48px 96px #181818, 56px 96px #fefe00, 64px 96px #fefe00, 72px 96px #fefe00, 80px 96px #fefe00, 88px 96px #fefe00, 96px 96px #fefe00, 104px 96px #181818, 112px 96px #181818, 32px 104px #181818, 40px 104px #fefe00, 48px 104px #181818, 56px 104px #181818, 64px 104px #fefe00, 72px 104px #fefe00, 80px 104px #fefe00, 88px 104px #fefe00, 96px 104px #181818, 104px 104px #fefe00, 112px 104px #fefe00, 120px 104px #181818, 40px 112px #181818, 48px 112px #fefe00, 56px 112px #fefe00, 64px 112px #181818, 72px 112px #181818, 80px 112px #181818, 88px 112px #181818, 104px 112px #181818, 112px 112px #181818, 48px 120px #181818, 56px 120px #181818;
-  }
-  50% {
-    box-shadow: 40px 16px #181818, 48px 16px #181818, 8px 24px #181818, 16px 24px #181818, 24px 24px #181818, 32px 24px #181818, 40px 24px #181818, 48px 24px #181818, 56px 24px #181818, 64px 24px #181818, 72px 24px #181818, 8px 32px #181818, 16px 32px #fefe00, 24px 32px #fefe00, 32px 32px #fefe00, 40px 32px #181818, 48px 32px #181818, 56px 32px #181818, 64px 32px #fefe00, 72px 32px #fefe00, 80px 32px #181818, 88px 32px #181818, 96px 32px #181818, 16px 40px #181818, 24px 40px #fefe00, 32px 40px #fefe00, 40px 40px #fefe00, 48px 40px #181818, 56px 40px #fefe00, 64px 40px #fefe00, 72px 40px #fefe00, 80px 40px #fefe00, 88px 40px #fefe00, 96px 40px #fefe00, 104px 40px #181818, 24px 48px #181818, 32px 48px #fefe00, 40px 48px #fefe00, 48px 48px #181818, 56px 48px #181818, 64px 48px #fefe00, 72px 48px #fefe00, 80px 48px #fefe00, 88px 48px #fefe00, 96px 48px #fefe00, 104px 48px #fefe00, 112px 48px #181818, 32px 56px #181818, 40px 56px #fefe00, 48px 56px #fefe00, 56px 56px #181818, 64px 56px #fefe00, 72px 56px #fefe00, 80px 56px #fefe00, 88px 56px #fefe00, 96px 56px #fefe00, 104px 56px #fefe00, 112px 56px #181818, 16px 64px #181818, 24px 64px #181818, 32px 64px #181818, 40px 64px #fefe00, 48px 64px #181818, 56px 64px #fefe00, 64px 64px #fefe00, 72px 64px #fefe00, 80px 64px #fefe00, 88px 64px #fefe00, 96px 64px #181818, 104px 64px #fefe00, 112px 64px #fefe00, 120px 64px #181818, 16px 72px #181818, 24px 72px #fefe00, 32px 72px #fefe00, 40px 72px #fefe00, 48px 72px #181818, 56px 72px #fefe00, 64px 72px #fefe00, 72px 72px #fefe00, 80px 72px #fe4100, 88px 72px #fefe00, 96px 72px #fefe00, 104px 72px #fefe00, 112px 72px #fefe00, 120px 72px #181818, 24px 80px #181818, 32px 80px #823e00, 40px 80px #181818, 48px 80px #823e00, 56px 80px #823e00, 64px 80px #823e00, 72px 80px #fefe00, 80px 80px #fefe00, 88px 80px #fefe00, 96px 80px #fefe00, 104px 80px #fefe00, 112px 80px #181818, 16px 88px #181818, 24px 88px #823e00, 32px 88px #823e00, 40px 88px #181818, 48px 88px #fefe00, 56px 88px #fefe00, 64px 88px #fefe00, 72px 88px #fefe00, 80px 88px #fefe00, 88px 88px #fefe00, 96px 88px #181818, 104px 88px #fefe00, 112px 88px #181818, 24px 96px #181818, 32px 96px #823e00, 40px 96px #181818, 48px 96px #823e00, 56px 96px #823e00, 64px 96px #823e00, 72px 96px #fefe00, 80px 96px #fefe00, 88px 96px #181818, 96px 96px #181818, 104px 96px #fefe00, 112px 96px #181818, 32px 104px #181818, 40px 104px #181818, 48px 104px #181818, 56px 104px #fefe00, 64px 104px #fefe00, 72px 104px #fefe00, 80px 104px #fefe00, 88px 104px #fefe00, 96px 104px #fefe00, 104px 104px #fefe00, 112px 104px #181818, 56px 112px #181818, 64px 112px #181818, 72px 112px #fefe00, 80px 112px #fefe00, 88px 112px #fefe00, 96px 112px #181818, 104px 112px #181818, 72px 120px #181818, 80px 120px #181818, 88px 120px #181818;
-  }
-}
-@keyframes pikachu-frames {
-  0% {
-    box-shadow: 40px 8px #181818, 48px 8px #181818, 8px 16px #181818, 16px 16px #181818, 24px 16px #181818, 32px 16px #181818, 40px 16px #181818, 48px 16px #181818, 56px 16px #181818, 64px 16px #181818, 72px 16px #181818, 8px 24px #181818, 16px 24px #fefe00, 24px 24px #fefe00, 32px 24px #fefe00, 40px 24px #181818, 48px 24px #181818, 56px 24px #181818, 64px 24px #fefe00, 72px 24px #fefe00, 80px 24px #181818, 88px 24px #181818, 96px 24px #181818, 16px 32px #181818, 24px 32px #fefe00, 32px 32px #fefe00, 40px 32px #fefe00, 48px 32px #181818, 56px 32px #fefe00, 64px 32px #fefe00, 72px 32px #fefe00, 80px 32px #fefe00, 88px 32px #fefe00, 96px 32px #fefe00, 104px 32px #181818, 24px 40px #181818, 32px 40px #fefe00, 40px 40px #fefe00, 48px 40px #181818, 56px 40px #181818, 64px 40px #fefe00, 72px 40px #fefe00, 80px 40px #fefe00, 88px 40px #fefe00, 96px 40px #fefe00, 104px 40px #fefe00, 112px 40px #181818, 32px 48px #181818, 40px 48px #fefe00, 48px 48px #fefe00, 56px 48px #181818, 64px 48px #fefe00, 72px 48px #fefe00, 80px 48px #fefe00, 88px 48px #fefe00, 96px 48px #fefe00, 104px 48px #fefe00, 112px 48px #181818, 16px 56px #181818, 24px 56px #181818, 32px 56px #181818, 40px 56px #fefe00, 48px 56px #181818, 56px 56px #fefe00, 64px 56px #fefe00, 72px 56px #fefe00, 80px 56px #fefe00, 88px 56px #fefe00, 96px 56px #181818, 104px 56px #fefe00, 112px 56px #fefe00, 120px 56px #181818, 16px 64px #181818, 24px 64px #fefe00, 32px 64px #fefe00, 40px 64px #181818, 48px 64px #181818, 56px 64px #fefe00, 64px 64px #fefe00, 72px 64px #fefe00, 80px 64px #fe4100, 88px 64px #fefe00, 96px 64px #fefe00, 104px 64px #fefe00, 112px 64px #fefe00, 120px 64px #181818, 24px 72px #181818, 32px 72px #823e00, 40px 72px #181818, 48px 72px #823e00, 56px 72px #823e00, 64px 72px #823e00, 72px 72px #fefe00, 80px 72px #fefe00, 88px 72px #fefe00, 96px 72px #fefe00, 104px 72px #fefe00, 112px 72px #181818, 16px 80px #181818, 24px 80px #823e00, 32px 80px #823e00, 40px 80px #181818, 48px 80px #fefe00, 56px 80px #fefe00, 64px 80px #fefe00, 72px 80px #fefe00, 80px 80px #fefe00, 88px 80px #fefe00, 96px 80px #181818, 104px 80px #fefe00, 112px 80px #181818, 24px 88px #181818, 32px 88px #823e00, 40px 88px #181818, 48px 88px #823e00, 56px 88px #823e00, 64px 88px #823e00, 72px 88px #fefe00, 80px 88px #fefe00, 88px 88px #181818, 96px 88px #181818, 104px 88px #fefe00, 112px 88px #181818, 32px 96px #181818, 40px 96px #181818, 48px 96px #181818, 56px 96px #fefe00, 64px 96px #fefe00, 72px 96px #fefe00, 80px 96px #fefe00, 88px 96px #fefe00, 96px 96px #fefe00, 104px 96px #181818, 112px 96px #181818, 32px 104px #181818, 40px 104px #fefe00, 48px 104px #181818, 56px 104px #181818, 64px 104px #fefe00, 72px 104px #fefe00, 80px 104px #fefe00, 88px 104px #fefe00, 96px 104px #181818, 104px 104px #fefe00, 112px 104px #fefe00, 120px 104px #181818, 40px 112px #181818, 48px 112px #fefe00, 56px 112px #fefe00, 64px 112px #181818, 72px 112px #181818, 80px 112px #181818, 88px 112px #181818, 104px 112px #181818, 112px 112px #181818, 48px 120px #181818, 56px 120px #181818;
-  }
-  50% {
-    box-shadow: 40px 16px #181818, 48px 16px #181818, 8px 24px #181818, 16px 24px #181818, 24px 24px #181818, 32px 24px #181818, 40px 24px #181818, 48px 24px #181818, 56px 24px #181818, 64px 24px #181818, 72px 24px #181818, 8px 32px #181818, 16px 32px #fefe00, 24px 32px #fefe00, 32px 32px #fefe00, 40px 32px #181818, 48px 32px #181818, 56px 32px #181818, 64px 32px #fefe00, 72px 32px #fefe00, 80px 32px #181818, 88px 32px #181818, 96px 32px #181818, 16px 40px #181818, 24px 40px #fefe00, 32px 40px #fefe00, 40px 40px #fefe00, 48px 40px #181818, 56px 40px #fefe00, 64px 40px #fefe00, 72px 40px #fefe00, 80px 40px #fefe00, 88px 40px #fefe00, 96px 40px #fefe00, 104px 40px #181818, 24px 48px #181818, 32px 48px #fefe00, 40px 48px #fefe00, 48px 48px #181818, 56px 48px #181818, 64px 48px #fefe00, 72px 48px #fefe00, 80px 48px #fefe00, 88px 48px #fefe00, 96px 48px #fefe00, 104px 48px #fefe00, 112px 48px #181818, 32px 56px #181818, 40px 56px #fefe00, 48px 56px #fefe00, 56px 56px #181818, 64px 56px #fefe00, 72px 56px #fefe00, 80px 56px #fefe00, 88px 56px #fefe00, 96px 56px #fefe00, 104px 56px #fefe00, 112px 56px #181818, 16px 64px #181818, 24px 64px #181818, 32px 64px #181818, 40px 64px #fefe00, 48px 64px #181818, 56px 64px #fefe00, 64px 64px #fefe00, 72px 64px #fefe00, 80px 64px #fefe00, 88px 64px #fefe00, 96px 64px #181818, 104px 64px #fefe00, 112px 64px #fefe00, 120px 64px #181818, 16px 72px #181818, 24px 72px #fefe00, 32px 72px #fefe00, 40px 72px #fefe00, 48px 72px #181818, 56px 72px #fefe00, 64px 72px #fefe00, 72px 72px #fefe00, 80px 72px #fe4100, 88px 72px #fefe00, 96px 72px #fefe00, 104px 72px #fefe00, 112px 72px #fefe00, 120px 72px #181818, 24px 80px #181818, 32px 80px #823e00, 40px 80px #181818, 48px 80px #823e00, 56px 80px #823e00, 64px 80px #823e00, 72px 80px #fefe00, 80px 80px #fefe00, 88px 80px #fefe00, 96px 80px #fefe00, 104px 80px #fefe00, 112px 80px #181818, 16px 88px #181818, 24px 88px #823e00, 32px 88px #823e00, 40px 88px #181818, 48px 88px #fefe00, 56px 88px #fefe00, 64px 88px #fefe00, 72px 88px #fefe00, 80px 88px #fefe00, 88px 88px #fefe00, 96px 88px #181818, 104px 88px #fefe00, 112px 88px #181818, 24px 96px #181818, 32px 96px #823e00, 40px 96px #181818, 48px 96px #823e00, 56px 96px #823e00, 64px 96px #823e00, 72px 96px #fefe00, 80px 96px #fefe00, 88px 96px #181818, 96px 96px #181818, 104px 96px #fefe00, 112px 96px #181818, 32px 104px #181818, 40px 104px #181818, 48px 104px #181818, 56px 104px #fefe00, 64px 104px #fefe00, 72px 104px #fefe00, 80px 104px #fefe00, 88px 104px #fefe00, 96px 104px #fefe00, 104px 104px #fefe00, 112px 104px #181818, 56px 112px #181818, 64px 112px #181818, 72px 112px #fefe00, 80px 112px #fefe00, 88px 112px #fefe00, 96px 112px #181818, 104px 112px #181818, 72px 120px #181818, 80px 120px #181818, 88px 120px #181818;
-  }
-}
-    </style>    
+    .shape-1 .shape-inner {
+      width: 600px;
+      height: 140px;
+    }
+
+    .shape-1 .shape-design {
+      background: linear-gradient(to right, rgba(99, 102, 241, 0.15), transparent);
+    }
+
+    .shape-2 {
+      right: -5%;
+      top: 70%;
+      animation-delay: 0.5s;
+    }
+
+    .shape-2 .shape-inner {
+      width: 500px;
+      height: 120px;
+    }
+
+    .shape-2 .shape-design {
+      background: linear-gradient(to right, rgba(244, 63, 94, 0.15), transparent);
+    }
+
+    .shape-3 {
+      left: 5%;
+      bottom: 5%;
+      animation-delay: 0.4s;
+    }
+
+    .shape-3 .shape-inner {
+      width: 300px;
+      height: 80px;
+    }
+
+    .shape-3 .shape-design {
+      background: linear-gradient(to right, rgba(139, 92, 246, 0.15), transparent);
+    }
+
+    .shape-4 {
+      right: 15%;
+      top: 10%;
+      animation-delay: 0.6s;
+    }
+
+    .shape-4 .shape-inner {
+      width: 200px;
+      height: 60px;
+    }
+
+    .shape-4 .shape-design {
+      background: linear-gradient(to right, rgba(245, 158, 11, 0.15), transparent);
+    }
+
+    .shape-5 {
+      left: 20%;
+      top: 5%;
+      animation-delay: 0.7s;
+    }
+
+    .shape-5 .shape-inner {
+      width: 150px;
+      height: 40px;
+    }
+
+    .shape-5 .shape-design {
+      background: linear-gradient(to right, rgba(6, 182, 212, 0.15), transparent);
+    }
+
+    .content-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .content-inner {
+      max-width: 48rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s 0.5s forwards cubic-bezier(0.25, 0.4, 0.25, 1);
+    }
+
+    .badge img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .badge span {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 0.05em;
+    }
+
+    .title {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.025em;
+      line-height: 2;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s 0.7s forwards cubic-bezier(0.25, 0.4, 0.25, 1);
+    }
+
+    .title-1 {
+      background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0.8));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: block;
+    }
+
+    .title-2 {
+      font-family: 'Pacifico', cursive;
+      background: linear-gradient(to right, rgb(165, 180, 252), rgba(255, 255, 255, 0.9), rgb(251, 207, 232));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: block;
+    }
+
+    .subtitle {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      font-weight: 300;
+      letter-spacing: 0.025em;
+      max-width: 36rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s 0.9s forwards cubic-bezier(0.25, 0.4, 0.25, 1);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #030303, transparent, rgba(3, 3, 3, 0.8));
+      pointer-events: none;
+    }
+
+    @keyframes shapeAppear {
+      0% {
+        opacity: 0;
+        transform: translateY(-150px) rotate(var(--rotate-start));
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) rotate(var(--rotate-end));
+      }
+    }
+
+    @keyframes shapeFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(15px);
+      }
+    }
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .shape-1 {
+      --rotate-start: -3deg;
+      --rotate-end: 12deg;
+    }
+
+    .shape-2 {
+      --rotate-start: -30deg;
+      --rotate-end: -15deg;
+    }
+
+    .shape-3 {
+      --rotate-start: -23deg;
+      --rotate-end: -8deg;
+    }
+
+    .shape-4 {
+      --rotate-start: 5deg;
+      --rotate-end: 20deg;
+    }
+
+    .shape-5 {
+      --rotate-start: -40deg;
+      --rotate-end: -25deg;
+    }
+
+    @media (min-width: 640px) {
+      .title {
+        font-size: 6rem;
+      }
+      .subtitle {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .title {
+        font-size: 8rem;
+        margin-bottom: 2rem;
+      }
+      .subtitle {
+        font-size: 1.5rem;
+      }
+      .badge {
+        margin-bottom: 3rem;
+      }
+      .shape-1 {
+        left: -5%;
+        top: 20%;
+      }
+      .shape-2 {
+        right: 0%;
+        top: 75%;
+      }
+      .shape-3 {
+        left: 10%;
+        bottom: 10%;
+      }
+      .shape-4 {
+        right: 20%;
+        top: 15%;
+      }
+      .shape-5 {
+        left: 25%;
+        top: 10%;
+      }
+      .content-container {
+        padding: 0 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="hero-container">
+    <div class="bg-gradient"></div>
 
-    <nav>
-        <div class="container">
-          <h2>
-            <i class="nes-icon star"></i>
-            Pranav (ME) UwU
-          </h2>
+    <div class="shapes-container">
+      <div class="elegant-shape shape-1">
+        <div class="shape-inner">
+          <div class="shape-design"></div>
         </div>
-      </nav>
-      <main class="container">
-        <section class="row showcase">
-          <div class="first-sm last-xs">
-            <i class="nes-octocat" style="margin-left: 15px;"></i>
-          </div>
-          <div class="col-sm-9 col-xs-12" style="padding-left: 1rem;">
-            <div class="nes-balloon from-left">
-              <p>
-                Hi, I'm <span class="nes-text is-primary">Pranav</span>. This page is about me and for myself hehe!
-                <i class="nes-icon heart is-small"></i>
-              </p>
-            </div>
-          </div>
-        </section>
-        <div class="row">
-          <div class="col-md-4 col-xs-12">
-            <section class="showcase">
-              <div class="nes-container with-title">
-                <p class="title">
-                  Things I do
-                </p>
-                <ul class="nes-list is-disc">
-                  <li>Play Games</li>
-                  <li>Chat-GPTer</li>
-                  <li>Frontend iGuess</li>
-                  <li>Acts Cringe</li>
-                  <li>Has a Job</li>
-                </ul>
-                <p>
-                  I do a lot of things~
-                </p>
-              </div>
-            </section>
-            <section class="showcase">
-              <div class="nes-container is-dark with-title">
-                <p class="title">
-                  Noteworthies
-                </p>
-                <div class="row middle-xs">
-                  <i class="nes-icon trophy"></i>
-                  <a href="https://cloud.pranavsatav.me/"
-                     class="nes-text is-error" >
-                     - NextCloud</a>
-                </div>
-                <div class="row middle-xs">
-                  <i class="nes-icon trophy"></i>
-                  <a href="https://eaglercraft.com/mc/1.12.2/"
-                     class="nes-text is-error" >
-                    - Play Minecraft</a>
-                </div>
-                <div class="row middle-xs">
-                  <i class="nes-icon trophy"></i>
-                  <a href="#" class="nes-text is-error"
-                     >
-                     - Knows Arigato</a>
-                </div>
-              </div>
-            </section>
-            <section class="showcase">
-              <div class="nes-container with-title">
-                <p class="title">
-                  My socials
-                </p>
-                
-                
-                <a href="https://www.instagram.com/pranv_satv/" class="social" target="_blank">
-                  <i class="nes-icon instagram is-large"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/pranav-satav-b187102a5/" class="social" target="_blank">
-                  <i class="nes-icon linkedin is-large"></i>
-                </a>
-                <a href="https://github.com/PranavSatav" class="social" target="_blank">
-                    <i class="nes-icon github is-large"></i>
-                  </a>
-              </div>
-            </section>
+      </div>
 
-          </div>
-          <div class="col-md-8 col-xs-12">
-            <section class="showcase">
-              <div class="nes-container with-title">
-                <p class="title">
-                  System Monitor
-                </p>
-                <script>
-                    function checkServerStatus() {
-                      fetch("https://cloud.pranavsatav.me/status.php", { method: "GET", cache: "no-store" })
-                        .then(response => {
-                          if (response.ok) {
-                            document.getElementById("server-status").classList.remove("is-error");
-                            document.getElementById("server-status").classList.add("is-success");
-                            document.getElementById("server-status-text").innerText = "Yay! Online";
-                          } else {
-                            throw new Error("Server unreachable");
-                          }
-                        })
-                        .catch(() => {
-                          document.getElementById("server-status").classList.remove("is-success");
-                          document.getElementById("server-status").classList.add("is-error");
-                          document.getElementById("server-status-text").innerText = "Bruh forgot to turn on PI";
-                        });
-                    }
-                  
-                    setInterval(checkServerStatus, 5000);
-                    checkServerStatus(); // Run once on page load
-                  </script>
-                  
-                  <div class="row middle-xs">
-                    <div class="col-md-4 col-xs-12">Cloud Server -</div>
-                    <div class="col-md-8 col-xs-12">
-                        <span id="server-status-text" style="margin-left: 10px; font-weight: bold;">checkinghhh!! </span>
-                      <progress id="server-status" class="nes-progress is-success" value="100" max="100"></progress>
-                      
-                    </div>
-                  </div>
-                  </br>
-                  <script>
-                    let fps = 0, lastTime = performance.now();
-                  
-                    function updateFPS() {
-                      const now = performance.now();
-                      fps = Math.round(1000 / (now - lastTime));
-                      lastTime = now;
-                      requestAnimationFrame(updateFPS);
-                    }
-                  
-                    document.addEventListener("mousemove", (event) => {
-                      document.getElementById("cursor-pos").innerText = `X: ${event.clientX}, Y: ${event.clientY}`;
-                    });
-                  
-                    setInterval(() => {
-                      document.getElementById("fps-counter").innerText = `FPS: ${fps}`;
-                    }, 1000);
-                  
-                    requestAnimationFrame(updateFPS);
-                  </script>
-                <div class="row middle-xs">
-                  <div class="col-md-4 col-xs-12">
-                    Device Stats - 
-                  </div>
-                  <div class="col-md-8 col-xs-12">
-                    <span id="fps-counter">FPS: 0</span> | <span id="cursor-pos">X: 0, Y: 0</span>
-                  </div>
-                </div>
-                
-              </div>
-            </section>
-            <section id="experience" class="showcase">
-                <div class="nes-container with-title">
-                    <div class="movie-search-title title nes-text is-primary">Wanna Watch Something?</div>
-                  <div class="row">
-                    <div class="col-md-2 col-xs-12">
-                        <div id='pikachu'></div>
-                      </div>
-                    <div class="col-md-10 col-xs-12">
-                      <h3>Search your Fav Movie / TV Show</h3>
-                      No Ads / No BS,  <div class="nes-badge">
-                        <span class="is-success">hehe</span>
-                      </div> ^_^
-                        
-                      
-                      <!-- NES Style Search Bar -->
-                      <div class="movie-search-container">
-                        
-                        <div class="movie-search-wrapper">
-                          <input type="text" id="movieSearchInput" class="nes-input" placeholder="Search Here..." autocomplete="off">
-                          <div class="movie-suggestions nes-container is-rounded" id="movieSuggestions" style="display: none;"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-              
-              <script>
-                const tmdbToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2QyMWU2NDIxNDAwNTdjZDYzNjJiZjI5ZjlhMzNkMiIsIm5iZiI6MTY5MTkzOTQxNi45OTUwMDAxLCJzdWIiOiI2NGQ4ZjI1ODAwMWJiZDAwYzZjN2FmZjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.1iAwqbg9q-TXSi6Sb8DPXAAcw29zd02GJarwO7QodcU"; // Replace with your TMDB API token
-                const searchInput = document.getElementById("movieSearchInput");
-                const suggestionsBox = document.getElementById("movieSuggestions");
-                let searchDebounce;
-              
-                function slugify(text) {
-                  return text.toString().toLowerCase()
-                             .replace(/\s+/g, '-')
-                             .replace(/[^\w\-]+/g, '')
-                             .replace(/\-\-+/g, '-')
-                             .replace(/^-+/, '')
-                             .replace(/-+$/, '');
-                }
-              
-                function performMovieSearch(query) {
-                  if (!query) {
-                    suggestionsBox.style.display = "none";
-                    suggestionsBox.innerHTML = "";
-                    return;
-                  }
-                  fetch(`https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(query)}&language=en-US&page=1`, {
-                    headers: {
-                      Authorization: 'Bearer ' + tmdbToken,
-                      'Content-Type': 'application/json;charset=utf-8'
-                    }
-                  })
-                  .then(response => response.json())
-                  .then(data => {
-                    const results = data.results.filter(item => 
-                      (item.media_type === "movie" || item.media_type === "tv") && item.poster_path
-                    );
-                    renderMovieSuggestions(results);
-                  })
-                  .catch(err => console.error("Error fetching movie search:", err));
-                }
-              
-                function renderMovieSuggestions(results) {
-                  suggestionsBox.innerHTML = "";
-                  if (results.length === 0) {
-                    suggestionsBox.style.display = "none";
-                    return;
-                  }
-                  results.forEach(item => {
-                    const suggestion = document.createElement("div");
-                    suggestion.className = "nes-container is-rounded movie-suggestion-item";
-              
-                    const img = document.createElement("img");
-                    img.src = "https://image.tmdb.org/t/p/w92" + item.poster_path;
-                    img.className = "nes-avatar is-medium2";
-                    suggestion.appendChild(img);
-              
-                    const titleDiv = document.createElement("div");
-                    titleDiv.className = "nes-text is-primary movie-title";
-                    titleDiv.textContent = item.title || item.name;
-                    suggestion.appendChild(titleDiv);
-              
-                    suggestion.addEventListener("click", () => {
-                      const slug = slugify(item.title || item.name);
-                      let aurlParam = "";
-                      if (item.media_type === "movie") {
-                        aurlParam = encodeURIComponent(`tmdb-movie-${item.id}-${slug}`);
-                        window.location.href = `player.html?aurl=${aurlParam}`;
-                      } else if (item.media_type === "tv") {
-                        aurlParam = encodeURIComponent(`tmdb-tv-${item.id}-${slug}`);
-                        window.location.href = `player.html?aurl=${aurlParam}&series=1&episode=1`;
-                      }
-                    });
-                    suggestionsBox.appendChild(suggestion);
-                  });
-                  suggestionsBox.style.display = "block";
-                }
-              
-                searchInput.addEventListener("input", () => {
-                  clearTimeout(searchDebounce);
-                  searchDebounce = setTimeout(() => {
-                    performMovieSearch(searchInput.value.trim());
-                  }, 300);
-                });
-              
-                document.addEventListener("click", (e) => {
-                  if (!document.querySelector(".movie-search-wrapper").contains(e.target)) {
-                    suggestionsBox.style.display = "none";
-                  }
-                });
-              </script>
-           
-           
-           <section class="showcase">
-            <div class="nes-container is-dark with-title">
-                <p class="title">Search Monkey</p>
-                
-                <div class="nes-field is-inline">
-                    <input type="text" id="query" class="nes-input search-input" placeholder="Superrr google?">
-                    <button id="search-button" class="nes-btn is-primary"> Search</button>
-                    <button id="reset-button" class="nes-btn is-error"> Reset</button>
-                </div>
-                
-                <h4>Select your preferred type to search..</h4>
-                <div id="search-options" class="button-group">
-                    <button class="nes-btn search-type" data-search-str="+(mkv|mp4|avi) intitle:index.of">
-                        <i class="nes-icon play"></i> Movies</button>
-                    <button class="nes-btn search-type" data-search-str="+(exe|zip|apk) intitle:index.of">
-                        <i class="nes-icon download"></i> Apps</button>
-                    <button class="nes-btn search-type" data-search-str="+(mp3|wav) intitle:index.of">
-                        <i class="nes-icon sound"></i> Audio</button>
-                    <button class="nes-btn search-type" data-search-str="+(pdf|doc) intitle:index.of">
-                        <i class="nes-icon file"></i> Documents</button>
-                    <button class="nes-btn search-type" data-search-str="+(jpg|png) intitle:index.of">
-                        <i class="nes-icon image"></i> Images</button>
-                    <button class="nes-btn search-type" data-search-str="site:drive.google.com">
-                        <i class="nes-icon folder"></i> Google Drive</button>
-                </div>
-                <div id="selected-search" class="nes-text"></div>
-            </div>
-            <script>
-                const searchButtons = document.querySelectorAll('.search-type');
-                const queryInput = document.getElementById('query');
-                const searchButton = document.getElementById('search-button');
-                const resetButton = document.getElementById('reset-button');
-                let selectedType = null;
-        
-                searchButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        selectedType = button.getAttribute('data-search-str');
-                        document.getElementById('selected-search').textContent = `Currently Selected: ${button.textContent}`;
-                    });
-                });
-        
-                searchButton.addEventListener('click', () => {
-                    const query = queryInput.value.trim();
-                    if (!query || !selectedType) {
-                        alert('Please enter a search query and select a search type!');
-                        return;
-                    }
-                    const searchQuery = encodeURIComponent(`${query} ${selectedType}`);
-                    window.open(`https://www.google.com/search?q=${searchQuery}`, '_blank');
-                });
-        
-                resetButton.addEventListener('click', () => {
-                    queryInput.value = '';
-                    selectedType = null;
-                    document.getElementById('selected-search').textContent = '';
-                });
-            </script>
-            </section>
-           <!-- <section id="experience" class="showcase">
-              <div class="nes-container with-title">
-                <p class="title">
-                  Experience
-                </p>
-                <div class="row">
-                  <div class="col-md-2 col-xs-12">
-                    <i class="nes-bcrikko"></i>
-                  </div>
-                  <div class="col-md-10 col-xs-12">
-                    <h3>Advanced World Systems</h3>
-                    <p>Senior Associate Research and Development Engineer</p>
-      
-                    <div class="nes-badge">
-                      <span class="is-success">6+ years</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section> -->
-          </div>
+      <div class="elegant-shape shape-2">
+        <div class="shape-inner">
+          <div class="shape-design"></div>
         </div>
-      </main>
-      <footer class="container center-xs">
-        &copy; To be very honest, I rarely play games. ¯\_(ツ)_/¯
-      </footer>
-  
+      </div>
+
+      <div class="elegant-shape shape-3">
+        <div class="shape-inner">
+          <div class="shape-design"></div>
+        </div>
+      </div>
+
+      <div class="elegant-shape shape-4">
+        <div class="shape-inner">
+          <div class="shape-design"></div>
+        </div>
+      </div>
+
+      <div class="elegant-shape shape-5">
+        <div class="shape-inner">
+          <div class="shape-design"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-container">
+      <div class="content-inner">
+        
+
+        <h1 class="title">
+          
+          <span class="title-2">Pranav Satav</span>
+        </h1>
+        <a href="explore.html">
+        <div class="badge">
+          
+            <img src="https://kokonutui.com/logo.svg" alt="Kokonut UI">
+            <span>Explore - Creations</span>
+          </div></a>
+      </div>
+    </div>
+
+    <div class="overlay"></div>
+  </div>
 </body>
 </html>
