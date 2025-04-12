@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+   /* Import clean fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@500&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  background-image: url(''); /* Add subtle background if desired */
+  background-size: cover;
+  background-position: center;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+/* Frosted glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Headings in green */
+h2, h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #8fff8f;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease, border-color 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: #8fff8f;
+}
+
+.project-card h3 {
+  margin-top: 0;
+}
+
+.elsewhere ul {
+  list-style: none;
+  padding: 0;
+}
+
+.elsewhere li {
+  margin-bottom: 0.6rem;
+}
+
+a {
+  color: #aaffaa;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+  </style>
+  <style>
+    
+    /* Set both halves to independently scroll with 100vh height and hide native scrollbars */
+    .search-section,
+    .content-section {
+      height: 100vh;
+      overflow-y: auto;
+    }
+    /* Hide scrollbars for Webkit browsers */
+    .search-section::-webkit-scrollbar,
+    .content-section::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbars for Firefox and IE/Edge */
+    .search-section {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .content-section {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Styling for the movie search & grid on the left panel */
+    .search-section {
+      padding: 1.5rem;
+      background-color: black;
+      position: relative;
+    }
+    /* Header text above search bar */
+    .search-section h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--foreground);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    /* Floating search bar container with sticky position and background blur */
+    .movie-search-wrapper {
+      position: sticky;
+      top: 20px; /* Adjust the distance from the top */
+      z-index: 10;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      backdrop-filter: blur(5px);
+      border-radius: 0.375rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 2rem;
+      border: 2px solid #ffffff;
+      border-radius: 1.375rem;
+      background-color: transparent; /* Make input transparent */
+      color: var(--foreground);
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.85); /* Almost white */
+    }
+
+    /* Grid container for movies. Shows trending/popular when search input is empty.
+       Reduced gap to 0.5rem and no extra right padding.
+       The max-height will roughly show 3 rows (18 posters) */
+       .movie-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 180px);
+  justify-content: center; /* Optional: centers the grid */
+  overflow-y: scroll;
+  transition: all 0.3s ease;
+}
+
+    /* Hide scrollbar for the movie grid */
+    .movie-grid::-webkit-scrollbar {
+      display: none;
+    }
+    .movie-grid {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Style for each movie/series poster tile */
+    .movie-item {
+      cursor: pointer;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-bottom: 0.5rem;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.5s forwards;
+      transition: transform 0.2s ease;
+    }
+    /* Subtle pop-up on hover */
+    .movie-item:hover {
+      transform: scale(1.05);
+      background-color: var(--card-hover);
+    }
+    .movie-item img {
+      width: 100%;
+      display: block;
+    }
+    .movie-title {
+      font-size: 0.75rem;
+      color: #ffffff;  /* White text */
+      margin-top: 0.5rem;
+      padding: 0 0.25rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    /* Fade in animation keyframes */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Player Modal Styles */
+    .player-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      flex-direction: column;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .player-modal.active {
+      display: flex;
+    }
+
+    .player-controls {
+      padding: 12px;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      flex-wrap: wrap;
+    }
+
+    .player-video-container {
+      flex: 1;
+      position: relative;
+      width: 100%;
+    }
+
+    .player-modal iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .tv-controls {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: nowrap;
+    }
+
+    .modal-close {
+      cursor: pointer;
+      background: rgba(255, 87, 34, 0.8);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 87, 34, 1);
+      transform: scale(1.1);
+    }
+
+    .player-title {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 15px;
+    }
+
+    .player-controls-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .label {
+      font-size: 14px;
+      color: #bbbbbb;
+      margin-right: 2px;
+    }
+
+    input, select, button {
+      font-size: 14px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background: #282828;
+      color: #ffffff;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input {
+      text-align: center;
+      width: 50px;
+    }
+
+    input::placeholder {
+      color: #bbbbbb;
+    }
+
+    select {
+      min-width: 110px;
+      max-width: 150px;
+    }
+
+    select:hover, input:hover {
+      background: #3a3a3a;
+    }
+
+    button {
+      background: #ff5722;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 8px 16px;
+    }
+
+    button:hover {
+      background: #e64a19;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 600px) {
+      .player-controls {
+        gap: 8px;
+        padding: 10px;
+        flex-direction: column;
+      }
+
+      .player-controls-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .player-title {
+        margin-bottom: 8px;
+      }
+
+      select {
+        width: 100%;
+        max-width: none;
+      }
+
+      input, button {
+        padding: 8px;
+      }
+
+      .tv-controls {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left panel: Movie search and grid -->
+    <div class="search-section">
+      <!-- Minimalist Professional Header with Particle Background -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@3.1.0/tsparticles.bundle.min.js"></script>
+
+<div id="hero-section" style="position: relative; height: 160px; display: flex; align-items: center; justify-content: center; text-align: center;">
+  <div id="particles" style="position: absolute; width: 100%; height: 100%; z-index: 0;"></div>
+  <div style="position: relative; z-index: 1;">
+    <h1 style="font-family: 'Space Grotesk', sans-serif; font-size: 2rem; color: white; margin: 0; font-weight: 700;">Discover. Stream. Enjoy.</h1>
+    <p style="font-family: 'Space Grotesk', sans-serif; color: #cccccc; font-size: 1rem; margin-top: 0.5rem;">Browse trending movies and series curated just for you</p>
+  </div>
+</div>
+
+<script>
+  tsParticles.load("particles", {
+    fullScreen: false,
+    background: { color: { value: "transparent" } },
+    particles: {
+      number: { value: 40 },
+      color: { value: "#ffffff" },
+      shape: { type: "circle" },
+      opacity: { value: 0.2 },
+      size: { value: { min: 1, max: 3 } },
+      move: { enable: true, speed: 0.5, direction: "none", outModes: { default: "bounce" } }
+    }
+  });
+</script>
+
+<!-- Existing Title Below -->
+
+      <div class="movie-search-wrapper">
+        <input type="text" id="movieSearchInput" class="search-input" placeholder="Search Movies / Series / TV Shows..." autocomplete="off">
+      </div>
+      <div id="movieGrid" class="movie-grid"></div>
+    </div>
+    
+    <!-- Right panel: Tools Dashboard content -->
+    <div class="content-section">
+      
+      <div class="header">
+        <a href="#" class="logo">
+         
+          
+        </a>
+      </div>
+      <div class="tools-container">
+        <div class="tools-header">
+          
+          <p class="subtitle">Some of my things you may be interested in?</p>
+        </div>
+       
+          <!-- explore.html (Updated v4) -->
+<!-- original content above remains untouched -->
+
+<!-- Additions to second half of container -->
+
+  <div id="cloud-status-wrapper" style="display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px; border-radius: 20px; backdrop-filter: blur(15px); background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+      <div id="cloud-status-indicator" style="width: 14px; height: 14px; margin-left: 100%; border-radius: 50%; background-color: grey;"></div>
+      <span id="cloud-status-text" style="font-weight: bold; font-size: 14px;">Checking...</span>
+      <span id="retry-text" style="font-size: 12px; color: #ffaaaa;"></span>
+    </div>
+    <div style="display: flex; gap: 20px; justify-content: center; margin-top: 12px;">
+      <a href="https://www.instagram.com/pranv_satv/" target="_blank"><img src="https://img.icons8.com/ios-filled/28/ffffff/instagram-new.png" alt="Instagram"></a>
+      <a href="https://www.linkedin.com/in/pranav-satav-b187102a5/" target="_blank"><img src="https://img.icons8.com/ios-filled/28/ffffff/linkedin.png" alt="LinkedIn"></a>
+      <a href="https://github.com/PranavSatav" target="_blank"><img src="https://img.icons8.com/ios-glyphs/28/ffffff/github.png" alt="GitHub"></a>
+    </div>
+  </div>
+
+
+  <script>
+    let isOnline = false;
+  
+    function updateRetryText() {
+      const textEl = document.getElementById("retry-text");
+      if (!isOnline && textEl) {
+        textEl.textContent = `Dont worry we retry ping every 5s...`;
+      } else if (isOnline && textEl) {
+        textEl.textContent = "Server is running smoothly ↗";
+      }
+    }
+  
+    function checkCloudStatus() {
+      fetch("https://cloud.pranavsatav.me/status.php", { cache: "no-store" })
+        .then((res) => {
+          if (res.ok) {
+            isOnline = true;
+            document.getElementById("cloud-status-indicator").style.backgroundColor = "#00ff00";
+            document.getElementById("cloud-status-text").textContent = "Cloud Server is Online!";
+            document.getElementById("cloud-status-wrapper").style.background = "rgba(0,255,0,0.1)";
+            document.getElementById("cloud-status-wrapper").style.border = "1px solid rgba(0,255,0,0.3)";
+          } else {
+            throw new Error();
+          }
+        })
+        .catch(() => {
+          isOnline = false;
+          document.getElementById("cloud-status-indicator").style.backgroundColor = "#ff0000";
+          document.getElementById("cloud-status-text").textContent = "Cloud Server is Offline!";
+          document.getElementById("cloud-status-wrapper").style.background = "rgba(255,0,0,0.1)";
+          document.getElementById("cloud-status-wrapper").style.border = "1px solid rgba(255,0,0,0.3)";
+        })
+        .finally(() => {
+          updateRetryText();
+        });
+    }
+  
+    setInterval(checkCloudStatus, 5000);
+    checkCloudStatus();
+  </script>
+
+<!-- Add link near Explore -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const logoAnchor = document.querySelector(".header .logo");
+    if (logoAnchor) {
+      const cloudLink = document.createElement("a");
+      cloudLink.href = "https://cloud.pranavsatav.me";
+      cloudLink.target = "_blank";
+      cloudLink.textContent = "↗ Access NextCloud";
+      cloudLink.style.marginLeft = "12px";
+      cloudLink.style.color = "#00ffcc";
+      cloudLink.style.textDecoration = "none";
+      cloudLink.style.fontSize = "14px";
+      logoAnchor.parentNode.appendChild(cloudLink);
+    }
+  });
+</script>
+
+          
+       
+        
+        
+        <main>
+          <section class="glass about">
+            <h2>About Me</h2>
+            <p>
+              I'm a full-stack developer, cloud tinkerer, and digital craftsman who believes <strong>code should be functional *and* fun</strong>.
+              Whether it's wrangling APIs, optimizing infrastructure, or making buttons go brr—I'm your dev.
+              <br><br>
+              Currently building things that (hopefully) don't crash.
+            </p>
+          </section>
+        
+          <section class="glass projects">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+              <div class="project-card">
+                <h3>M3U Playlist Checker</h3>
+                <p>Upload, validate, re-check, and stream. It's like CPR for dead IPTV links.</p>
+              </div>
+        
+              <div class="project-card">
+                <h3>Telegram Video Streamer</h3>
+                <p>HTML5 video player + Telegram = seamless privacy-first streaming.</p>
+              </div>
+        
+              <div class="project-card">
+                <h3>IoT + SDN = Secure Chaos</h3>
+                <p>Made IOTA 2.0 and SDN shake hands to secure IoT networks. Surprisingly polite handshake.</p>
+              </div>
+        
+              <div class="project-card">
+                <h3>LocalStack EC2 Wizard</h3>
+                <p>Create and test EC2 instances locally. It’s like AWS... but in your hoodie.</p>
+              </div>
+            </div>
+          </section>
+        
+          
+        </main>
+        
+        
+        
+         
+        </div>
+      </div>
+    </div>
+  
+
+  <!-- Player Modal -->
+  <div id="playerModal" class="player-modal">
+    <div class="player-controls">
+      <button class="modal-close" id="closePlayer">&times;</button>
+      <div class="player-title" id="playerTitle">Loading...</div>
+      <div class="player-controls-right">
+        <div id="tvControls" class="tv-controls">
+          <span class="label">S</span>
+          <input type="number" id="seasonInput" min="1" value="1" placeholder="S">
+          <span class="label">E</span>
+          <input type="number" id="episodeInput" min="1" value="1" placeholder="E">
+          <button id="updateEpisode">▶</button>
+        </div>
+        <select id="sourceSelect"></select>
+      </div>
+    </div>
+    <div class="player-video-container">
+      <iframe sandbox="allow-scripts allow-same-origin allow-presentation" id="videoFrame" scrolling="no" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    // TMDB API token and elements
+    const tmdbToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2QyMWU2NDIxNDAwNTdjZDYzNjJiZjI5ZjlhMzNkMiIsIm5iZiI6MTY5MTkzOTQxNi45OTUwMDAxLCJzdWIiOiI2NGQ4ZjI1ODAwMWJiZDAwYzZjN2FmZjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.1iAwqbg9q-TXSi6Sb8DPXAAcw29zd02GJarwO7QodcU";
+    const searchInput = document.getElementById("movieSearchInput");
+    const movieGrid = document.getElementById("movieGrid");
+    let searchDebounce;
+
+    // Player Modal elements
+const playerModal = document.getElementById("playerModal");
+const videoFrame = document.getElementById("videoFrame");
+const closePlayerBtn = document.getElementById("closePlayer"); // ✅ Renamed
+const seasonInput = document.getElementById("seasonInput");
+const episodeInput = document.getElementById("episodeInput");
+const updateEpisodeButton = document.getElementById("updateEpisode");
+const sourceSelect = document.getElementById("sourceSelect");
+const tvControls = document.getElementById("tvControls");
+const playerTitle = document.getElementById("playerTitle");
+    
+    let currentMediaType = null;
+    let currentMediaId = null;
+    let currentMediaTitle = null;
+    let embedSources = [];
+
+    // Utility: create URL-friendly slugs
+    function slugify(text) {
+      return text.toString().toLowerCase()
+                 .replace(/\s+/g, '-')
+                 .replace(/[^\w\-]+/g, '')
+                 .replace(/\-\-+/g, '-')
+                 .replace(/^-+/, '')
+                 .replace(/-+$/, '');
+    }
+
+    // Render movies/series into the grid
+    function renderMovies(items) {
+      movieGrid.innerHTML = "";
+      
+      // Debug info to help diagnose
+      console.log("Rendering movies, received items:", items ? items.length : 0);
+      
+      if (!items || items.length === 0) {
+        movieGrid.innerHTML = "<p style='text-align:center; width:100%; color:white;'>No results found.</p>";
+        return;
+      }
+      
+      // Filter out items without poster_path
+      const validItems = items.filter(item => {
+        // For debugging purposes
+        if (!item.poster_path) {
+          console.log("Filtering out item without poster:", item.title || item.name);
+        }
+        // For multi search, ensure we only show movies and TV shows
+        return item.poster_path && (item.media_type === undefined || item.media_type === "movie" || item.media_type === "tv");
+      });
+      
+      console.log("Valid items with posters:", validItems.length);
+      
+      if (validItems.length === 0) {
+        movieGrid.innerHTML = "<p style='text-align:center; width:100%; color:white;'>No results with valid posters found.</p>";
+        return;
+      }
+      
+      // Limit rendering to 18 items with valid posters
+      validItems.slice(0, 18).forEach((item, index) => {
+        // Add a delay for animation timing
+        setTimeout(() => {
+          const movieItem = document.createElement("div");
+          movieItem.className = "movie-item";
+          
+          const img = document.createElement("img");
+          img.src = "https://image.tmdb.org/t/p/w342" + item.poster_path;
+          img.alt = item.title || item.name;
+          img.onerror = function() {
+            // Fallback if image fails to load
+            this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='300' viewBox='0 0 200 300'%3E%3Crect width='200' height='300' fill='%23212121'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='14' fill='white' text-anchor='middle' dominant-baseline='middle'%3ENo Image%3C/text%3E%3C/svg%3E";
+          };
+          movieItem.appendChild(img);
+          
+          const titleDiv = document.createElement("div");
+          titleDiv.className = "movie-title";
+          titleDiv.textContent = item.title || item.name;
+          movieItem.appendChild(titleDiv);
+          
+          movieItem.addEventListener("click", () => {
+            // For trending, item.media_type is set, but we need to handle movies from search
+            const mediaType = item.media_type || (item.first_air_date ? "tv" : "movie");
+            
+            // Create a complete object with the media_type field if it's not already present
+            const mediaItem = {
+              ...item,
+              media_type: mediaType
+            };
+            
+            openPlayer(mediaItem);
+          });
+          
+          movieGrid.appendChild(movieItem);
+        }, index * 40); // Stagger the animations
+      });
+    }
+
+    // Open the player modal with the selected media
+    function openPlayer(mediaItem) {
+      console.log("Opening player for:", mediaItem);
+      
+      // Set current media info
+      currentMediaType = mediaItem.media_type === "tv" ? "tv" : "movie";
+      currentMediaId = mediaItem.id;
+      currentMediaTitle = mediaItem.title || mediaItem.name;
+      
+      // Update modal title
+      playerTitle.textContent = currentMediaTitle;
+      
+      // Show/hide TV controls
+      if (currentMediaType === "tv") {
+        tvControls.style.display = 'flex';
+        // Set default season and episode
+        seasonInput.value = 1;
+        episodeInput.value = 1;
+      } else {
+        tvControls.style.display = 'none';
+      }
+      
+      // Build and populate sources
+      buildEmbedSources();
+      populateSourceDropdown();
+      loadSource(0);
+      
+      // Show modal
+      playerModal.classList.add("active");
+      
+      // Prevent background scrolling when modal is open
+      document.body.style.overflow = "hidden";
+    }
+    
+    // Close the player modal
+    function closePlayer() {
+  playerModal.classList.remove("active");
+  videoFrame.src = "";
+  document.body.style.overflow = "";
+}
+
+    // Build embed sources based on current media type and ID
+    function buildEmbedSources() {
+      let season = seasonInput.value || '1';
+      let episode = episodeInput.value || '1';
+      
+      if (currentMediaType === 'movie') {
+        embedSources = [
+          { name: "Source 1", url: `https://111movies.com/movie/${currentMediaId}` },
+          { name: "Source 2", url: `https://vidjoy.pro/embed/movie/${currentMediaId}` },
+          { name: "Source 3", url: `https://player.videasy.net/movie/${currentMediaId}` }
+        ];
+      } else if (currentMediaType === 'tv') {
+        embedSources = [
+          { name: "Source 1", url: `https://111movies.com/tv/${currentMediaId}/${season}/${episode}` },
+          { name: "Source 2", url: `https://vidjoy.pro/embed/tv/${currentMediaId}/${season}/${episode}` },
+          { name: "Source 3", url: `https://player.videasy.net/tv/${currentMediaId}/${season}/${episode}` }
+        ];
+      }
+    }
+
+    // Populate the source dropdown
+    function populateSourceDropdown() {
+      sourceSelect.innerHTML = "";
+      embedSources.forEach((source, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = source.name;
+        sourceSelect.appendChild(option);
+      });
+    }
+
+    // Load a specific source
+    function loadSource(index) {
+      if (index >= 0 && index < embedSources.length) {
+        videoFrame.src = embedSources[index].url;
+      }
+    }
+
+    // Fetch trending (popular) movies/series from TMDB
+    function fetchTrendingItems() {
+      console.log("Fetching trending items...");
+      // Display loading message
+      movieGrid.innerHTML = `
+  <div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    color: white;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem;
+  ">
+    Loading trending titles...
+  </div>
+`;
+
+      
+      fetch("https://api.themoviedb.org/3/trending/movie/week", {
+        headers: {
+          Authorization: 'Bearer ' + tmdbToken,
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Trending data received:", data);
+        // Add media_type if not present
+        const processedResults = data.results.map(item => {
+          if (!item.media_type) {
+            item.media_type = item.first_air_date ? "tv" : "movie";
+          }
+          return item;
+        });
+        renderMovies(processedResults);
+      })
+      .catch(err => {
+        console.error("Error fetching trending items:", err);
+        movieGrid.innerHTML = `<p style='text-align:center; width:100%; color:white;'>Error loading content: ${err.message}</p>`;
+      });
+    }
+
+    // Perform a search for movies/series using TMDB search API
+    function performMovieSearch(query) {
+      if (!query) {
+        fetchTrendingItems();
+        return;
+      }
+      
+      console.log("Searching for:", query);
+      // Display loading message
+      movieGrid.innerHTML = "<p style='text-align:center; width:100%; color:white;'>Searching...</p>";
+      
+      fetch(`https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(query)}&language=en-US&page=1&include_adult=false`, {
+        headers: {
+          Authorization: 'Bearer ' + tmdbToken,
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Search results:", data);
+        // Filter to only include movies and TV shows
+        const results = data.results.filter(item => 
+          (item.media_type === "movie" || item.media_type === "tv")
+        );
+        
+        renderMovies(results);
+      })
+      .catch(err => {
+        console.error("Error fetching movie search:", err);
+        movieGrid.innerHTML = `<p style='text-align:center; width:100%; color:white;'>Error searching: ${err.message}</p>`;
+      });
+    }
+
+    // Event Listeners
+    
+    // Search input with debounce
+    searchInput.addEventListener("input", () => {
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        performMovieSearch(searchInput.value.trim());
+      }, 300);
+    });
+
+    // Close player when clicking the close button
+    closePlayerBtn.addEventListener("click", closePlayer); // ✅ Updated
+    
+    // Change source when selecting a different one
+    sourceSelect.addEventListener('change', function() {
+      loadSource(parseInt(this.value, 10));
+    });
+    
+    // Update episode button click
+    updateEpisodeButton.addEventListener('click', function() {
+      buildEmbedSources();
+      populateSourceDropdown();
+      loadSource(sourceSelect.value ? parseInt(sourceSelect.value, 10) : 0);
+    });
+    
+    // Keyboard shortcuts for player navigation
+    document.addEventListener('keydown', function(e) {
+      // Only process if player modal is open and we're in TV mode
+      if (!playerModal.classList.contains("active") || currentMediaType !== "tv") return;
+      
+      if (e.key === 'Escape') {
+        closePlayer();
+      } else if (e.key === 'ArrowRight') {
+        // Next episode
+        episodeInput.value = parseInt(episodeInput.value, 10) + 1;
+        updateEpisodeButton.click();
+      } else if (e.key === 'ArrowLeft') {
+        // Previous episode (if we're not at episode 1)
+        if (parseInt(episodeInput.value, 10) > 1) {
+          episodeInput.value = parseInt(episodeInput.value, 10) - 1;
+          updateEpisodeButton.click();
+        }
+      } else if (e.key === 'ArrowUp') {
+        // Next season
+        seasonInput.value = parseInt(seasonInput.value, 10) + 1;
+        episodeInput.value = 1; // Reset episode to 1
+        updateEpisodeButton.click();
+      } else if (e.key === 'ArrowDown') {
+        // Previous season (if we're not at season 1)
+        if (parseInt(seasonInput.value, 10) > 1) {
+          seasonInput.value = parseInt(seasonInput.value, 10) - 1;
+          episodeInput.value = 1; // Reset episode to 1
+          updateEpisodeButton.click();
+        }
+      }
+    });
+    
+    // Close modal if clicking outside of content
+    window.addEventListener('click', function(e) {
+      if (e.target === playerModal) {
+        closePlayer();
+      }
+    });
+
+    // On initial load, show trending items
+    window.addEventListener("DOMContentLoaded", () => {
+      console.log("DOM loaded, fetching trending items");
+      fetchTrendingItems();
+    });
+  </script>
+</body>
+</html>
