@@ -1,0 +1,963 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreamFlix</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Netflix Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@300;400;500;700&display=swap" onerror="this.href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap'" rel="stylesheet">
+  <!-- Swiper JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'netflix-red': '#E50914',
+            'netflix-dark': '#141414',
+            'netflix-light': '#E5E5E5',
+            'netflix-gray': '#808080',
+          },
+          fontFamily: {
+            'netflix': ['"Netflix Sans"', 'Inter', 'sans-serif'],
+          },
+          backdropBlur: {
+            'netflix': '70px',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Custom Style -->
+  <style>
+    body {
+      font-family: 'Netflix Sans', 'Inter', sans-serif;
+      background-color: #141414;
+    }
+    .content-row::-webkit-scrollbar {
+      height: 8px;
+    }
+    .content-row::-webkit-scrollbar-track {
+      background: #1a1a1a;
+    }
+    .content-row::-webkit-scrollbar-thumb {
+      background: #e50914;
+      border-radius: 4px;
+    }
+    .banner-gradient {
+      background-image: linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 0.8) 15%, rgba(20, 20, 20, 0) 40%, rgba(20, 20, 20, 0.4) 100%);
+    }
+    .lazy-load {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .lazy-loaded {
+      opacity: 1;
+    }
+    .poster-zoom {
+      transition: all 0.4s ease-in-out;
+      overflow: hidden;
+    }
+    .poster-zoom:hover {
+      transform: scale(1.08);
+      z-index: 20;
+    }
+    .poster-container:hover .poster-info {
+      opacity: 1;
+    }
+    .poster-info {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%);
+    }
+    .swiper {
+      width: 100%;
+      padding-top: 20px;
+      padding-bottom: 30px;
+    }
+    .swiper-slide {
+      width: auto;
+      transition: transform 0.3s;
+    }
+    .swiper-button-next, .swiper-button-prev {
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+    }
+    .swiper-button-next:after, .swiper-button-prev:after {
+      font-size: 1.2rem;
+    }
+    .swiper-button-next {
+      right: 10px;
+    }
+    .swiper-button-prev {
+      left: 10px;
+    }
+    .search-dropdown {
+      backdrop-filter: blur(70px);
+      -webkit-backdrop-filter: blur(70px);
+      background-color: rgba(20, 20, 20, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+    .search-dropdown::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+    .netflix-blur {
+      backdrop-filter: blur(70px);
+      -webkit-backdrop-filter: blur(70px);
+    }
+    
+    /* Enhanced Card Effects */
+    .poster-container .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .poster-container:hover .overlay {
+      opacity: 1;
+    }
+    
+    .poster-container:hover .card-shadow {
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.7), 0 10px 10px rgba(0, 0, 0, 0.6);
+    }
+    
+    .card-shadow {
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Hero banner transition effect */
+    .hero-transition {
+      transition: background-image 1s ease-in-out;
+    }
+    
+    /* Responsive Optimizations */
+    @media (max-width: 640px) {
+      .hero-content {
+        width: 100% !important;
+        padding: 0 1rem !important;
+      }
+      .hero-title {
+        font-size: 2.5rem !important;
+      }
+      .hero-overview {
+        font-size: 1rem !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-netflix-dark text-netflix-light font-netflix">
+  <!-- Navigation Bar -->
+  <nav class="fixed w-full bg-gradient-to-b from-black to-transparent z-50 px-4 py-3">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-netflix-red font-bold text-4xl">StreamFlix</h1>
+      
+      <!-- Search Bar and Dropdown -->
+      <div class="relative md:w-1/3 w-1/2">
+        <div class="relative">
+          <input 
+            id="search-input" 
+            class="bg-black bg-opacity-70 text-white border border-gray-600 rounded-full py-2 px-4 w-full focus:outline-none focus:border-netflix-red" 
+            type="text" 
+            placeholder="Search for movies, TV shows..."
+          >
+          <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+        </div>
+        
+        <!-- Search Results Dropdown -->
+        <div id="search-dropdown" class="search-dropdown absolute mt-2 w-full rounded-lg z-50 overflow-hidden max-h-[70vh] overflow-y-auto hidden">
+          <div class="p-2">
+            <div id="search-status" class="text-center py-2 text-sm text-netflix-gray hidden">Searching...</div>
+            <div id="dropdown-results" class="space-y-2"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Settings Button -->
+      <button id="settings-toggle" class="bg-netflix-red text-white px-4 py-2 rounded hover:bg-red-700 transition font-medium hidden sm:flex items-center">
+        <i class="fas fa-cog mr-2"></i>Settings
+      </button>
+      <button id="settings-toggle-mobile" class="bg-netflix-red text-white p-2 rounded-full hover:bg-red-700 transition sm:hidden">
+        <i class="fas fa-cog"></i>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Settings Panel -->
+  <div id="settings" class="fixed right-0 top-0 h-full w-96 bg-black bg-opacity-90 netflix-blur p-6 transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h3 class="text-2xl font-bold">Player Settings</h3>
+      <button id="close-settings" class="text-xl hover:text-netflix-red transition-colors">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="space-y-6">
+      <div>
+        <label for="theme-select" class="block mb-3 text-netflix-light font-medium">Theme</label>
+        <select id="theme-select" class="w-full bg-zinc-800 border-0 border-b border-gray-700 rounded-sm p-3 focus:outline-none focus:border-netflix-red">
+          <option value="default">Default</option>
+          <option value="classic">Classic</option>
+          <option value="blue">Blue</option>
+          <option value="teal">Teal</option>
+          <option value="red">Red</option>
+          <option value="gray">Gray</option>
+          <option value="green">Green</option>
+          <option value="mocha">Mocha</option>
+          <option value="pink">Pink</option>
+        </select>
+      </div>
+      
+      <div>
+        <label for="language-select" class="block mb-3 text-netflix-light font-medium">Language</label>
+        <select id="language-select" class="w-full bg-zinc-800 border-0 border-b border-gray-700 rounded-sm p-3 focus:outline-none focus:border-netflix-red">
+          <option value="en">English</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="es">Spanish</option>
+          <option value="it">Italian</option>
+          <option value="pt">Portuguese</option>
+          <option value="ru">Russian</option>
+        </select>
+      </div>
+      
+      <div class="space-y-4">
+        <h4 class="text-lg font-medium">Player Options</h4>
+        <div class="space-y-3">
+          <div class="flex items-center">
+            <input type="checkbox" id="logo-toggle" class="mr-3 h-4 w-4 accent-netflix-red">
+            <label for="logo-toggle" class="text-netflix-light">Show Logo</label>
+          </div>
+          
+          <div class="flex items-center">
+            <input type="checkbox" id="downloads-toggle" checked class="mr-3 h-4 w-4 accent-netflix-red">
+            <label for="downloads-toggle" class="text-netflix-light">Enable Downloads</label>
+          </div>
+          
+          <div class="flex items-center">
+            <input type="checkbox" id="watchparty-toggle" checked class="mr-3 h-4 w-4 accent-netflix-red">
+            <label for="watchparty-toggle" class="text-netflix-light">Enable Watch Party</label>
+          </div>
+          
+          <div class="flex items-center">
+            <input type="checkbox" id="allinone-toggle" checked class="mr-3 h-4 w-4 accent-netflix-red">
+            <label for="allinone-toggle" class="text-netflix-light">All In One Mode</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <main class="pt-20 pb-10">
+    <!-- Hero Banner (Auto-sliding) -->
+    <section id="hero-banner" class="relative w-full h-[80vh] md:h-[80vh] sm:h-[50vh] mb-12 hero-transition">
+      <div class="absolute inset-0 banner-gradient"></div>
+      <div class="container mx-auto h-full flex items-end pb-16">
+        <div class="relative z-10 px-8 w-1/2 hero-content">
+          <div class="mb-4">
+            <span class="text-netflix-red font-bold mr-2">#1 in Trending</span>
+          </div>
+          <h2 id="hero-title" class="text-7xl font-bold mb-4 text-white hero-title"></h2>
+          <p id="hero-overview" class="text-lg text-gray-300 mb-8 line-clamp-3 font-light hero-overview"></p>
+          <div class="flex items-center">
+            <button id="hero-play" class="bg-netflix-red text-white px-8 py-3 rounded-md hover:bg-red-700 transition font-bold flex items-center">
+              <i class="fas fa-play mr-2"></i>Play
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Content Sections -->
+    <section class="container mx-auto px-4 space-y-16">
+      <!-- Trending Content -->
+      <div>
+        <h3 class="text-2xl font-bold mb-4 text-netflix-light">Trending Now</h3>
+        <div class="swiper trending-swiper">
+          <div id="trending-content" class="swiper-wrapper"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </div>
+      
+      <!-- Movies Section -->
+      <div>
+        <h3 class="text-2xl font-bold mb-4 text-netflix-light">Popular Movies</h3>
+        <div class="swiper movies-swiper">
+          <div id="movies-content" class="swiper-wrapper"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </div>
+      
+      <!-- TV Shows Section -->
+      <div>
+        <h3 class="text-2xl font-bold mb-4 text-netflix-light">Popular TV Shows</h3>
+        <div class="swiper tvshows-swiper">
+          <div id="tvshows-content" class="swiper-wrapper"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </div>
+      
+      <!-- Search Results -->
+      <div id="search-results-container" class="hidden">
+        <h3 class="text-2xl font-bold mb-6 text-netflix-light">Search Results</h3>
+        <div id="search-results" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Modal for TV Shows -->
+  <div id="series-modal" class="fixed inset-0 bg-black bg-opacity-90 netflix-blur z-50 flex items-center justify-center hidden">
+    <div class="bg-zinc-900 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="relative">
+        <div id="modal-backdrop" class="h-[400px] bg-center bg-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent"></div>
+        </div>
+        <button id="close-modal" class="absolute top-6 right-6 text-white hover:text-netflix-red text-xl bg-black bg-opacity-50 p-2 rounded-full">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="p-8 -mt-40 relative">
+        <h2 id="series-title" class="text-4xl font-bold mb-4 text-white"></h2>
+        <div class="flex items-center gap-4 mb-6">
+          <span id="series-year" class="text-gray-400"></span>
+          <span id="series-rating" class="border border-gray-400 text-gray-400 px-1 text-sm"></span>
+          <span id="series-seasons" class="text-gray-400"></span>
+        </div>
+        
+        <p id="series-overview" class="text-gray-300 mb-8 text-lg"></p>
+        
+        <div id="season-selector" class="mb-8">
+          <div class="flex items-center justify-between mb-4">
+            <label class="text-xl font-bold text-white">Episodes</label>
+            <select id="season-select" class="bg-black bg-opacity-70 text-white border border-gray-600 rounded px-4 py-2 focus:outline-none focus:border-netflix-red">
+              <option value="">Loading seasons...</option>
+            </select>
+          </div>
+          
+          <div id="episode-list" class="space-y-4 divide-y divide-gray-800">
+            <!-- Episodes will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // API Configuration
+    const TMDB_API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2QyMWU2NDIxNDAwNTdjZDYzNjJiZjI5ZjlhMzNkMiIsIm5iZiI6MTY5MTkzOTQxNi45OTUwMDAxLCJzdWIiOiI2NGQ4ZjI1ODAwMWJiZDAwYzZjN2FmZjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.1iAwqbg9q-TXSi6Sb8DPXAAcw29zd02GJarwO7QodcU';
+    const TMDB_API_BASE = 'https://api.themoviedb.org/3';
+    const CONFIG_ENDPOINT = `${TMDB_API_BASE}/configuration`;
+    const TRENDING_ENDPOINT = `${TMDB_API_BASE}/trending/all/day`;
+    const POPULAR_MOVIES_ENDPOINT = `${TMDB_API_BASE}/movie/popular?language=en-US&page=1`;
+    const POPULAR_TV_ENDPOINT = `${TMDB_API_BASE}/tv/popular?language=en-US&page=1`;
+    const SEARCH_MULTI_ENDPOINT = `${TMDB_API_BASE}/search/multi?language=en-US&page=1&include_adult=false&query=`;
+    
+    let imageBase = '';
+    let backdropSize = '';
+    let posterSize = '';
+    let logoSize = '';
+    let currentTvId = null;
+    let currentSeasons = [];
+    let swipers = {};
+    
+    // DOM References
+    const searchInput = document.getElementById('search-input');
+    const searchDropdown = document.getElementById('search-dropdown');
+    const searchStatus = document.getElementById('search-status');
+    const dropdownResults = document.getElementById('dropdown-results');
+    const searchResultsContainer = document.getElementById('search-results-container');
+    const searchResults = document.getElementById('search-results');
+    const seriesModal = document.getElementById('series-modal');
+    const seasonSelect = document.getElementById('season-select');
+    const episodeList = document.getElementById('episode-list');
+    const settingsPanel = document.getElementById('settings');
+    const heroBanner = document.getElementById('hero-banner');
+    const heroTitle = document.getElementById('hero-title');
+    const heroOverview = document.getElementById('hero-overview');
+    const heroPlayBtn = document.getElementById('hero-play');
+    
+    // Settings Panel Toggle (Desktop)
+    document.getElementById('settings-toggle').addEventListener('click', () => {
+      settingsPanel.classList.toggle('translate-x-full');
+    });
+    
+    // Settings Panel Toggle (Mobile)
+    document.getElementById('settings-toggle-mobile').addEventListener('click', () => {
+      settingsPanel.classList.toggle('translate-x-full');
+    });
+    
+    document.getElementById('close-settings').addEventListener('click', () => {
+      settingsPanel.classList.add('translate-x-full');
+    });
+    
+    // Close Modal Events
+    document.getElementById('close-modal').addEventListener('click', () => {
+      seriesModal.classList.add('hidden');
+    });
+    
+    // Close search dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!searchInput.contains(event.target) && !searchDropdown.contains(event.target)) {
+        searchDropdown.classList.add('hidden');
+      }
+    });
+    
+    // API Fetch Functions
+    async function fetchWithToken(url) {
+      const res = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${TMDB_API_TOKEN}` }
+      });
+      return await res.json();
+    }
+    
+    async function fetchConfig() {
+      const data = await fetchWithToken(CONFIG_ENDPOINT);
+      imageBase = data.images.secure_base_url;
+      posterSize = data.images.poster_sizes.includes('w342') ? 'w342' : 'w500';
+      backdropSize = data.images.backdrop_sizes.includes('w1280') ? 'w1280' : 'original';
+      logoSize = data.images.logo_sizes.includes('w300') ? 'w300' : 'original';
+    }
+    
+    async function fetchTrending() {
+      const data = await fetchWithToken(TRENDING_ENDPOINT);
+      // Filter out items without poster_path and backdrop_path
+      return data.results.filter(item => item.poster_path && item.backdrop_path);
+    }
+    
+    async function fetchPopularMovies() {
+      const data = await fetchWithToken(POPULAR_MOVIES_ENDPOINT);
+      // Filter out movies without poster_path
+      return data.results.filter(movie => movie.poster_path);
+    }
+    
+    async function fetchPopularTVShows() {
+      const data = await fetchWithToken(POPULAR_TV_ENDPOINT);
+      // Filter out shows without poster_path
+      return data.results.filter(show => show.poster_path);
+    }
+    
+    async function searchContent(query) {
+      if (!query.trim()) return [];
+      const data = await fetchWithToken(`${SEARCH_MULTI_ENDPOINT}${encodeURIComponent(query)}`);
+      // Filter to only include movies and TV shows with poster images
+      return data.results.filter(item => 
+        (item.media_type === 'movie' || item.media_type === 'tv') && 
+        item.poster_path
+      );
+    }
+    
+    async function fetchTVShowDetails(tvId) {
+      return await fetchWithToken(`${TMDB_API_BASE}/tv/${tvId}?language=en-US&append_to_response=content_ratings`);
+    }
+    
+    async function fetchSeasonDetails(tvId, seasonNumber) {
+      return await fetchWithToken(`${TMDB_API_BASE}/tv/${tvId}/season/${seasonNumber}?language=en-US`);
+    }
+    
+    // Render Functions
+    function createContentCard(item, isDropdown = false) {
+      // Skip items without poster_path
+      if (!item.poster_path) return null;
+      
+      const isMovie = item.media_type === 'movie' || item.title;
+      const title = isMovie ? item.title : item.name;
+      const id = item.id;
+      const posterPath = item.poster_path;
+      const mediaType = isMovie ? 'movie' : 'tv';
+      const releaseDate = isMovie ? item.release_date : item.first_air_date;
+      const year = releaseDate ? new Date(releaseDate).getFullYear() : '';
+      const rating = item.vote_average ? Math.round(item.vote_average * 10) / 10 : '';
+      
+      if (isDropdown) {
+        // Search dropdown item
+        const dropdownItem = document.createElement('div');
+        dropdownItem.className = 'flex items-center p-2 hover:bg-zinc-800 rounded cursor-pointer transition-colors';
+        dropdownItem.innerHTML = `
+          <img src="${imageBase}${posterSize}${posterPath}" alt="${title}" class="w-14 h-20 object-cover rounded mr-3">
+          <div class="flex-1">
+            <h4 class="font-medium">${title}</h4>
+            <div class="flex items-center text-xs text-netflix-gray">
+              <span>${year}</span>
+              ${rating ? `<span class="mx-2">•</span><span>${rating}/10</span>` : ''}
+              <span class="ml-2 uppercase">${mediaType}</span>
+            </div>
+          </div>
+        `;
+        
+        dropdownItem.addEventListener('click', () => {
+          if (isMovie) {
+            openPlayerInNewTab(id, title, 'movie');
+          } else {
+            openTVShowModal(item);
+          }
+          searchDropdown.classList.add('hidden');
+        });
+        
+        return dropdownItem;
+      } else {
+        // Regular swiper card
+        const card = document.createElement('div');
+        card.className = 'swiper-slide poster-container w-[190px]';
+        
+        const poster = document.createElement('div');
+        poster.className = 'poster-zoom rounded-md overflow-hidden card-shadow relative';
+        poster.innerHTML = `
+          <img 
+            src="${imageBase}${posterSize}${posterPath}" 
+            alt="${title}" 
+            class="w-full h-[285px] object-cover lazy-load"
+            loading="lazy">
+          <div class="overlay"></div>
+          <div class="poster-info absolute bottom-0 left-0 w-full p-4">
+            <h4 class="font-semibold line-clamp-1">${title}</h4>
+            <div class="flex justify-between text-sm">
+              <span>${year}</span>
+              <span class="uppercase">${mediaType}</span>
+            </div>
+          </div>
+        `;
+        
+        card.appendChild(poster);
+        
+        // Add event listener based on media type
+        card.addEventListener('click', () => {
+          if (isMovie) {
+            openPlayerInNewTab(id, title, 'movie');
+          } else {
+            openTVShowModal(item);
+          }
+        });
+        
+        return card;
+      }
+    }
+    
+    function setupLazyLoading() {
+      const lazyImages = document.querySelectorAll('.lazy-load');
+      
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.classList.add('lazy-loaded');
+              imageObserver.unobserve(img);
+            }
+          });
+        });
+        
+        lazyImages.forEach(img => imageObserver.observe(img));
+      } else {
+        // Fallback for browsers without IntersectionObserver
+        lazyImages.forEach(img => img.classList.add('lazy-loaded'));
+      }
+    }
+    
+    function renderContentInSwiper(swiperElement, items) {
+      swiperElement.innerHTML = '';
+      
+      items.forEach(item => {
+        const card = createContentCard(item);
+        if (card) {
+          swiperElement.appendChild(card);
+        }
+      });
+      
+      setupLazyLoading();
+    }
+    
+    function initializeSwiper(swiperClass, slidesPerView) {
+      return new Swiper(`.${swiperClass}`, {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        slidesPerGroup: 3,
+        loop: false,
+        loopFillGroupWithBlank: false,
+        navigation: {
+          nextEl: `.${swiperClass} .swiper-button-next`,
+          prevEl: `.${swiperClass} .swiper-button-prev`,
+        },
+        breakpoints: {
+          640: { slidesPerView: Math.min(2, slidesPerView) },
+          768: { slidesPerView: Math.min(3, slidesPerView) },
+          1024: { slidesPerView: Math.min(4, slidesPerView) },
+          1280: { slidesPerView: Math.min(5, slidesPerView) },
+          1536: { slidesPerView: slidesPerView }
+        }
+      });
+    }
+    
+    function renderSearchDropdown(items) {
+      dropdownResults.innerHTML = '';
+      searchStatus.classList.add('hidden');
+      
+      if (!items || items.length === 0) {
+        dropdownResults.innerHTML = '<p class="text-center py-2 text-sm text-netflix-gray">No results found</p>';
+        searchDropdown.classList.remove('hidden');
+        return;
+      }
+      
+      // Limit to 6 items in dropdown
+      const limitedItems = items.slice(0, 6);
+      
+      limitedItems.forEach(item => {
+        const card = createContentCard(item, true);
+        if (card) {
+          dropdownResults.appendChild(card);
+        }
+      });
+      
+      // Add "See all results" option if more than 6 items
+      if (items.length > 6) {
+        const seeAllItem = document.createElement('div');
+        seeAllItem.className = 'text-center py-3 text-netflix-red font-medium hover:text-white cursor-pointer border-t border-gray-800 mt-2';
+        seeAllItem.textContent = `See all ${items.length} results`;
+        seeAllItem.addEventListener('click', () => {
+          searchDropdown.classList.add('hidden');
+          renderSearchResults(items);
+        });
+        dropdownResults.appendChild(seeAllItem);
+      }
+      
+      searchDropdown.classList.remove('hidden');
+    }
+    
+    function renderSearchResults(items) {
+      searchResults.innerHTML = '';
+      
+      if (!items || items.length === 0) {
+        searchResults.innerHTML = '<p class="col-span-full text-center py-8 text-netflix-gray">No results found. Try a different search term.</p>';
+        return;
+      }
+      
+      items.forEach(item => {
+        const card = createContentCard(item);
+        if (card) {
+          searchResults.appendChild(card);
+        }
+      });
+      
+      searchResultsContainer.classList.remove('hidden');
+      setupLazyLoading();
+    }
+    
+    async function openTVShowModal(show) {
+      if (!show || !show.id) return;
+      
+      currentTvId = show.id;
+      document.getElementById('series-title').textContent = show.name;
+      document.getElementById('series-overview').textContent = show.overview || '';
+      
+      // Set backdrop
+      if (show.backdrop_path) {
+        document.getElementById('modal-backdrop').style.backgroundImage = `url(${imageBase}${backdropSize}${show.backdrop_path})`;
+      } else {
+        document.getElementById('modal-backdrop').style.backgroundImage = '';
+        document.getElementById('modal-backdrop').style.backgroundColor = '#2d2d2d';
+      }
+      
+      // Reset metadata
+      document.getElementById('series-year').textContent = '';
+      document.getElementById('series-rating').textContent = '';
+      document.getElementById('series-seasons').textContent = '';
+      
+      // Reset season and episode sections
+      seasonSelect.innerHTML = '<option value="">Loading seasons...</option>';
+      episodeList.innerHTML = '<div class="flex justify-center items-center h-40"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-netflix-red"></div></div>';
+      
+      // Show the modal
+      seriesModal.classList.remove('hidden');
+      
+      try {
+        // Fetch full TV show details to get seasons
+        const tvDetails = await fetchTVShowDetails(show.id);
+        currentSeasons = tvDetails.seasons || [];
+        
+        // Set metadata
+        if (tvDetails.first_air_date) {
+          document.getElementById('series-year').textContent = new Date(tvDetails.first_air_date).getFullYear();
+        }
+        
+        const contentRating = tvDetails.content_ratings?.results?.find(r => r.iso_3166_1 === 'US')?.rating;
+        if (contentRating) {
+          document.getElementById('series-rating').textContent = contentRating;
+        }
+        
+        const seasonCount = currentSeasons.filter(s => s.season_number > 0).length;
+        document.getElementById('series-seasons').textContent = `${seasonCount} Season${seasonCount !== 1 ? 's' : ''}`;
+        
+        if (currentSeasons.length > 0) {
+          // Populate season dropdown
+          seasonSelect.innerHTML = '';
+          currentSeasons
+            .filter(season => season.season_number > 0) // Filter out specials (season 0)
+            .forEach(season => {
+              const option = document.createElement('option');
+              option.value = season.season_number;
+              option.textContent = `Season ${season.season_number}`;
+              seasonSelect.appendChild(option);
+            });
+          
+          // Load first season episodes
+          if (seasonSelect.options.length > 0) {
+            const firstSeasonNumber = seasonSelect.options[0].value;
+            await loadSeasonEpisodes(currentTvId, firstSeasonNumber);
+          } else {
+            episodeList.innerHTML = '<p class="text-center py-4 text-netflix-gray">No seasons available for this show</p>';
+          }
+        } else {
+          episodeList.innerHTML = '<p class="text-center py-4 text-netflix-gray">No seasons available for this show</p>';
+        }
+      } catch (error) {
+        console.error('Error loading TV show details:', error);
+        episodeList.innerHTML = '<p class="text-center py-4 text-red-500">Error loading details. Please try again.</p>';
+      }
+    }
+    
+    async function loadSeasonEpisodes(tvId, seasonNumber) {
+      episodeList.innerHTML = '<div class="flex justify-center items-center h-40"><div class="animate-spin rounded-full h-12 w-12 border-b-2 border-netflix-red"></div></div>';
+      
+      try {
+        const seasonDetails = await fetchSeasonDetails(tvId, seasonNumber);
+        const episodes = seasonDetails.episodes || [];
+        
+        if (episodes.length > 0) {
+          episodeList.innerHTML = '';
+          episodes.forEach(episode => {
+            const episodeItem = document.createElement('div');
+            episodeItem.className = 'py-4 hover:bg-zinc-800 rounded flex items-start cursor-pointer group';
+            
+            const episodeNumber = document.createElement('div');
+            episodeNumber.className = 'w-14 text-center text-gray-500 font-medium mr-3 pt-1';
+            episodeNumber.textContent = episode.episode_number;
+            
+            let thumbnailHTML = '';
+            if (episode.still_path) {
+              thumbnailHTML = `
+                <div class="w-32 h-20 rounded overflow-hidden mr-4 flex-shrink-0">
+                  <img src="${imageBase}w300${episode.still_path}" alt="${episode.name}" class="w-full h-full object-cover">
+                </div>
+              `;
+            }
+            
+            const episodeContent = document.createElement('div');
+            episodeContent.className = 'flex-1';
+            
+            const episodeTitle = document.createElement('h4');
+            episodeTitle.className = 'font-medium group-hover:text-netflix-red transition';
+            episodeTitle.textContent = episode.name;
+            
+            const episodeOverview = document.createElement('p');
+            episodeOverview.className = 'text-sm text-gray-400 line-clamp-2 mt-1';
+            episodeOverview.textContent = episode.overview || 'No overview available.';
+            
+            const episodeDetails = document.createElement('div');
+            episodeDetails.className = 'flex items-center text-xs text-netflix-gray mt-2';
+            
+            const runtime = episode.runtime ? `${episode.runtime}m` : '';
+            episodeDetails.textContent = runtime;
+            
+            episodeContent.appendChild(episodeTitle);
+            episodeContent.appendChild(episodeOverview);
+            if (runtime) episodeContent.appendChild(episodeDetails);
+            
+            episodeItem.innerHTML = thumbnailHTML;
+            episodeItem.appendChild(episodeNumber);
+            episodeItem.appendChild(episodeContent);
+            
+            episodeItem.addEventListener('click', () => {
+              openPlayerInNewTab(tvId, episode.name, 'tv', seasonNumber, episode.episode_number);
+              seriesModal.classList.add('hidden');
+            });
+            
+            episodeList.appendChild(episodeItem);
+          });
+        } else {
+          episodeList.innerHTML = '<p class="text-center py-4 text-netflix-gray">No episodes available for this season</p>';
+        }
+      } catch (error) {
+        console.error('Error loading season episodes:', error);
+        episodeList.innerHTML = '<p class="text-center py-4 text-red-500">Error loading episodes. Please try again.</p>';
+      }
+    }
+    
+    // Set up season selection change event
+    seasonSelect.addEventListener('change', function() {
+      const selectedSeason = this.value;
+      if (selectedSeason && currentTvId) {
+        loadSeasonEpisodes(currentTvId, selectedSeason);
+      }
+    });
+    
+    // Player Functions
+    function getPlayerSettings() {
+      return {
+        theme: document.getElementById('theme-select').value,
+        language: document.getElementById('language-select').value,
+        logo: document.getElementById('logo-toggle').checked,
+        downloads: document.getElementById('downloads-toggle').checked,
+        watchparty: document.getElementById('watchparty-toggle').checked,
+        allinone: document.getElementById('allinone-toggle').checked
+      };
+    }
+    
+    function openPlayerInNewTab(id, title, type = 'movie', season = null, episode = null) {
+      // Get current settings
+      const settings = getPlayerSettings();
+      
+      // Create the pstream URL with parameters from settings
+      let embedUrl;
+      
+      if (type === 'movie') {
+        embedUrl = `https://iframe.pstream.org/media/tmdb-movie-${id}?theme=${settings.theme}&language=${settings.language}&logo=${settings.logo}&downloads=${settings.downloads}&watchparty=${settings.watchparty}&lang-order=en,hi,fr,de,nl,pt&allinone=${settings.allinone}`;
+      } else if (type === 'tv' && season !== null && episode !== null) {
+        embedUrl = `https://iframe.pstream.org/embed/tmdb-tv-${id}/${season}/${episode}?theme=${settings.theme}&language=${settings.language}&logo=${settings.logo}&downloads=${settings.downloads}&watchparty=${settings.watchparty}&lang-order=en,hi,fr,de,nl,pt&allinone=${settings.allinone}`;
+      }
+      
+      // Open in a new tab
+      window.open(embedUrl, '_blank');
+    }
+    
+    // Auto-sliding hero banner functionality
+    let heroSlideIndex = 0;
+    let heroSlideItems = [];
+    let heroSlideInterval;
+    
+    function setupHeroSlider(items) {
+      if (!items || items.length < 3) return;
+      
+      // Filter items with backdrop_path for hero banner
+      heroSlideItems = items.filter(item => item.backdrop_path);
+      
+      if (heroSlideItems.length < 3) return;
+      
+      // Set initial hero banner
+      updateHeroBanner(heroSlideItems[0]);
+      
+      // Start auto-sliding
+      heroSlideInterval = setInterval(() => {
+        heroSlideIndex = (heroSlideIndex + 1) % heroSlideItems.length;
+        updateHeroBanner(heroSlideItems[heroSlideIndex]);
+      }, 8000); // Change slide every 8 seconds
+    }
+    
+    function updateHeroBanner(item) {
+      if (!item || !item.backdrop_path) return;
+      
+      const isMovie = item.media_type === 'movie' || item.title;
+      const title = isMovie ? item.title : item.name;
+      const overview = item.overview;
+      const backdropPath = item.backdrop_path;
+      const id = item.id;
+      
+      // Fade out effect before changing
+      heroBanner.style.opacity = '0.7';
+      
+      setTimeout(() => {
+        heroTitle.textContent = title;
+        heroOverview.textContent = overview;
+        heroBanner.style.backgroundImage = `url(${imageBase}${backdropSize}${backdropPath})`;
+        heroBanner.style.backgroundSize = 'cover';
+        heroBanner.style.backgroundPosition = 'center 20%';
+        heroBanner.style.opacity = '1';
+        
+        // Update play button functionality
+        heroPlayBtn.onclick = () => {
+          if (isMovie) {
+            openPlayerInNewTab(id, title, 'movie');
+          } else {
+            openTVShowModal(item);
+          }
+        };
+      }, 500);
+    }
+    
+    // Search functionality with debounce
+    let searchTimeout;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchStatus.classList.remove('hidden');
+      dropdownResults.innerHTML = '';
+      
+      const query = searchInput.value.trim();
+      
+      if (query.length < 2) {
+        searchDropdown.classList.add('hidden');
+        return;
+      }
+      
+      searchDropdown.classList.remove('hidden');
+      
+      searchTimeout = setTimeout(async () => {
+        const results = await searchContent(query);
+        renderSearchDropdown(results);
+      }, 300); // 300ms debounce
+    });
+    
+    // Show dropdown when focusing on search
+    searchInput.addEventListener('focus', () => {
+      const query = searchInput.value.trim();
+      if (query.length >= 2) {
+        searchDropdown.classList.remove('hidden');
+      }
+    });
+    
+    // Initialize the app
+    async function init() {
+      try {
+        await fetchConfig();
+        
+        // Fetch trending content for hero slider and content row
+        const trending = await fetchTrending();
+        renderContentInSwiper(document.getElementById('trending-content'), trending);
+        swipers.trending = initializeSwiper('trending-swiper', 6);
+        
+        // Set up auto-sliding hero banner with trending items
+        setupHeroSlider(trending);
+        
+        // Fetch and display popular movies
+        const movies = await fetchPopularMovies();
+        renderContentInSwiper(document.getElementById('movies-content'), movies);
+        swipers.movies = initializeSwiper('movies-swiper', 6);
+        
+        // Fetch and display popular TV shows
+        const tvShows = await fetchPopularTVShows();
+        renderContentInSwiper(document.getElementById('tvshows-content'), tvShows);
+        swipers.tvShows = initializeSwiper('tvshows-swiper', 6);
+        
+      } catch (error) {
+        console.error('Error initializing app:', error);
+      }
+    }
+    
+    init();
+  </script>
+</body>
+</html>
+
+
