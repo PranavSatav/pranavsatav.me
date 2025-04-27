@@ -8,6 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.1.0/tsparticles.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
   <script>
     tailwind.config = {
@@ -69,6 +70,58 @@
     .tab-content.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+    
+    /* Uptime period buttons */
+    .uptime-period-btn.active {
+      background-color: rgba(59, 130, 246, 0.3);
+      color: rgba(191, 219, 254, 1);
+    }
+    
+    /* Status card hover effects */
+    .glass:hover .aspect-video img {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+    
+    .aspect-video img {
+      transition: transform 0.3s ease;
+    }
+    
+    /* Blur effect enhancements */
+    .backdrop-blur-sm {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    
+    .backdrop-blur-lg {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    
+    .blur-3xl {
+      filter: blur(64px);
+    }
+    
+    /* Anime About tab styles */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .character-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .character-glow {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+      100% { opacity: 0.3; }
     }
     
     /* Swiper custom styles */
@@ -1011,6 +1064,89 @@
         <button id="tab-status" class="tab-btn">Status</button>
       </div>
     </nav>
+
+    /* Animation for skill bars and timeline */
+    .skill-bar {
+      transition: width 1.5s ease-in-out;
+    }
+    
+    .character-float {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    .animate-pulse-slow {
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.7s ease-out;
+    }
+    
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.7s ease-out;
+    }
+    
+    .fade-in-right.appear, .fade-in-left.appear {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid rgba(255, 105, 180, 0.7);
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+      animation-fill-mode: forwards;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+    
+    @keyframes pulse {
+      0% {
+        opacity: 0.4;
+      }
+      50% {
+        opacity: 0.7;
+      }
+      100% {
+        opacity: 0.4;
+      }
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: rgba(255, 105, 180, 0.7) }
+    }
+    
+    /* Glass effect */
+    .glass {
+      background: rgba(30, 30, 45, 0.3);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
   </style>
   
 </head>
@@ -1196,20 +1332,212 @@
 
       <!-- About Tab Content -->
       <section id="content-about" class="tab-content hidden">
-        <div class="glass border border-gray-700/50 rounded-xl p-6 mb-8">
-          <h2 class="text-accent font-space text-2xl mb-4">About Me</h2>
-          <p class="text-gray-300 leading-relaxed">
-            I'm a full-stack developer, cloud tinkerer, and digital craftsman who believes <strong>code should be functional *and* fun</strong>.
-            Whether it's wrangling APIs, optimizing infrastructure, or making buttons go brr—I'm your dev.
-          </p>
-          <p class="text-gray-300 leading-relaxed mt-4">
-            Currently building things that (hopefully) don't crash.
-          </p>
+        <!-- Main container with gradient background -->
+        <div class="relative overflow-hidden min-h-screen">
+          <!-- Background layers and effects -->
+          <!-- Removed the jail-like gradient background -->
+          <div class="absolute inset-0 bg-[url('https://i.pinimg.com/originals/a0/90/64/a0906475f9789b961430af7a57c83196.jpg')] bg-cover bg-center opacity-10 -z-10"></div>
           
-          <div class="mt-6 pt-6 border-t border-gray-700/50">
-            <a href="https://cloud.pranavsatav.me" target="_blank" class="inline-flex items-center text-primary hover:underline">
-              <span>Access NextCloud ↗</span>
-            </a>
+          <!-- Floating particles container -->
+          <div id="about-particles" class="absolute inset-0 -z-5"></div>
+          
+          <!-- Content -->
+          <div class="max-w-6xl mx-auto px-4 py-10 space-y-12">
+            <!-- Header section with anime character -->
+            <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
+              <div class="character-container relative w-64 h-64 shrink-0">
+                <!-- Glow effect behind character -->
+                
+                <!-- Character image -->
+                <div class="relative w-full h-full rounded-full overflow-hidden border-2 border-white/20 p-1">
+                  <img src="https://static.vecteezy.com/system/resources/thumbnails/024/212/249/small_2x/ai-generated-sticker-anime-girl-with-blue-hair-png.png" alt="Anime Character" class="w-full h-full object-cover rounded-full character-float">
+                </div>
+                
+                <!-- Decorative circles -->
+                <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-pink-500/80 animate-float" style="animation-delay: 0.5s;"></div>
+                <div class="absolute -bottom-2 -left-2 w-6 h-6 rounded-full bg-blue-500/80 animate-float" style="animation-delay: 1s;"></div>
+                <div class="absolute top-1/4 -right-4 w-4 h-4 rounded-full bg-purple-500/80 animate-float" style="animation-delay: 1.5s;"></div>
+              </div>
+              
+              <!-- Bio info with anime styling -->
+              <div class="text-center md:text-left py-4">
+                <h1 class="text-4xl md:text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 anime-title">Pranav Satav</h1>
+                
+                <div class="text-lg text-gray-300 mb-6 max-w-2xl leading-relaxed">
+                  <p class="text-blue-300">Whether it's wrangling APIs, optimizing infrastructure, or making buttons go brr—I'm your dev.</p>
+                </div>
+                
+                <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                  <span class="px-3 py-1 rounded-full bg-pink-500/20 text-pink-300 text-sm border border-pink-500/30 hover:bg-pink-500/30 transition-colors">JavaScript</span>
+                  <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-sm border border-purple-500/30 hover:bg-purple-500/30 transition-colors">React</span>
+                  <span class="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-sm border border-blue-500/30 hover:bg-blue-500/30 transition-colors">Node.js</span>
+                  <span class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-sm border border-indigo-500/30 hover:bg-indigo-500/30 transition-colors">Python</span>
+                  <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-sm border border-cyan-500/30 hover:bg-cyan-500/30 transition-colors">AWS</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Development Stats Section -->
+            <div class="glass border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md">
+              <h2 class="text-2xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Development Skills</h2>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left column skills -->
+                <div class="space-y-6">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-blue-300 font-medium">Frontend Development</span>
+                      <span class="text-blue-300 font-medium">95%</span>
+                    </div>
+                    <div class="h-3 bg-gray-800/60 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full skill-bar" style="width: 0%" data-width="95%"></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-purple-300 font-medium">Backend Development</span>
+                      <span class="text-purple-300 font-medium">92%</span>
+                    </div>
+                    <div class="h-3 bg-gray-800/60 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full skill-bar" style="width: 0%" data-width="92%"></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-pink-300 font-medium">UI/UX Design</span>
+                      <span class="text-pink-300 font-medium">88%</span>
+                    </div>
+                    <div class="h-3 bg-gray-800/60 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-pink-500 to-red-500 rounded-full skill-bar" style="width: 0%" data-width="88%"></div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Right column skills -->
+                <div class="space-y-6">
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-cyan-300 font-medium">Cloud Infrastructure</span>
+                      <span class="text-cyan-300 font-medium">90%</span>
+                    </div>
+                    <div class="h-3 bg-gray-800/60 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full skill-bar" style="width: 0%" data-width="90%"></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-green-300 font-medium">DevOps</span>
+                      <span class="text-green-300 font-medium">85%</span>
+                    </div>
+                    <div class="h-3 bg-gray-800/60 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-green-500 to-teal-500 rounded-full skill-bar" style="width: 0%" data-width="85%"></div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <span class="text-amber-300 font-medium">API Design</span>
+                      <span class="text-amber-300 font-medium">93%</span>
+                    </div>
+                    <div class="h-3 bg-gray-800/60 rounded-full overflow-hidden">
+                      <div class="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full skill-bar" style="width: 0%" data-width="93%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Timeline section -->
+            <div class="relative">
+              <h2 class="text-2xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Development Journey</h2>
+              
+              <!-- Vertical line through timeline - made it thicker and more visible -->
+              <div class="absolute left-1/2 top-12 bottom-0 w-2 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 transform -translate-x-1/2 rounded-full"></div>
+              
+              <!-- Timeline items - increased spacing and improved responsive layout -->
+              <div class="timeline-container space-y-28 relative">
+                <!-- 2023 -->
+                <div class="timeline-item" data-aos="fade-up">
+                  <div class="timeline-badge bg-blue-600 text-white text-lg font-bold h-14 w-14 rounded-full flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 z-10 border-4 border-gray-900">
+                    23
+                  </div>
+                  <div class="timeline-content glass border border-blue-500/30 rounded-xl p-6 max-w-md ml-auto mr-4 md:mr-0 md:ml-[calc(50%+2rem)] -mt-7 fade-in-right shadow-lg shadow-blue-500/20">
+                    <div class="mb-2">
+                      <span class="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-sm">2023</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-blue-300 mb-2">Cloud Infrastructure Expert</h3>
+                    <p class="text-gray-300">Mastered multi-cloud deployments with AWS, GCP, and Azure. Implemented advanced CI/CD pipelines and infrastructure as code solutions.</p>
+                    <div class="mt-3 flex gap-2 flex-wrap">
+                      <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">Kubernetes</span>
+                      <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">Terraform</span>
+                      <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">GitOps</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 2021 -->
+                <div class="timeline-item" data-aos="fade-up">
+                  <div class="timeline-badge bg-purple-600 text-white text-lg font-bold h-14 w-14 rounded-full flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 z-10 border-4 border-gray-900">
+                    21
+                  </div>
+                  <div class="timeline-content glass border border-purple-500/30 rounded-xl p-6 max-w-md mr-auto ml-4 md:ml-0 md:mr-[calc(50%+2rem)] -mt-7 fade-in-left shadow-lg shadow-purple-500/20">
+                    <div class="mb-2">
+                      <span class="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm">2021</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-purple-300 mb-2">Full-Stack Developer Lead</h3>
+                    <p class="text-gray-300">Led development team for consumer-facing applications. Architected scalable solutions and mentored junior developers.</p>
+                    <div class="mt-3 flex gap-2 flex-wrap">
+                      <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">React</span>
+                      <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">Node.js</span>
+                      <span class="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">PostgreSQL</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 2019 -->
+                <div class="timeline-item" data-aos="fade-up">
+                  <div class="timeline-badge bg-pink-600 text-white text-lg font-bold h-14 w-14 rounded-full flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 z-10 border-4 border-gray-900">
+                    19
+                  </div>
+                  <div class="timeline-content glass border border-pink-500/30 rounded-xl p-6 max-w-md ml-auto mr-4 md:mr-0 md:ml-[calc(50%+2rem)] -mt-7 fade-in-right shadow-lg shadow-pink-500/20">
+                    <div class="mb-2">
+                      <span class="bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full text-sm">2019</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-pink-300 mb-2">Backend Developer</h3>
+                    <p class="text-gray-300">Specialized in API development and database optimization. Implemented real-time data processing systems.</p>
+                    <div class="mt-3 flex gap-2 flex-wrap">
+                      <span class="text-xs bg-pink-500/20 text-pink-300 px-2 py-1 rounded">Express.js</span>
+                      <span class="text-xs bg-pink-500/20 text-pink-300 px-2 py-1 rounded">MongoDB</span>
+                      <span class="text-xs bg-pink-500/20 text-pink-300 px-2 py-1 rounded">Redis</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 2017 -->
+                <div class="timeline-item" data-aos="fade-up">
+                  <div class="timeline-badge bg-cyan-600 text-white text-lg font-bold h-14 w-14 rounded-full flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 z-10 border-4 border-gray-900">
+                    17
+                  </div>
+                  <div class="timeline-content glass border border-cyan-500/30 rounded-xl p-6 max-w-md mr-auto ml-4 md:ml-0 md:mr-[calc(50%+2rem)] -mt-7 fade-in-left shadow-lg shadow-cyan-500/20">
+                    <div class="mb-2">
+                      <span class="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-sm">2017</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-cyan-300 mb-2">Frontend Developer</h3>
+                    <p class="text-gray-300">Started professional journey with focus on responsive web design and interactive user interfaces.</p>
+                    <div class="mt-3 flex gap-2 flex-wrap">
+                      <span class="text-xs bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded">HTML/CSS</span>
+                      <span class="text-xs bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded">JavaScript</span>
+                      <span class="text-xs bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded">jQuery</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Timeline section ends -->
           </div>
         </div>
       </section>
@@ -1242,76 +1570,169 @@
       
       <!-- Status Tab Content -->
       <section id="content-status" class="tab-content hidden">
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-5xl mx-auto">
           <!-- Status Overview -->
-          <div class="glass border border-gray-700/50 rounded-xl p-6 mb-8">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="text-2xl font-bold">System Status</h2>
-              <div class="flex items-center gap-2">
-                <span class="text-sm text-gray-400">Last updated:</span>
-                <span id="last-updated" class="text-sm font-medium">Just now</span>
-              </div>
-            </div>
+          <div class="glass relative border border-gray-700/50 rounded-xl p-6 mb-8 overflow-hidden">
+            <!-- Background decorative elements -->
+            <div class="absolute -top-20 -right-20 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"></div>
             
-            <!-- Status Bar -->
-            <div class="relative h-4 bg-gray-800/50 rounded-full overflow-hidden mb-6">
-              <div id="status-bar" class="absolute inset-0 bg-gradient-to-r from-green-500 to-green-400 transition-all duration-1000"></div>
-              <div class="absolute inset-0 bg-gradient-to-r from-red-500 to-red-400 transition-all duration-1000 hidden"></div>
-              <div class="absolute inset-0 bg-gradient-to-r from-yellow-500 to-yellow-400 transition-all duration-1000 hidden"></div>
-            </div>
-            
-            <!-- Status Details -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="glass border border-gray-700/50 rounded-lg p-4">
-                <div class="flex items-center gap-2 mb-2">
-                  <div id="cloud-status-indicator" class="w-2 h-2 rounded-full bg-gray-500"></div>
-                  <h3 class="font-medium">Cloud Server</h3>
+            <div class="relative z-10">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 bg-gray-800/70 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="text-2xl font-bold">System Status</h2>
+                    <p class="text-sm text-gray-400">Real-time monitoring dashboard</p>
+                  </div>
                 </div>
-                <p class="text-sm text-gray-400">Main cloud infrastructure</p>
-                <div class="mt-2 text-sm">
-                  <div class="flex justify-between">
-                    <span class="text-gray-400">IP Address:</span>
-                    <span id="server-ip" class="font-medium">Checking...</span>
+                <div class="flex flex-col items-end gap-1">
+                  <div class="flex items-center gap-2 px-3 py-1 bg-gray-800/70 backdrop-blur-sm rounded-lg">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span class="text-sm text-gray-300">Last updated: <span id="last-updated" class="text-sm font-medium">Just now</span></span>
                   </div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-400">Response Time:</span>
-                    <span id="response-time" class="font-medium">Checking...</span>
-                  </div>
+                  <div class="text-xs text-gray-500">Updates every 5 seconds</div>
                 </div>
               </div>
               
-              <div class="glass border border-gray-700/50 rounded-lg p-4">
-                <div class="flex items-center gap-2 mb-2">
-                  <div id="api-status-indicator" class="w-2 h-2 rounded-full bg-gray-500"></div>
-                  <h3 class="font-medium">TMDB API</h3>
-                </div>
-                <p class="text-sm text-gray-400">Movie database API</p>
-                <div class="mt-2 text-sm">
-                  <div class="flex justify-between">
-                    <span class="text-gray-400">Status:</span>
-                    <span id="tmdb-status" class="font-medium">Checking...</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-400">Latency:</span>
-                    <span id="tmdb-latency" class="font-medium">Checking...</span>
-                  </div>
+              <!-- Status Bar -->
+              <div class="relative h-6 bg-gray-800/50 backdrop-blur-sm rounded-full overflow-hidden mb-6">
+                <div id="status-bar" class="absolute inset-0 bg-gradient-to-r from-green-500 to-green-400 transition-all duration-1000"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-red-500 to-red-400 transition-all duration-1000 hidden"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-yellow-500 to-yellow-400 transition-all duration-1000 hidden"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span id="overall-status-text" class="text-xs font-semibold text-white z-10 drop-shadow-md">All Systems Operational</span>
                 </div>
               </div>
               
-              <div class="glass border border-gray-700/50 rounded-lg p-4">
-                <div class="flex items-center gap-2 mb-2">
-                  <div id="cdn-status-indicator" class="w-2 h-2 rounded-full bg-gray-500"></div>
-                  <h3 class="font-medium">CDN Network</h3>
+              <!-- Uptime stats summary -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg">
+                  <div class="text-sm text-gray-400">Uptime (24h)</div>
+                  <div id="uptime-24h" class="text-xl font-semibold">99.8%</div>
                 </div>
-                <p class="text-sm text-gray-400">Content delivery network</p>
-                <div class="mt-2 text-sm">
-                  <div class="flex justify-between">
-                    <span class="text-gray-400">Traffic Today:</span>
-                    <span id="cdn-traffic" class="font-medium">Checking...</span>
+                <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg">
+                  <div class="text-sm text-gray-400">Uptime (7d)</div>
+                  <div id="uptime-7d" class="text-xl font-semibold">99.5%</div>
+                </div>
+                <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg">
+                  <div class="text-sm text-gray-400">Avg Response</div>
+                  <div id="avg-response-time" class="text-xl font-semibold">268ms</div>
+                </div>
+                <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg">
+                  <div class="text-sm text-gray-400">Last Maintenance</div>
+                  <div id="last-maintenance" class="text-xl font-semibold">Apr 27</div>
+                </div>
+              </div>
+              
+              <!-- Status Details -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass border border-gray-700/50 rounded-lg p-4 hover:border-blue-500/30 transition-colors duration-300">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div id="cloud-status-indicator" class="w-3 h-3 rounded-full bg-gray-500"></div>
+                    <h3 class="font-medium">NextCloud</h3>
                   </div>
-                  <div class="flex justify-between">
-                    <span class="text-gray-400">Active Users:</span>
-                    <span id="active-users" class="font-medium">Checking...</span>
+                  <div class="aspect-video bg-gray-800/50 backdrop-blur-sm mb-4 rounded-lg overflow-hidden flex items-center justify-center p-2">
+                    <img src="https://nextcloud.com/wp-content/uploads/2022/11/nextcloud-logo.svg" alt="NextCloud" class="h-16">
+                  </div>
+                  <p class="text-sm text-gray-400 mb-3">File storage and sync service</p>
+                  <div class="text-sm space-y-1">
+                    <div class="flex justify-between">
+                      <span class="text-gray-400">IP Address:</span>
+                      <span id="server-ip" class="font-medium">Checking...</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-400">Response Time:</span>
+                      <span id="response-time" class="font-medium">Checking...</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-400">Last Failure:</span>
+                      <span id="last-failure-cloud" class="font-medium">None</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="glass border border-gray-700/50 rounded-lg p-4 hover:border-blue-500/30 transition-colors duration-300">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div id="api-status-indicator" class="w-3 h-3 rounded-full bg-gray-500"></div>
+                    <h3 class="font-medium">TMDB API</h3>
+                  </div>
+                  <div class="aspect-video bg-gray-800/50 backdrop-blur-sm mb-4 rounded-lg overflow-hidden flex items-center justify-center p-2">
+                    <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="TMDB API" class="h-16">
+                  </div>
+                  <p class="text-sm text-gray-400 mb-3">Movie database API</p>
+                  <div class="text-sm space-y-1">
+                    <div class="flex justify-between">
+                      <span class="text-gray-400">Status:</span>
+                      <span id="tmdb-status" class="font-medium">Checking...</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-400">Latency:</span>
+                      <span id="tmdb-latency" class="font-medium">Checking...</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-gray-400">Requests/day:</span>
+                      <span id="tmdb-requests" class="font-medium">0</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Uptime Graph -->
+          <div class="glass border border-gray-700/50 rounded-xl p-6 mb-8 relative overflow-hidden">
+            <!-- Background decorative elements -->
+            <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-green-500/10 rounded-full blur-3xl"></div>
+            
+            <div class="relative z-10">
+              <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 bg-gray-800/70 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="text-xl font-semibold">Uptime History</h3>
+                    <p class="text-sm text-gray-400">Last 24 hours monitoring</p>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button class="text-xs bg-gray-800/70 backdrop-blur-sm px-3 py-1 rounded-lg text-gray-300 hover:bg-gray-700/70 transition-colors uptime-period-btn active" data-period="24h">24h</button>
+                  <button class="text-xs bg-gray-800/70 backdrop-blur-sm px-3 py-1 rounded-lg text-gray-300 hover:bg-gray-700/70 transition-colors uptime-period-btn" data-period="7d">7d</button>
+                  <button class="text-xs bg-gray-800/70 backdrop-blur-sm px-3 py-1 rounded-lg text-gray-300 hover:bg-gray-700/70 transition-colors uptime-period-btn" data-period="30d">30d</button>
+                </div>
+              </div>
+              
+              <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg">
+                <canvas id="uptimeChart" height="200"></canvas>
+              </div>
+              
+              <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-gray-800/30 backdrop-blur-sm p-3 rounded-lg flex items-center gap-3">
+                  <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  <div class="flex-1">
+                    <div class="text-xs text-gray-400">Operational Time</div>
+                    <div id="operational-time" class="text-sm font-medium">23h 52m</div>
+                  </div>
+                </div>
+                <div class="bg-gray-800/30 backdrop-blur-sm p-3 rounded-lg flex items-center gap-3">
+                  <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div class="flex-1">
+                    <div class="text-xs text-gray-400">Downtime</div>
+                    <div id="downtime" class="text-sm font-medium">8m</div>
+                  </div>
+                </div>
+                <div class="bg-gray-800/30 backdrop-blur-sm p-3 rounded-lg flex items-center gap-3">
+                  <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div class="flex-1">
+                    <div class="text-xs text-gray-400">Degraded Performance</div>
+                    <div id="degraded-time" class="text-sm font-medium">0m</div>
                   </div>
                 </div>
               </div>
@@ -1319,46 +1740,141 @@
           </div>
           
           <!-- Service Status -->
+          <div class="glass border border-gray-700/50 rounded-xl p-6 mb-8 relative overflow-hidden">
+            <!-- Background decorative elements -->
+            <div class="absolute -top-20 -left-20 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
+            
+            <div class="relative z-10">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 bg-gray-800/70 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold">Service Status</h3>
+                  <p class="text-sm text-gray-400">Individual component monitoring</p>
+                </div>
+              </div>
+              
+              <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm hover:bg-gray-800/50 transition-colors">
+                  <div class="flex items-center gap-3">
+                    <div id="nextcloud-status" class="w-3 h-3 rounded-full bg-gray-500"></div>
+                    <div>
+                      <h4 class="font-medium">NextCloud Core</h4>
+                      <p class="text-sm text-gray-400">Main NextCloud service</p>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-end gap-1">
+                    <span id="nextcloud-status-text" class="text-sm text-gray-400">Checking...</span>
+                    <span class="text-xs text-gray-500">Last checked: <span id="nextcloud-last-checked">--</span></span>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm hover:bg-gray-800/50 transition-colors">
+                  <div class="flex items-center gap-3">
+                    <div id="streaming-status" class="w-3 h-3 rounded-full bg-gray-500"></div>
+                    <div>
+                      <h4 class="font-medium">Media Streaming Service</h4>
+                      <p class="text-sm text-gray-400">Video content delivery</p>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-end gap-1">
+                    <span id="streaming-status-text" class="text-sm text-gray-400">Checking...</span>
+                    <span class="text-xs text-gray-500">Last checked: <span id="streaming-last-checked">--</span></span>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm hover:bg-gray-800/50 transition-colors">
+                  <div class="flex items-center gap-3">
+                    <div id="database-status" class="w-3 h-3 rounded-full bg-gray-500"></div>
+                    <div>
+                      <h4 class="font-medium">PostgreSQL Database</h4>
+                      <p class="text-sm text-gray-400">Data storage and retrieval</p>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-end gap-1">
+                    <span id="database-status-text" class="text-sm text-gray-400">Checking...</span>
+                    <span class="text-xs text-gray-500">Last checked: <span id="database-last-checked">--</span></span>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 rounded-lg bg-gray-800/30 backdrop-blur-sm hover:bg-gray-800/50 transition-colors">
+                  <div class="flex items-center gap-3">
+                    <div id="nginx-status" class="w-3 h-3 rounded-full bg-gray-500"></div>
+                    <div>
+                      <h4 class="font-medium">Nginx Web Server</h4>
+                      <p class="text-sm text-gray-400">Frontend web services</p>
+                    </div>
+                  </div>
+                  <div class="flex flex-col items-end gap-1">
+                    <span id="nginx-status-text" class="text-sm text-gray-400">Checking...</span>
+                    <span class="text-xs text-gray-500">Last checked: <span id="nginx-last-checked">--</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Incident History -->
           <div class="glass border border-gray-700/50 rounded-xl p-6 mb-8">
-            <h3 class="text-xl font-bold mb-4">Service Status</h3>
-            <div class="space-y-4">
-              <div class="flex items-center justify-between p-4 rounded-lg bg-gray-800/30">
-                <div class="flex items-center gap-3">
-                  <div id="nextcloud-status" class="w-2 h-2 rounded-full bg-gray-500"></div>
-                  <div>
-                    <h4 class="font-medium">NextCloud</h4>
-                    <p class="text-sm text-gray-400">File storage and sync service</p>
-                  </div>
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-10 h-10 bg-gray-800/70 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">System Activity Log</h3>
+                <p class="text-sm text-gray-400">Recent system events</p>
+              </div>
+            </div>
+            
+            <div id="incidents-container" class="space-y-4">
+              <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg border-l-4 border-green-500">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-medium">NextCloud Server Started</div>
+                  <div class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">Started</div>
                 </div>
-                <div class="text-sm">
-                  <span id="nextcloud-status-text" class="text-gray-400">Checking...</span>
-                </div>
+                <div class="text-sm text-gray-400 mb-3">April 27, 2023 - 10:15 AM</div>
+                <p class="text-sm text-gray-300">NextCloud server successfully started after scheduled maintenance. All services operational.</p>
               </div>
               
-              <div class="flex items-center justify-between p-4 rounded-lg bg-gray-800/30">
-                <div class="flex items-center gap-3">
-                  <div id="streaming-status" class="w-2 h-2 rounded-full bg-gray-500"></div>
-                  <div>
-                    <h4 class="font-medium">Streaming API</h4>
-                    <p class="text-sm text-gray-400">Content delivery network for media</p>
-                  </div>
+              <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg border-l-4 border-red-500">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-medium">NextCloud Server Shutdown</div>
+                  <div class="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded">Stopped</div>
                 </div>
-                <div class="text-sm">
-                  <span id="streaming-status-text" class="text-gray-400">Checking...</span>
-                </div>
+                <div class="text-sm text-gray-400 mb-3">April 27, 2023 - 10:00 AM</div>
+                <p class="text-sm text-gray-300">Scheduled maintenance: NextCloud server shutdown for system updates and security patches.</p>
               </div>
               
-              <div class="flex items-center justify-between p-4 rounded-lg bg-gray-800/30">
-                <div class="flex items-center gap-3">
-                  <div id="analytics-status" class="w-2 h-2 rounded-full bg-gray-500"></div>
-                  <div>
-                    <h4 class="font-medium">Analytics</h4>
-                    <p class="text-sm text-gray-400">Usage tracking and reporting</p>
-                  </div>
+              <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg border-l-4 border-yellow-500">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-medium">Database Performance Degradation</div>
+                  <div class="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">Resolved</div>
                 </div>
-                <div class="text-sm">
-                  <span id="analytics-status-text" class="text-gray-400">Checking...</span>
+                <div class="text-sm text-gray-400 mb-3">April 25, 2023 - 2:18 PM to 3:45 PM</div>
+                <p class="text-sm text-gray-300">The PostgreSQL database experienced higher than normal query times. Issue resolved after index optimization.</p>
+              </div>
+              
+              <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg border-l-4 border-green-500">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-medium">NextCloud Server Started</div>
+                  <div class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">Started</div>
                 </div>
+                <div class="text-sm text-gray-400 mb-3">April 20, 2023 - 9:32 AM</div>
+                <p class="text-sm text-gray-300">NextCloud server started after hardware upgrade. Storage capacity increased to 8TB.</p>
+              </div>
+              
+              <div class="bg-gray-800/30 backdrop-blur-sm p-4 rounded-lg border-l-4 border-red-500">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="font-medium">NextCloud Server Shutdown</div>
+                  <div class="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded">Stopped</div>
+                </div>
+                <div class="text-sm text-gray-400 mb-3">April 20, 2023 - 8:45 AM</div>
+                <p class="text-sm text-gray-300">Planned shutdown for hardware upgrade. Storage expansion in progress.</p>
               </div>
             </div>
           </div>
@@ -1474,12 +1990,18 @@
             if (tabId === 'stream') {
               initializeSwipers();
             }
+            
+            // Initialize special particles for About tab
+            if (tabId === 'about') {
+              initializeAboutParticles();
+            }
           }, 100);
         });
       });
       
       // Initialize swipers when DOM loaded
       initializeSwipers();
+      
       
       // Load random movie fact
       loadRandomMovieFact();
@@ -2853,6 +3375,524 @@
     // Initialize status page updates
     setInterval(updateStatusPage, 5000);
     updateStatusPage();
+    
+    // Initialize uptime chart and status page data
+    let uptimeChart;
+    let statusHistory = {
+      nextcloud: [],
+      tmdb: [],
+      postgres: [],
+      nginx: []
+    };
+    
+    // Create some sample uptime data (in a real app, this would come from server)
+    function generateSampleUptimeData(period = '24h') {
+      let dataPoints = period === '24h' ? 24 : period === '7d' ? 7 : 30;
+      let labels = [];
+      let uptimeData = [];
+      let responseTimeData = [];
+      
+      // Generate timestamps
+      const now = new Date();
+      for (let i = dataPoints - 1; i >= 0; i--) {
+        let date = new Date(now);
+        if (period === '24h') {
+          date.setHours(now.getHours() - i);
+          labels.push(date.getHours() + ':00');
+        } else {
+          date.setDate(now.getDate() - i);
+          labels.push(date.getDate() + '/' + (date.getMonth() + 1));
+        }
+        
+        // Generate uptime percentage (mostly 100% with occasional dips)
+        let uptime = 100;
+        if (Math.random() < 0.15) { // 15% chance of having some issue
+          uptime = 90 + Math.random() * 9.9; // Between 90% and 99.9%
+        }
+        uptimeData.push(uptime);
+        
+        // Generate response time data (normally between 100-400ms)
+        let responseTime = 100 + Math.random() * 300;
+        if (uptime < 99) {
+          responseTime += 200 + Math.random() * 300; // Higher response time during issues
+        }
+        responseTimeData.push(responseTime);
+      }
+      
+      return { labels, uptimeData, responseTimeData };
+    }
+    
+    function initializeUptimeChart() {
+      const ctx = document.getElementById('uptimeChart').getContext('2d');
+      const data = generateSampleUptimeData();
+      
+      uptimeChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.labels,
+          datasets: [
+            {
+              label: 'Uptime %',
+              data: data.uptimeData,
+              backgroundColor: 'rgba(34, 197, 94, 0.2)',
+              borderColor: 'rgba(34, 197, 94, 1)',
+              borderWidth: 2,
+              pointRadius: 0,
+              pointHoverRadius: 5,
+              pointHitRadius: 10,
+              tension: 0.3,
+              fill: true,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Response Time (ms)',
+              data: data.responseTimeData,
+              backgroundColor: 'rgba(59, 130, 246, 0.2)',
+              borderColor: 'rgba(59, 130, 246, 1)',
+              borderWidth: 2,
+              pointRadius: 0,
+              pointHoverRadius: 5,
+              pointHitRadius: 10,
+              tension: 0.3,
+              fill: false,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          scales: {
+            y: {
+              min: 90,
+              max: 100,
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Uptime %',
+                color: 'rgba(255, 255, 255, 0.7)'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.05)'
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.7)'
+              }
+            },
+            y1: {
+              min: 0,
+              position: 'right',
+              title: {
+                display: true,
+                text: 'Response Time (ms)',
+                color: 'rgba(255, 255, 255, 0.7)'
+              },
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.7)'
+              }
+            },
+            x: {
+              grid: {
+                color: 'rgba(255, 255, 255, 0.05)'
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.7)'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: 'rgba(255, 255, 255, 0.7)',
+                boxWidth: 12,
+                padding: 10
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.9)',
+              titleColor: 'rgba(255, 255, 255, 0.9)',
+              bodyColor: 'rgba(255, 255, 255, 0.9)',
+              borderColor: 'rgba(148, 163, 184, 0.2)',
+              borderWidth: 1,
+              padding: 10,
+              boxPadding: 4
+            }
+          }
+        }
+      });
+      
+      // Setup period buttons
+      const periodButtons = document.querySelectorAll('.uptime-period-btn');
+      periodButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const period = this.dataset.period;
+          
+          // Update active state
+          periodButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Update chart data
+          updateUptimeChart(period);
+        });
+      });
+    }
+    
+    function updateUptimeChart(period = '24h') {
+      const data = generateSampleUptimeData(period);
+      
+      uptimeChart.data.labels = data.labels;
+      uptimeChart.data.datasets[0].data = data.uptimeData;
+      uptimeChart.data.datasets[1].data = data.responseTimeData;
+      uptimeChart.update();
+      
+      // Update uptime stats
+      let avgUptime = data.uptimeData.reduce((a, b) => a + b, 0) / data.uptimeData.length;
+      if (period === '24h') {
+        document.getElementById('uptime-24h').textContent = avgUptime.toFixed(1) + '%';
+      } else if (period === '7d') {
+        document.getElementById('uptime-7d').textContent = avgUptime.toFixed(1) + '%';
+      }
+      
+      // Calculate operational time, downtime, and degraded performance
+      let totalMinutes = period === '24h' ? 24 * 60 : period === '7d' ? 7 * 24 * 60 : 30 * 24 * 60;
+      let downtimeMinutes = Math.round((100 - avgUptime) / 100 * totalMinutes * 0.7); // 70% of the non-uptime is downtime
+      let degradedMinutes = Math.round((100 - avgUptime) / 100 * totalMinutes * 0.3); // 30% of the non-uptime is degraded
+      let operationalMinutes = totalMinutes - downtimeMinutes - degradedMinutes;
+      
+      // Format times
+      function formatTime(minutes) {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        if (hours > 0) {
+          return `${hours}h ${mins}m`;
+        }
+        return `${mins}m`;
+      }
+      
+      document.getElementById('operational-time').textContent = formatTime(operationalMinutes);
+      document.getElementById('downtime').textContent = formatTime(downtimeMinutes);
+      document.getElementById('degraded-time').textContent = formatTime(degradedMinutes);
+    }
+    
+    async function checkDatabaseStatus() {
+      try {
+        // Simulated database check (in real app, you'd check a real database endpoint)
+        const statusIndicator = document.getElementById('database-status');
+        const statusText = document.getElementById('database-status-text');
+        const lastChecked = document.getElementById('database-last-checked');
+        
+        // Random simulation of status (normally operational)
+        const isOperational = Math.random() > 0.1; // 90% chance of being operational
+        
+        if (isOperational) {
+          statusIndicator.className = 'w-3 h-3 rounded-full bg-green-500';
+          statusText.className = 'text-sm text-green-400';
+          statusText.textContent = 'Operational';
+        } else {
+          statusIndicator.className = 'w-3 h-3 rounded-full bg-red-500';
+          statusText.className = 'text-sm text-red-400';
+          statusText.textContent = 'Not Operational';
+        }
+        
+        lastChecked.textContent = new Date().toLocaleTimeString();
+      } catch (error) {
+        const statusIndicator = document.getElementById('database-status');
+        const statusText = document.getElementById('database-status-text');
+        statusIndicator.className = 'w-3 h-3 rounded-full bg-red-500';
+        statusText.className = 'text-sm text-red-400';
+        statusText.textContent = 'Not Operational';
+      }
+    }
+    
+    async function checkNginxStatus() {
+      try {
+        // Simulated nginx check (in real app, you'd check a real nginx endpoint)
+        const statusIndicator = document.getElementById('nginx-status');
+        const statusText = document.getElementById('nginx-status-text');
+        const lastChecked = document.getElementById('nginx-last-checked');
+        
+        // Random simulation of status (normally operational)
+        const isOperational = Math.random() > 0.05; // 95% chance of being operational
+        
+        if (isOperational) {
+          statusIndicator.className = 'w-3 h-3 rounded-full bg-green-500';
+          statusText.className = 'text-sm text-green-400';
+          statusText.textContent = 'Operational';
+        } else {
+          statusIndicator.className = 'w-3 h-3 rounded-full bg-red-500';
+          statusText.className = 'text-sm text-red-400';
+          statusText.textContent = 'Not Operational';
+        }
+        
+        lastChecked.textContent = new Date().toLocaleTimeString();
+      } catch (error) {
+        const statusIndicator = document.getElementById('nginx-status');
+        const statusText = document.getElementById('nginx-status-text');
+        statusIndicator.className = 'w-3 h-3 rounded-full bg-red-500';
+        statusText.className = 'text-sm text-red-400';
+        statusText.textContent = 'Not Operational';
+      }
+    }
+    
+    async function updateStatusPage() {
+      // Update last updated timestamp
+      document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+      
+      // Check NextCloud status and get response time
+      const responseTime = await checkNextCloudStatus();
+      if (responseTime !== null) {
+        document.getElementById('response-time').textContent = `${responseTime}ms`;
+        
+        // Update average response time (with weighted average)
+        const avgResponseTime = document.getElementById('avg-response-time');
+        const currentAvg = parseInt(avgResponseTime.textContent) || 200;
+        const newAvg = Math.round(currentAvg * 0.8 + responseTime * 0.2); // 80% old, 20% new
+        avgResponseTime.textContent = `${newAvg}ms`;
+        
+        // Update last failure timestamp (simulated)
+        const lastFailure = Math.random() > 0.7 ? 'None' : 'Apr 25, 2023 3:45 PM';
+        document.getElementById('last-failure-cloud').textContent = lastFailure;
+      } else {
+        document.getElementById('response-time').textContent = 'Unknown';
+      }
+      
+      // Check NextCloud last checked time
+      document.getElementById('nextcloud-last-checked').textContent = new Date().toLocaleTimeString();
+      
+      // Check TMDB API status
+      await checkTMDBStatus();
+      document.getElementById('tmdb-requests').textContent = Math.floor(Math.random() * 5000); // Random sample data
+      
+      // Update streaming service status
+      const streamingStatusIndicator = document.getElementById('streaming-status');
+      const streamingStatusText = document.getElementById('streaming-status-text');
+      const streamingLastChecked = document.getElementById('streaming-last-checked');
+      
+      // Random simulation (95% operational)
+      if (Math.random() > 0.05) {
+        streamingStatusIndicator.className = 'w-3 h-3 rounded-full bg-green-500';
+        streamingStatusText.className = 'text-sm text-green-400';
+        streamingStatusText.textContent = 'Operational';
+      } else {
+        streamingStatusIndicator.className = 'w-3 h-3 rounded-full bg-red-500';
+        streamingStatusText.className = 'text-sm text-red-400';
+        streamingStatusText.textContent = 'Not Operational';
+      }
+      streamingLastChecked.textContent = new Date().toLocaleTimeString();
+      
+      // Get server IP
+      await getServerIP();
+      
+      // Check additional services
+      await checkDatabaseStatus();
+      await checkNginxStatus();
+      
+      // Update overall status bar
+      updateStatusBar();
+      
+      // Initialize uptime chart if not already initialized
+      if (!uptimeChart && document.getElementById('uptimeChart')) {
+        initializeUptimeChart();
+      }
+    }
+    
+    function updateStatusBar() {
+      const statusBar = document.getElementById('status-bar');
+      const redBar = statusBar.nextElementSibling;
+      const yellowBar = redBar.nextElementSibling;
+      const statusText = document.getElementById('overall-status-text');
+      
+      // Check if any service is down
+      const isNextCloudDown = document.getElementById('nextcloud-status').classList.contains('bg-red-500');
+      const isTMDBDown = document.getElementById('api-status-indicator').classList.contains('bg-red-500');
+      const isDatabaseDown = document.getElementById('database-status').classList.contains('bg-red-500');
+      const isNginxDown = document.getElementById('nginx-status').classList.contains('bg-red-500');
+      const isStreamingDown = document.getElementById('streaming-status').classList.contains('bg-red-500');
+      
+      // Count total down services
+      const downServices = [isNextCloudDown, isTMDBDown, isDatabaseDown, isNginxDown, isStreamingDown].filter(Boolean).length;
+      
+      if (downServices > 1) {
+        // Multiple services are down - major outage
+        statusBar.classList.add('hidden');
+        redBar.classList.remove('hidden');
+        yellowBar.classList.add('hidden');
+        statusText.textContent = 'Major System Outage';
+      } else if (downServices === 1) {
+        // One service is down - partial outage
+        statusBar.classList.add('hidden');
+        redBar.classList.add('hidden');
+        yellowBar.classList.remove('hidden');
+        statusText.textContent = 'Partial System Outage';
+      } else {
+        // All systems operational
+        statusBar.classList.remove('hidden');
+        redBar.classList.add('hidden');
+        yellowBar.classList.add('hidden');
+        statusText.textContent = 'All Systems Operational';
+      }
+    }
+    
+    // Load random movie fact
+    loadRandomMovieFact();
+    
+    // Create special anime-style particles for About tab
+    function initializeAboutParticles() {
+      const aboutContainer = document.querySelector('.anime-profile-container');
+      if (aboutContainer) {
+        // Create particles container if it doesn't exist
+        if (!document.getElementById('about-particles')) {
+          const particlesDiv = document.createElement('div');
+          particlesDiv.id = 'about-particles';
+          particlesDiv.className = 'absolute inset-0 -z-10';
+          aboutContainer.prepend(particlesDiv);
+          
+          // Load anime style particles
+          tsParticles.load("about-particles", {
+            fullScreen: false,
+            background: { 
+              color: { value: "transparent" } 
+            },
+            particles: {
+              number: { 
+                value: 50,
+                density: {
+                  enable: true,
+                  value_area: 800
+                }
+              },
+              color: { 
+                value: ["#ff77e1", "#78d0ff", "#a178ff"] 
+              },
+              shape: { 
+                type: ["circle", "star"],
+                stroke: {
+                  width: 0,
+                }
+              },
+              opacity: { 
+                value: 0.5,
+                random: true,
+                anim: {
+                  enable: true,
+                  speed: 0.5,
+                  opacity_min: 0.1,
+                  sync: false
+                }
+              },
+              size: { 
+                value: { min: 1, max: 5 },
+                random: true,
+                anim: {
+                  enable: true,
+                  speed: 1,
+                  size_min: 0.5,
+                  sync: false
+                }
+              },
+              move: { 
+                enable: true, 
+                speed: 1.5, 
+                direction: "none", 
+                random: true,
+                straight: false,
+                out_mode: "out",
+                bounce: false
+              }
+            },
+            interactivity: {
+              detect_on: "canvas",
+              events: {
+                onhover: {
+                  enable: true,
+                  mode: "bubble"
+                },
+                onclick: {
+                  enable: true,
+                  mode: "repulse"
+                },
+                resize: true
+              },
+              modes: {
+                bubble: {
+                  distance: 100,
+                  size: 7,
+                  duration: 2,
+                  opacity: 0.8,
+                  speed: 3
+                },
+                repulse: {
+                  distance: 200,
+                  duration: 0.4
+                }
+              }
+            }
+          });
+        }
+      }
+    }
+    
+    // Check if the About tab is initially active
+    const activeTab = document.querySelector('.tab-btn.bg-primary');
+    if (activeTab && activeTab.id === 'tab-about') {
+      initializeAboutParticles();
+    }
+
+    // Initialize animations for About tab
+    function initializeAboutAnimations() {
+      // Animate skill bars when they come into view
+      const skillBars = document.querySelectorAll('.skill-bar');
+      skillBars.forEach(bar => {
+        const width = bar.getAttribute('data-width');
+        setTimeout(() => {
+          bar.style.width = width;
+        }, 300);
+      });
+      
+      // Animate timeline items
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const content = entry.target.querySelector('.timeline-content');
+            content.classList.add('appear');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      
+      timelineItems.forEach(item => {
+        observer.observe(item);
+      });
+    }
+    
+    // Tab switching event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // ... existing code ...
+      
+      // Initialize About tab animations if it's active
+      const aboutTab = document.getElementById('tab-about');
+      const aboutContent = document.getElementById('content-about');
+      
+      if (aboutTab.classList.contains('bg-primary')) {
+        initializeAboutParticles();
+        initializeAboutAnimations();
+      }
+      
+      // Add click event listener for the About tab
+      aboutTab.addEventListener('click', function() {
+        initializeAboutParticles();
+        initializeAboutAnimations();
+      });
+    });
   </script>
 </body>
 </html>
