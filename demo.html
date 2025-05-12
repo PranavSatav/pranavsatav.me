@@ -2469,12 +2469,14 @@
       if (currentMediaType === 'movie') {
         embedSources = [
           { name: "Source 1", url: `https://111movies.com/movie/${currentMediaId}` },
-          { name: "Source 2", url: `https://player.videasy.net/movie/${currentMediaId}` }
+          { name: "Source 2", url: `https://player.videasy.net/movie/${currentMediaId}` },
+          { name: "StreamFlix", url: `https://iframe.pstream.org/media/tmdb-movie-${currentMediaId}?theme=default&language=en&logo=false&downloads=true&watchparty=true&lang-order=en,hi,fr,de,nl,pt&allinone=true` }
         ];
       } else if (currentMediaType === 'tv') {
         embedSources = [
           { name: "Source 1", url: `https://111movies.com/tv/${currentMediaId}/${season}/${episode}` },
-          { name: "Source 2", url: `https://player.videasy.net/tv/${currentMediaId}/${season}/${episode}` }
+          { name: "Source 2", url: `https://player.videasy.net/tv/${currentMediaId}/${season}/${episode}` },
+          { name: "StreamFlix", url: `https://iframe.pstream.org/embed/tmdb-tv-${currentMediaId}/${season}/${episode}?theme=default&language=en&logo=false&downloads=true&watchparty=true&lang-order=en,hi,fr,de,nl,pt&allinone=true` }
         ];
       }
     }
@@ -2491,11 +2493,20 @@
     }
 
     // Load a specific source
-    function loadSource(index) {
-      if (index >= 0 && index < embedSources.length) {
-        videoFrame.src = embedSources[index].url;
-      }
+   function loadSource(index) {
+  if (index >= 0 && index < embedSources.length) {
+    const selectedSource = embedSources[index];
+
+    // Open Source 3 (or third source) in a new tab
+    if (index === 2 || selectedSource.name === "StreamFlix") {
+      window.open(selectedSource.url, '_blank');
+      return;
     }
+
+    // Otherwise load inside the iframe
+    videoFrame.src = selectedSource.url;
+  }
+}
 
     // Fetch trending movies for section
     function fetchTrendingItems() {
