@@ -217,7 +217,7 @@ fileInput.onchange = () => {
   generatedCode.innerText = "Share this code: " + room;
   sendStatus.innerText = "Waiting for receiver to join...";
   // Show QR code for mobile join
-  const qrUrl = `${location.origin}?code=${room}`;
+  const qrUrl = `${location.origin}${location.pathname}?code=${room}`;
   document.getElementById('qrCode').innerHTML = '';
   new QRCode(document.getElementById('qrCode'), {
     text: qrUrl,
