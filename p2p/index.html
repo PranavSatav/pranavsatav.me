@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DropCode – P2P File Share</title>
+  <script defer src="script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center h-screen">
+  <div class="text-center space-y-4">
+    <h1 class="text-4xl font-bold">📁 DropCode</h1>
+    <div id="actionButtons">
+      <button id="sendBtn" class="bg-green-600 px-6 py-2 rounded hover:bg-green-700">Send File</button>
+      <button id="receiveBtn" class="bg-blue-600 px-6 py-2 rounded hover:bg-blue-700">Receive File</button>
+    </div>
+
+    <div id="sendSection" class="hidden space-y-4">
+      <input type="file" id="fileInput" class="block mx-auto text-black" multiple />
+      <div id="fileList" class="text-left text-sm text-gray-200"></div>
+      <div id="sendProgressList" class="space-y-2"></div>
+      <div id="qrSection" class="my-4">
+        <div id="qrCode"></div>
+        <p id="qrHint" class="text-xs text-gray-400"></p>
+      </div>
+      <p id="generatedCode" class="text-xl font-mono text-yellow-300"></p>
+      <p id="sendStatus" class="text-sm text-gray-300"></p>
+    </div>
+
+    <div id="receiveSection" class="hidden space-y-4">
+      <input type="text" id="codeInput" placeholder="Enter 6-digit code" class="text-black px-3 py-1" />
+      <button id="connectBtn" class="bg-purple-600 px-4 py-2 rounded hover:bg-purple-700">Connect</button>
+      <p id="receiveStatus" class="text-sm text-gray-300"></p>
+      <div id="downloadList" class="space-y-2"></div>
+      <div id="receiveProgressList" class="space-y-2"></div>
+      <a id="downloadLink" class="hidden text-blue-400 underline mt-2" download>Download File</a>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+</html>
