@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DropCode – P2P File Share</title>
+  <script defer src="script.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-xl mx-auto p-0 md:p-8 flex flex-col items-center justify-center min-h-screen">
+    <div class="w-full bg-white rounded-3xl shadow-2xl p-6 md:p-10 flex flex-col gap-8">
+      <!-- Logs at the top -->
+      <div id="logArea" class="mb-4 bg-white text-black text-sm p-4 rounded-xl h-28 overflow-y-auto border border-gray-300 font-mono tracking-tight"></div>
+      <h1 class="text-5xl font-extrabold text-center text-gray-900 tracking-tight mb-2">DropCode</h1>
+      <p class="text-center text-lg text-gray-500 mb-4">Effortless P2P File Sharing</p>
+      <!-- Segmented Control -->
+      <div class="flex justify-center mb-6">
+        <button id="sendBtn" class="flex-1 py-2 rounded-l-full border border-gray-200 bg-gray-100 text-gray-700 font-semibold text-lg focus:z-10 focus:ring-2 focus:ring-blue-400 transition">Send</button>
+        <button id="receiveBtn" class="flex-1 py-2 rounded-r-full border-t border-b border-r border-gray-200 bg-gray-100 text-gray-700 font-semibold text-lg focus:z-10 focus:ring-2 focus:ring-blue-400 transition">Receive</button>
+      </div>
+      <!-- Send Section -->
+      <div id="sendSection" class="hidden flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
+          <label class="text-base font-medium text-gray-700">Select files to send</label>
+          <input type="file" id="fileInput" class="block w-full text-gray-700 border border-gray-300 rounded-xl p-3 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400" multiple />
+        </div>
+        <div id="fileList" class="text-sm text-gray-700"></div>
+        <div id="sendProgressList" class="space-y-2"></div>
+        <div id="qrSection" class="flex flex-col items-center gap-2 mt-4">
+          <div id="qrCode" class="rounded-xl border border-gray-200 p-2 bg-gray-50"></div>
+          <p id="qrHint" class="text-xs text-gray-500"></p>
+        </div>
+        <p id="generatedCode" class="text-lg font-mono text-blue-600 text-center"></p>
+        <p id="sendStatus" class="text-sm text-gray-500 text-center"></p>
+      </div>
+      <!-- Receive Section -->
+      <div id="receiveSection" class="hidden flex flex-col gap-4">
+        <div class="flex flex-col gap-2 items-center">
+          <label class="text-base font-medium text-gray-700">Enter code to receive</label>
+          <div class="flex w-full gap-2">
+            <input type="text" id="codeInput" placeholder="6-digit code" maxlength="6" class="flex-1 border border-gray-300 rounded-xl px-4 py-3 text-lg text-gray-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 tracking-widest text-center" />
+            <button id="connectBtn" class="bg-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-blue-600 transition">Connect</button>
+          </div>
+        </div>
+        <p id="receiveStatus" class="text-sm text-gray-500 text-center"></p>
+        <div id="downloadList" class="space-y-2"></div>
+        <div id="receiveProgressList" class="space-y-2"></div>
+        <a id="downloadLink" class="hidden text-blue-500 underline mt-2 text-center" download>Download File</a>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+</html>
