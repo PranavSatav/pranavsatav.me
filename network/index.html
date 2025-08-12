@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network+ Interactive Study Toolkit</title>
+    <title>DamnBoi</title>
     <style>
         * {
             margin: 0;
@@ -189,32 +189,65 @@
 
         .tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+            position: relative;
+            padding: 0;
+            border-radius: 0;
+            background: transparent;
+            border: none;
+            white-space: nowrap;
+            justify-content: center;
         }
 
         .tab {
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            background: transparent;
             border: none;
-            border-radius: 6px;
-            color: white;
+            border-radius: 0;
+            color: rgba(255,255,255,0.85);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        .tab.active {
-            background: rgba(255,255,255,0.3);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .tab:hover { color: #ffffff; }
+
+        .tab:focus-visible {
+            outline: none;
+            text-decoration: underline;
+            text-underline-offset: 6px;
         }
 
-        .tab-content {
-            display: none;
+        .tab.active { color: #ffffff; }
+
+        .tab-indicator {
+            position: absolute;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            border-radius: 2px;
+            background: #ffffff;
+            transition: left 0.2s ease, width 0.2s ease;
+            pointer-events: none;
         }
 
-        .tab-content.active {
-            display: block;
+        @media (prefers-reduced-motion: reduce) {
+            .tab,
+            .tab-indicator {
+                transition: none;
+            }
         }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
         .progress-bar {
             width: 100%;
@@ -240,14 +273,15 @@
             <p>Some of the things which im learning.. :)</p>
         </div>
 
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('basic')">Basic Tools</button>
-            <button class="tab" onclick="showTab('analysis')">Analysis</button>
-            <button class="tab" onclick="showTab('security')">Security</button>
-            <button class="tab" onclick="showTab('advanced')">Advanced</button>
+        <div class="tabs" role="tablist" aria-label="Sections">
+            <button class="tab active" role="tab" aria-selected="true" aria-controls="basic" id="tab-basic" onclick="showTab('basic')">Basic Tools</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="analysis" id="tab-analysis" onclick="showTab('analysis')">Analysis</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="security" id="tab-security" onclick="showTab('security')">Security</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="advanced" id="tab-advanced" onclick="showTab('advanced')">Advanced</button>
+            <div class="tab-indicator" aria-hidden="true"></div>
         </div>
 
-        <div id="basic" class="tab-content active">
+        <div id="basic" class="tab-content active" role="tabpanel" aria-labelledby="tab-basic">
             <div class="grid">
                 <!-- DNS Lookup -->
                 <div class="module">
@@ -319,7 +353,7 @@
             </div>
         </div>
 
-        <div id="analysis" class="tab-content">
+        <div id="analysis" class="tab-content" role="tabpanel" aria-labelledby="tab-analysis" hidden>
             <div class="grid">
                 <!-- HTTP Headers -->
                 <div class="module">
@@ -389,7 +423,7 @@
             </div>
         </div>
 
-        <div id="security" class="tab-content">
+        <div id="security" class="tab-content" role="tabpanel" aria-labelledby="tab-security" hidden>
             <div class="grid">
                 <!-- Password Strength -->
                 <div class="module">
@@ -452,7 +486,7 @@
             </div>
         </div>
 
-        <div id="advanced" class="tab-content">
+        <div id="advanced" class="tab-content" role="tabpanel" aria-labelledby="tab-advanced" hidden>
             <div class="grid">
                 <!-- CIDR Calculator -->
                 <div class="module">
@@ -536,14 +570,91 @@
     <script>
         // Tab functionality
         function showTab(tabName) {
-            const tabs = document.querySelectorAll('.tab');
-            const contents = document.querySelectorAll('.tab-content');
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-            
-            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
-            document.getElementById(tabName).classList.add('active');
+            const tabs = Array.from(document.querySelectorAll('.tabs .tab'));
+            const panels = Array.from(document.querySelectorAll('.tab-content'));
+            const indicator = document.querySelector('.tab-indicator');
+
+            // Toggle active tab
+            tabs.forEach(tab => {
+                const isActive = tab.getAttribute('aria-controls') === tabName;
+                tab.classList.toggle('active', isActive);
+                tab.setAttribute('aria-selected', String(isActive));
+                if (isActive) tab.setAttribute('tabindex', '0'); else tab.setAttribute('tabindex', '-1');
+            });
+
+            // Toggle panels
+            panels.forEach(panel => {
+                const isActive = panel.id === tabName;
+                panel.classList.toggle('active', isActive);
+                panel.toggleAttribute('hidden', !isActive);
+            });
+
+            // Move indicator
+            const activeTab = tabs.find(t => t.classList.contains('active'));
+            if (indicator && activeTab) {
+                const { offsetLeft, offsetWidth } = activeTab;
+                indicator.style.left = `${offsetLeft}px`;
+                indicator.style.width = `${offsetWidth}px`;
+            }
+        }
+
+        // Keyboard navigation for tabs
+        function initTabsA11y() {
+            const tabsContainer = document.querySelector('.tabs');
+            const tabs = Array.from(tabsContainer.querySelectorAll('.tab'));
+            const keys = { LEFT: 37, RIGHT: 39, HOME: 36, END: 35 };
+
+            tabsContainer.addEventListener('keydown', (e) => {
+                const currentIndex = tabs.findIndex(t => t.classList.contains('active'));
+                if ([keys.LEFT, keys.RIGHT, keys.HOME, keys.END].includes(e.keyCode)) {
+                    e.preventDefault();
+                }
+                let nextIndex = currentIndex;
+                if (e.keyCode === keys.LEFT) nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                if (e.keyCode === keys.RIGHT) nextIndex = (currentIndex + 1) % tabs.length;
+                if (e.keyCode === keys.HOME) nextIndex = 0;
+                if (e.keyCode === keys.END) nextIndex = tabs.length - 1;
+                const nextTab = tabs[nextIndex];
+                if (nextTab) {
+                    nextTab.focus();
+                    const target = nextTab.getAttribute('aria-controls');
+                    showTab(target);
+                }
+            });
+
+            // Set proper tabindex for roving focus
+            tabs.forEach((tab, idx) => tab.setAttribute('tabindex', idx === 0 ? '0' : '-1'));
+
+            // Initialize indicator position
+            requestAnimationFrame(() => {
+                const indicator = document.querySelector('.tab-indicator');
+                const activeTab = document.querySelector('.tabs .tab.active');
+                if (indicator && activeTab) {
+                    const { offsetLeft, offsetWidth } = activeTab;
+                    indicator.style.left = `${offsetLeft}px`;
+                    indicator.style.width = `${offsetWidth}px`;
+                }
+            });
+
+            // Reposition indicator on resize and scroll
+            window.addEventListener('resize', () => {
+                const activeTab = document.querySelector('.tabs .tab.active');
+                const indicator = document.querySelector('.tab-indicator');
+                if (indicator && activeTab) {
+                    const { offsetLeft, offsetWidth } = activeTab;
+                    indicator.style.left = `${offsetLeft}px`;
+                    indicator.style.width = `${offsetWidth}px`;
+                }
+            });
+            tabsContainer.addEventListener('scroll', () => {
+                const activeTab = document.querySelector('.tabs .tab.active');
+                const indicator = document.querySelector('.tab-indicator');
+                if (indicator && activeTab) {
+                    const { offsetLeft, offsetWidth } = activeTab;
+                    indicator.style.left = `${offsetLeft}px`;
+                    indicator.style.width = `${offsetWidth}px`;
+                }
+            });
         }
 
         // DNS Lookup
@@ -1202,11 +1313,7 @@
                 `Transport: ${info.transport}\n\n` +
                 `Description:\n${info.description}\n\n` +
                 `Security:\n${info.security}\n\n` +
-                `Common Uses:\n${info.uses}\n\n` +
-                `Network+ Exam Tips:\n` +
-                `- Remember port numbers for certification\n` +
-                `- Understand security implications\n` +
-                `- Know when to use vs alternatives`;
+                `Common Uses:\n${info.uses}`;
             
             showResult('protocolResult', output, 'info');
         }
@@ -1418,6 +1525,7 @@
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Network+ Toolkit loaded successfully!');
+            initTabsA11y();
         });
     </script>
 </body>
