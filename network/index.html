@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network+ Interactive Study Toolkit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .module h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .description {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #2d3748;
+            border-left: 4px solid #667eea;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .success {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            color: #22543d;
+        }
+
+        .error {
+            background: #fed7d7;
+            border: 1px solid #feb2b2;
+            color: #742a2a;
+        }
+
+        .info {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            color: #2a4365;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: rgba(255,255,255,0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>^_^ network thingggyy</h1>
+            <p>Some of the things which im learning.. :)</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('basic')">Basic Tools</button>
+            <button class="tab" onclick="showTab('analysis')">Analysis</button>
+            <button class="tab" onclick="showTab('security')">Security</button>
+            <button class="tab" onclick="showTab('advanced')">Advanced</button>
+        </div>
+
+        <div id="basic" class="tab-content active">
+            <div class="grid">
+                <!-- DNS Lookup -->
+                <div class="module">
+                    <h3><span class="icon">🔍</span>DNS Lookup</h3>
+                    <div class="description">
+                        Resolve domain names to IP addresses using DNS queries. Essential for understanding how domain name resolution works in networks.
+                    </div>
+                    <div class="input-group">
+                        <label>Domain Name:</label>
+                        <input type="text" id="dnsInput" placeholder="example.com" value="google.com">
+                    </div>
+                    <button class="btn" onclick="performDNSLookup()">Resolve DNS</button>
+                    <div id="dnsResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- IP Geolocation -->
+                <div class="module">
+                    <h3><span class="icon">📍</span>IP Geolocation</h3>
+                    <div class="description">
+                        Find the geographical location of an IP address. Useful for network troubleshooting and security analysis.
+                    </div>
+                    <div class="input-group">
+                        <label>IP Address:</label>
+                        <input type="text" id="geoInput" placeholder="8.8.8.8" value="8.8.8.8">
+                    </div>
+                    <button class="btn" onclick="getIPLocation()">Get Location</button>
+                    <div id="geoResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- URL Analysis -->
+                <div class="module">
+                    <h3><span class="icon">🔗</span>URL Analysis</h3>
+                    <div class="description">
+                        Analyze URLs to extract protocol, domain, port, and path information. Important for understanding web communication.
+                    </div>
+                    <div class="input-group">
+                        <label>URL:</label>
+                        <input type="text" id="urlInput" placeholder="https://example.com:8080/path" value="https://www.google.com:443/search?q=networking">
+                    </div>
+                    <button class="btn" onclick="analyzeURL()">Analyze URL</button>
+                    <div id="urlResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- Network Calculator -->
+                <div class="module">
+                    <h3><span class="icon">🧮</span>Network Calculator</h3>
+                    <div class="description">
+                        Calculate network information from IP and subnet mask. Essential for subnetting and network planning.
+                    </div>
+                    <div class="input-group">
+                        <label>IP Address:</label>
+                        <input type="text" id="netIP" placeholder="192.168.1.100" value="192.168.1.100">
+                    </div>
+                    <div class="input-group">
+                        <label>Subnet Mask:</label>
+                        <select id="netMask">
+                            <option value="24">255.255.255.0 (/24)</option>
+                            <option value="16">255.255.0.0 (/16)</option>
+                            <option value="8">255.0.0.0 (/8)</option>
+                            <option value="25">255.255.255.128 (/25)</option>
+                            <option value="26">255.255.255.192 (/26)</option>
+                            <option value="27">255.255.255.224 (/27)</option>
+                            <option value="28">255.255.255.240 (/28)</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="calculateNetwork()">Calculate Network</button>
+                    <div id="netResult" class="result" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analysis" class="tab-content">
+            <div class="grid">
+                <!-- HTTP Headers -->
+                <div class="module">
+                    <h3><span class="icon">📋</span>HTTP Headers Analysis</h3>
+                    <div class="description">
+                        Analyze HTTP headers to understand server configuration and security headers. Critical for web security assessment.
+                    </div>
+                    <div class="input-group">
+                        <label>Website URL:</label>
+                        <input type="text" id="headerInput" placeholder="https://example.com" value="https://httpbin.org/headers">
+                    </div>
+                    <button class="btn" onclick="analyzeHeaders()">Analyze Headers</button>
+                    <div id="headerResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- Port Scanner Simulator -->
+                <div class="module">
+                    <h3><span class="icon">🔌</span>Common Ports Reference</h3>
+                    <div class="description">
+                        Learn about common network ports and their services. Essential knowledge for network troubleshooting.
+                    </div>
+                    <div class="input-group">
+                        <label>Port Number:</label>
+                        <input type="number" id="portInput" placeholder="80" value="443">
+                    </div>
+                    <button class="btn" onclick="getPortInfo()">Get Port Info</button>
+                    <div id="portResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- MAC Address Info -->
+                <div class="module">
+                    <h3><span class="icon">🏷️</span>MAC Address Analyzer</h3>
+                    <div class="description">
+                        Analyze MAC addresses to identify vendor and address type. Important for network device identification.
+                    </div>
+                    <div class="input-group">
+                        <label>MAC Address:</label>
+                        <input type="text" id="macInput" placeholder="00:1A:2B:3C:4D:5E" value="00:50:56:C0:00:01">
+                    </div>
+                    <button class="btn" onclick="analyzeMACAddress()">Analyze MAC</button>
+                    <div id="macResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- Bandwidth Calculator -->
+                <div class="module">
+                    <h3><span class="icon">📊</span>Bandwidth Calculator</h3>
+                    <div class="description">
+                        Calculate data transfer times and bandwidth requirements. Essential for network capacity planning.
+                    </div>
+                    <div class="input-group">
+                        <label>File Size (MB):</label>
+                        <input type="number" id="fileSizeInput" placeholder="100" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label>Connection Speed:</label>
+                        <select id="speedSelect">
+                            <option value="1">1 Mbps</option>
+                            <option value="10">10 Mbps</option>
+                            <option value="100">100 Mbps</option>
+                            <option value="1000">1 Gbps</option>
+                            <option value="10000">10 Gbps</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="calculateBandwidth()">Calculate Transfer Time</button>
+                    <div id="bandwidthResult" class="result" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="security" class="tab-content">
+            <div class="grid">
+                <!-- Password Strength -->
+                <div class="module">
+                    <h3><span class="icon">🔒</span>Password Strength Analyzer</h3>
+                    <div class="description">
+                        Evaluate password strength based on length, complexity, and common patterns. Critical for network security.
+                    </div>
+                    <div class="input-group">
+                        <label>Password:</label>
+                        <input type="password" id="passwordInput" placeholder="Enter password to test">
+                    </div>
+                    <button class="btn" onclick="analyzePassword()">Check Strength</button>
+                    <div id="passwordResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- SSL Certificate Info -->
+                <div class="module">
+                    <h3><span class="icon">🛡️</span>SSL/TLS Checker</h3>
+                    <div class="description">
+                        Check SSL certificate status and security information for websites. Essential for secure communications.
+                    </div>
+                    <div class="input-group">
+                        <label>Website:</label>
+                        <input type="text" id="sslInput" placeholder="example.com" value="google.com">
+                    </div>
+                    <button class="btn" onclick="checkSSL()">Check SSL Status</button>
+                    <div id="sslResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- Hash Generator -->
+                <div class="module">
+                    <h3><span class="icon">🔐</span>Hash Generator</h3>
+                    <div class="description">
+                        Generate MD5, SHA-1, and SHA-256 hashes for text input. Important for data integrity verification.
+                    </div>
+                    <div class="input-group">
+                        <label>Text to Hash:</label>
+                        <input type="text" id="hashInput" placeholder="Enter text" value="Hello Network+">
+                    </div>
+                    <button class="btn" onclick="generateHashes()">Generate Hashes</button>
+                    <div id="hashResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- Base64 Encoder/Decoder -->
+                <div class="module">
+                    <h3><span class="icon">📝</span>Base64 Encoder/Decoder</h3>
+                    <div class="description">
+                        Encode and decode Base64 strings. Commonly used in network protocols and data transmission.
+                    </div>
+                    <div class="input-group">
+                        <label>Input Text:</label>
+                        <input type="text" id="base64Input" placeholder="Enter text" value="Network+ Certification">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn" onclick="encodeBase64()" style="width: 50%;">Encode</button>
+                        <button class="btn" onclick="decodeBase64()" style="width: 50%;">Decode</button>
+                    </div>
+                    <div id="base64Result" class="result" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="advanced" class="tab-content">
+            <div class="grid">
+                <!-- CIDR Calculator -->
+                <div class="module">
+                    <h3><span class="icon">🔢</span>CIDR Calculator</h3>
+                    <div class="description">
+                        Convert between CIDR notation and subnet masks. Essential for advanced network configuration.
+                    </div>
+                    <div class="input-group">
+                        <label>CIDR Notation:</label>
+                        <input type="text" id="cidrInput" placeholder="192.168.1.0/24" value="10.0.0.0/16">
+                    </div>
+                    <button class="btn" onclick="calculateCIDR()">Calculate CIDR</button>
+                    <div id="cidrResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- Binary/Decimal Converter -->
+                <div class="module">
+                    <h3><span class="icon">💾</span>Binary/Decimal Converter</h3>
+                    <div class="description">
+                        Convert between binary and decimal representations. Fundamental for understanding IP addresses.
+                    </div>
+                    <div class="input-group">
+                        <label>IP Address:</label>
+                        <input type="text" id="binaryInput" placeholder="192.168.1.1" value="192.168.1.1">
+                    </div>
+                    <button class="btn" onclick="convertToBinary()">Convert to Binary</button>
+                    <div id="binaryResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- Network Latency Simulator -->
+                <div class="module">
+                    <h3><span class="icon">⏱️</span>Latency Calculator</h3>
+                    <div class="description">
+                        Calculate theoretical network latency based on distance and medium. Helps understand network performance.
+                    </div>
+                    <div class="input-group">
+                        <label>Distance (km):</label>
+                        <input type="number" id="distanceInput" placeholder="1000" value="5000">
+                    </div>
+                    <div class="input-group">
+                        <label>Medium:</label>
+                        <select id="mediumSelect">
+                            <option value="fiber">Fiber Optic</option>
+                            <option value="copper">Copper Cable</option>
+                            <option value="satellite">Satellite</option>
+                            <option value="wireless">Wireless</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="calculateLatency()">Calculate Latency</button>
+                    <div id="latencyResult" class="result" style="display:none;"></div>
+                </div>
+
+                <!-- Protocol Analyzer -->
+                <div class="module">
+                    <h3><span class="icon">📡</span>Protocol Reference</h3>
+                    <div class="description">
+                        Get detailed information about network protocols and their characteristics.
+                    </div>
+                    <div class="input-group">
+                        <label>Protocol:</label>
+                        <select id="protocolSelect">
+                            <option value="HTTP">HTTP</option>
+                            <option value="HTTPS">HTTPS</option>
+                            <option value="FTP">FTP</option>
+                            <option value="SSH">SSH</option>
+                            <option value="SMTP">SMTP</option>
+                            <option value="DNS">DNS</option>
+                            <option value="DHCP">DHCP</option>
+                            <option value="SNMP">SNMP</option>
+                            <option value="TCP">TCP</option>
+                            <option value="UDP">UDP</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="getProtocolInfo()">Get Protocol Info</button>
+                    <div id="protocolResult" class="result" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // DNS Lookup
+        async function performDNSLookup() {
+            const domain = document.getElementById('dnsInput').value;
+            const result = document.getElementById('dnsResult');
+            
+            if (!domain) {
+                showResult('dnsResult', 'Please enter a domain name', 'error');
+                return;
+            }
+
+            try {
+                showLoading('dnsResult');
+                const response = await fetch(`https://dns.google/resolve?name=${domain}&type=A`);
+                const data = await response.json();
+                
+                let output = `DNS Resolution for ${domain}:\n\n`;
+                
+                if (data.Answer) {
+                    data.Answer.forEach(record => {
+                        output += `Type: ${record.type === 1 ? 'A (IPv4)' : record.type === 28 ? 'AAAA (IPv6)' : 'Other'}\n`;
+                        output += `IP Address: ${record.data}\n`;
+                        output += `TTL: ${record.TTL} seconds\n\n`;
+                    });
+                } else {
+                    output += 'No A records found for this domain.';
+                }
+                
+                showResult('dnsResult', output, 'success');
+            } catch (error) {
+                showResult('dnsResult', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        // IP Geolocation
+        async function getIPLocation() {
+            const ip = document.getElementById('geoInput').value;
+            const result = document.getElementById('geoResult');
+            
+            if (!ip) {
+                showResult('geoResult', 'Please enter an IP address', 'error');
+                return;
+            }
+
+            try {
+                showLoading('geoResult');
+                const response = await fetch(`http://ip-api.com/json/${ip}`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const output = `IP Geolocation for ${ip}:\n\n` +
+                        `Country: ${data.country}\n` +
+                        `Region: ${data.regionName}\n` +
+                        `City: ${data.city}\n` +
+                        `ISP: ${data.isp}\n` +
+                        `Organization: ${data.org}\n` +
+                        `Timezone: ${data.timezone}\n` +
+                        `Latitude: ${data.lat}\n` +
+                        `Longitude: ${data.lon}`;
+                    
+                    showResult('geoResult', output, 'success');
+                } else {
+                    showResult('geoResult', `Error: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                showResult('geoResult', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        // URL Analysis
+        function analyzeURL() {
+            const url = document.getElementById('urlInput').value;
+            
+            if (!url) {
+                showResult('urlResult', 'Please enter a URL', 'error');
+                return;
+            }
+
+            try {
+                const urlObj = new URL(url);
+                
+                const output = `URL Analysis:\n\n` +
+                    `Full URL: ${urlObj.href}\n` +
+                    `Protocol: ${urlObj.protocol}\n` +
+                    `Host: ${urlObj.hostname}\n` +
+                    `Port: ${urlObj.port || (urlObj.protocol === 'https:' ? '443' : '80')}\n` +
+                    `Path: ${urlObj.pathname}\n` +
+                    `Query String: ${urlObj.search}\n` +
+                    `Fragment: ${urlObj.hash}\n` +
+                    `Origin: ${urlObj.origin}`;
+                
+                showResult('urlResult', output, 'success');
+            } catch (error) {
+                showResult('urlResult', `Invalid URL: ${error.message}`, 'error');
+            }
+        }
+
+        // Network Calculator
+        function calculateNetwork() {
+            const ip = document.getElementById('netIP').value;
+            const cidr = parseInt(document.getElementById('netMask').value);
+            
+            if (!ip) {
+                showResult('netResult', 'Please enter an IP address', 'error');
+                return;
+            }
+
+            try {
+                const ipParts = ip.split('.').map(Number);
+                if (ipParts.length !== 4 || ipParts.some(part => part < 0 || part > 255)) {
+                    throw new Error('Invalid IP address format');
+                }
+
+                const subnetMask = cidrToSubnetMask(cidr);
+                const networkAddress = calculateNetworkAddress(ip, subnetMask);
+                const broadcastAddress = calculateBroadcastAddress(networkAddress, cidr);
+                const hostCount = Math.pow(2, 32 - cidr) - 2;
+                
+                const output = `Network Calculation for ${ip}/${cidr}:\n\n` +
+                    `Network Address: ${networkAddress}\n` +
+                    `Subnet Mask: ${subnetMask}\n` +
+                    `Broadcast Address: ${broadcastAddress}\n` +
+                    `First Host: ${incrementIP(networkAddress)}\n` +
+                    `Last Host: ${decrementIP(broadcastAddress)}\n` +
+                    `Total Hosts: ${hostCount}\n` +
+                    `Network Class: ${getNetworkClass(ipParts[0])}`;
+                
+                showResult('netResult', output, 'success');
+            } catch (error) {
+                showResult('netResult', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        // HTTP Headers Analysis
+        async function analyzeHeaders() {
+            const url = document.getElementById('headerInput').value;
+            
+            if (!url) {
+                showResult('headerResult', 'Please enter a URL', 'error');
+                return;
+            }
+
+            try {
+                showLoading('headerResult');
+                const response = await fetch(url);
+                
+                let output = `HTTP Headers for ${url}:\n\n`;
+                output += `Status: ${response.status} ${response.statusText}\n\n`;
+                
+                response.headers.forEach((value, key) => {
+                    output += `${key}: ${value}\n`;
+                });
+                
+                showResult('headerResult', output, 'success');
+            } catch (error) {
+                showResult('headerResult', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Port Info
+        function getPortInfo() {
+            const port = parseInt(document.getElementById('portInput').value);
+            
+            const commonPorts = {
+                20: 'FTP Data Transfer',
+                21: 'FTP Control',
+                22: 'SSH (Secure Shell)',
+                23: 'Telnet',
+                25: 'SMTP (Simple Mail Transfer)',
+                53: 'DNS (Domain Name System)',
+                67: 'DHCP Server',
+                68: 'DHCP Client',
+                69: 'TFTP (Trivial File Transfer)',
+                80: 'HTTP (HyperText Transfer)',
+                110: 'POP3 (Post Office Protocol v3)',
+                123: 'NTP (Network Time Protocol)',
+                135: 'RPC (Remote Procedure Call)',
+                139: 'NetBIOS Session Service',
+                143: 'IMAP (Internet Message Access)',
+                161: 'SNMP (Simple Network Management)',
+                389: 'LDAP (Lightweight Directory Access)',
+                443: 'HTTPS (HTTP Secure)',
+                445: 'SMB (Server Message Block)',
+                993: 'IMAPS (IMAP over SSL)',
+                995: 'POP3S (POP3 over SSL)',
+                3389: 'RDP (Remote Desktop Protocol)'
+            };
+
+            const service = commonPorts[port] || 'Unknown/Custom Service';
+            const category = getPortCategory(port);
+            
+            const output = `Port ${port} Information:\n\n` +
+                `Service: ${service}\n` +
+                `Category: ${category}\n` +
+                `Range: ${getPortRange(port)}\n` +
+                `Transport: Both TCP and UDP (typically)\n` +
+                `Security Note: ${getPortSecurityNote(port)}`;
+            
+            showResult('portResult', output, 'info');
+        }
+
+        // MAC Address Analysis
+        function analyzeMACAddress() {
+            const mac = document.getElementById('macInput').value;
+            
+            if (!mac || !isValidMAC(mac)) {
+                showResult('macResult', 'Please enter a valid MAC address (XX:XX:XX:XX:XX:XX)', 'error');
+                return;
+            }
+
+            const oui = mac.substring(0, 8).replace(/[:-]/g, '').toUpperCase();
+            const vendor = getMACVendor(oui);
+            const type = getMACType(mac);
+            
+            const output = `MAC Address Analysis for ${mac}:\n\n` +
+                `OUI (First 3 bytes): ${oui.substring(0, 2)}:${oui.substring(2, 4)}:${oui.substring(4, 6)}\n` +
+                `Vendor: ${vendor}\n` +
+                `Address Type: ${type}\n` +
+                `Transmission Type: ${mac.charAt(1) % 2 === 0 ? 'Unicast' : 'Multicast'}\n` +
+                `Administration: ${parseInt(mac.charAt(1), 16) & 2 ? 'Locally Administered' : 'Globally Unique'}\n` +
+                `Binary OUI: ${parseInt(oui.substring(0, 6), 16).toString(2).padStart(24, '0')}`;
+            
+            showResult('macResult', output, 'success');
+        }
+
+        // Bandwidth Calculator
+        function calculateBandwidth() {
+            const fileSize = parseFloat(document.getElementById('fileSizeInput').value);
+            const speed = parseFloat(document.getElementById('speedSelect').value);
+            
+            if (!fileSize || fileSize <= 0) {
+                showResult('bandwidthResult', 'Please enter a valid file size', 'error');
+                return;
+            }
+
+            const fileSizeInBits = fileSize * 8 * 1024 * 1024; // Convert MB to bits
+            const speedInBps = speed * 1024 * 1024; // Convert Mbps to bps
+            const timeInSeconds = fileSizeInBits / speedInBps;
+            
+            const hours = Math.floor(timeInSeconds / 3600);
+            const minutes = Math.floor((timeInSeconds % 3600) / 60);
+            const seconds = Math.floor(timeInSeconds % 60);
+            
+            const output = `Bandwidth Calculation:\n\n` +
+                `File Size: ${fileSize} MB (${fileSizeInBits.toLocaleString()} bits)\n` +
+                `Connection Speed: ${speed} Mbps (${speedInBps.toLocaleString()} bps)\n` +
+                `Transfer Time: ${hours}h ${minutes}m ${seconds}s\n` +
+                `Total Seconds: ${timeInSeconds.toFixed(2)}\n\n` +
+                `Efficiency Notes:\n` +
+                `- Theoretical maximum (100% efficiency)\n` +
+                `- Real-world transfer ~70-85% of theoretical\n` +
+                `- Network overhead reduces actual throughput`;
+            
+            showResult('bandwidthResult', output, 'success');
+        }
+
+        // Password Strength Analyzer
+        function analyzePassword() {
+            const password = document.getElementById('passwordInput').value;
+            
+            if (!password) {
+                showResult('passwordResult', 'Please enter a password', 'error');
+                return;
+            }
+
+            const analysis = {
+                length: password.length,
+                hasLower: /[a-z]/.test(password),
+                hasUpper: /[A-Z]/.test(password),
+                hasNumbers: /\d/.test(password),
+                hasSpecial: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+                hasSpaces: /\s/.test(password),
+                entropy: calculatePasswordEntropy(password)
+            };
+
+            const score = calculatePasswordScore(analysis);
+            const strength = getPasswordStrength(score);
+            
+            const output = `Password Strength Analysis:\n\n` +
+                `Length: ${analysis.length} characters\n` +
+                `Lowercase letters: ${analysis.hasLower ? '✓' : '✗'}\n` +
+                `Uppercase letters: ${analysis.hasUpper ? '✓' : '✗'}\n` +
+                `Numbers: ${analysis.hasNumbers ? '✓' : '✗'}\n` +
+                `Special characters: ${analysis.hasSpecial ? '✓' : '✗'}\n` +
+                `Contains spaces: ${analysis.hasSpaces ? '✓' : '✗'}\n\n` +
+                `Entropy: ${analysis.entropy.toFixed(2)} bits\n` +
+                `Strength Score: ${score}/100\n` +
+                `Overall Strength: ${strength}\n\n` +
+                `Recommendations:\n${getPasswordRecommendations(analysis)}`;
+            
+            showResult('passwordResult', output, score >= 70 ? 'success' : score >= 40 ? 'info' : 'error');
+        }
+
+        // SSL Certificate Checker
+        async function checkSSL() {
+            const domain = document.getElementById('sslInput').value;
+            
+            if (!domain) {
+                showResult('sslResult', 'Please enter a domain name', 'error');
+                return;
+            }
+
+            try {
+                showLoading('sslResult');
+                // Simulate SSL check with basic HTTPS test
+                const testUrl = domain.startsWith('http') ? domain : `https://${domain}`;
+                const response = await fetch(testUrl, { method: 'HEAD' });
+                
+                const securityHeaders = {
+                    'strict-transport-security': 'HSTS',
+                    'content-security-policy': 'CSP',
+                    'x-frame-options': 'X-Frame-Options',
+                    'x-content-type-options': 'X-Content-Type-Options',
+                    'x-xss-protection': 'X-XSS-Protection'
+                };
+
+                let output = `SSL/TLS Security Check for ${domain}:\n\n`;
+                output += `HTTPS Status: ${response.ok ? '✓ Available' : '✗ Failed'}\n`;
+                output += `Response Code: ${response.status}\n\n`;
+                
+                output += 'Security Headers:\n';
+                Object.entries(securityHeaders).forEach(([header, name]) => {
+                    const hasHeader = response.headers.get(header);
+                    output += `${name}: ${hasHeader ? '✓ Present' : '✗ Missing'}\n`;
+                });
+
+                output += `\nTLS Version: Modern browsers enforce TLS 1.2+\n`;
+                output += `Certificate: Browser validates automatically\n`;
+                output += `Encryption: Strong encryption assumed for HTTPS`;
+                
+                showResult('sslResult', output, response.ok ? 'success' : 'error');
+            } catch (error) {
+                showResult('sslResult', `SSL Check failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Hash Generator
+        async function generateHashes() {
+            const text = document.getElementById('hashInput').value;
+            
+            if (!text) {
+                showResult('hashResult', 'Please enter text to hash', 'error');
+                return;
+            }
+
+            try {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(text);
+                
+                // Generate SHA-256
+                const sha256Hash = await crypto.subtle.digest('SHA-256', data);
+                const sha256Hex = Array.from(new Uint8Array(sha256Hash))
+                    .map(b => b.toString(16).padStart(2, '0')).join('');
+                
+                // Generate SHA-1
+                const sha1Hash = await crypto.subtle.digest('SHA-1', data);
+                const sha1Hex = Array.from(new Uint8Array(sha1Hash))
+                    .map(b => b.toString(16).padStart(2, '0')).join('');
+                
+                // Simple MD5-like hash (not cryptographically secure)
+                const md5Like = simpleMD5Like(text);
+                
+                const output = `Hash Generation for: "${text}"\n\n` +
+                    `MD5-like: ${md5Like}\n` +
+                    `SHA-1: ${sha1Hex}\n` +
+                    `SHA-256: ${sha256Hex}\n\n` +
+                    `Hash Properties:\n` +
+                    `- Deterministic (same input = same output)\n` +
+                    `- Fixed length output\n` +
+                    `- Avalanche effect (small change = big difference)\n` +
+                    `- One-way function (irreversible)`;
+                
+                showResult('hashResult', output, 'success');
+            } catch (error) {
+                showResult('hashResult', `Error generating hashes: ${error.message}`, 'error');
+            }
+        }
+
+        // Base64 Encoder/Decoder
+        function encodeBase64() {
+            const text = document.getElementById('base64Input').value;
+            
+            if (!text) {
+                showResult('base64Result', 'Please enter text to encode', 'error');
+                return;
+            }
+
+            try {
+                const encoded = btoa(text);
+                const output = `Base64 Encoding:\n\n` +
+                    `Original: ${text}\n` +
+                    `Encoded: ${encoded}\n\n` +
+                    `Properties:\n` +
+                    `- Uses A-Z, a-z, 0-9, +, / characters\n` +
+                    `- Padding with = if needed\n` +
+                    `- 33% size increase\n` +
+                    `- Used in email, data URLs, authentication`;
+                
+                showResult('base64Result', output, 'success');
+            } catch (error) {
+                showResult('base64Result', `Encoding error: ${error.message}`, 'error');
+            }
+        }
+
+        function decodeBase64() {
+            const text = document.getElementById('base64Input').value;
+            
+            if (!text) {
+                showResult('base64Result', 'Please enter Base64 text to decode', 'error');
+                return;
+            }
+
+            try {
+                const decoded = atob(text);
+                const output = `Base64 Decoding:\n\n` +
+                    `Encoded: ${text}\n` +
+                    `Decoded: ${decoded}\n\n` +
+                    `Validation: ${isValidBase64(text) ? '✓ Valid Base64' : '✗ Invalid Base64'}`;
+                
+                showResult('base64Result', output, 'success');
+            } catch (error) {
+                showResult('base64Result', `Decoding error: ${error.message}`, 'error');
+            }
+        }
+
+        // CIDR Calculator
+        function calculateCIDR() {
+            const cidr = document.getElementById('cidrInput').value;
+            
+            if (!cidr || !cidr.includes('/')) {
+                showResult('cidrResult', 'Please enter CIDR notation (e.g., 192.168.1.0/24)', 'error');
+                return;
+            }
+
+            try {
+                const [network, prefixLength] = cidr.split('/');
+                const prefix = parseInt(prefixLength);
+                
+                if (prefix < 0 || prefix > 32) {
+                    throw new Error('Invalid prefix length (0-32)');
+                }
+
+                const subnetMask = cidrToSubnetMask(prefix);
+                const wildcardMask = getWildcardMask(subnetMask);
+                const hosts = Math.pow(2, 32 - prefix) - 2;
+                const subnets = Math.pow(2, prefix);
+                
+                const output = `CIDR Analysis for ${cidr}:\n\n` +
+                    `Network Address: ${network}\n` +
+                    `Prefix Length: /${prefix}\n` +
+                    `Subnet Mask: ${subnetMask}\n` +
+                    `Wildcard Mask: ${wildcardMask}\n` +
+                    `Host Bits: ${32 - prefix}\n` +
+                    `Network Bits: ${prefix}\n` +
+                    `Total Hosts: ${hosts}\n` +
+                    `Possible Subnets: ${subnets}\n` +
+                    `Address Class: ${getNetworkClass(parseInt(network.split('.')[0]))}`;
+                
+                showResult('cidrResult', output, 'success');
+            } catch (error) {
+                showResult('cidrResult', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Binary/Decimal Converter
+        function convertToBinary() {
+            const ip = document.getElementById('binaryInput').value;
+            
+            if (!ip) {
+                showResult('binaryResult', 'Please enter an IP address', 'error');
+                return;
+            }
+
+            try {
+                const parts = ip.split('.');
+                if (parts.length !== 4) {
+                    throw new Error('Invalid IP address format');
+                }
+
+                let output = `Binary Conversion for ${ip}:\n\n`;
+                
+                parts.forEach((part, index) => {
+                    const decimal = parseInt(part);
+                    if (decimal < 0 || decimal > 255) {
+                        throw new Error(`Invalid octet: ${part}`);
+                    }
+                    
+                    const binary = decimal.toString(2).padStart(8, '0');
+                    output += `Octet ${index + 1}: ${decimal} = ${binary}\n`;
+                });
+                
+                const fullBinary = parts.map(p => parseInt(p).toString(2).padStart(8, '0')).join('.');
+                const fullDecimal = parts.map(p => parseInt(p)).reduce((acc, val) => acc * 256 + val, 0);
+                
+                output += `\nFull Binary: ${fullBinary}\n`;
+                output += `32-bit Decimal: ${fullDecimal}\n`;
+                output += `Hexadecimal: 0x${fullDecimal.toString(16).toUpperCase().padStart(8, '0')}`;
+                
+                showResult('binaryResult', output, 'success');
+            } catch (error) {
+                showResult('binaryResult', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Latency Calculator
+        function calculateLatency() {
+            const distance = parseFloat(document.getElementById('distanceInput').value);
+            const medium = document.getElementById('mediumSelect').value;
+            
+            if (!distance || distance <= 0) {
+                showResult('latencyResult', 'Please enter a valid distance', 'error');
+                return;
+            }
+
+            const speedFactors = {
+                fiber: { speed: 200000, name: 'Fiber Optic (2/3 speed of light)' },
+                copper: { speed: 180000, name: 'Copper Cable (~0.6 speed of light)' },
+                satellite: { speed: 300000, name: 'Satellite (speed of light)' },
+                wireless: { speed: 300000, name: 'Wireless (speed of light)' }
+            };
+
+            const factor = speedFactors[medium];
+            const oneWayLatency = (distance / factor.speed) * 1000; // Convert to ms
+            const roundTripLatency = oneWayLatency * 2;
+            
+            let additionalDelay = 0;
+            let delayNote = '';
+            
+            switch (medium) {
+                case 'satellite':
+                    additionalDelay = 250; // Geostationary orbit delay
+                    delayNote = 'Includes geostationary orbit delay';
+                    break;
+                case 'wireless':
+                    additionalDelay = 5; // Processing delay
+                    delayNote = 'Includes typical wireless processing delay';
+                    break;
+                case 'copper':
+                    additionalDelay = 2; // Electrical propagation delay
+                    delayNote = 'Includes electrical propagation delay';
+                    break;
+                default:
+                    additionalDelay = 1; // Minimal processing delay
+                    delayNote = 'Includes minimal processing delay';
+            }
+
+            const totalLatency = roundTripLatency + additionalDelay;
+            
+            const output = `Latency Calculation:\n\n` +
+                `Distance: ${distance} km\n` +
+                `Medium: ${factor.name}\n` +
+                `Propagation Speed: ${factor.speed.toLocaleString()} km/s\n\n` +
+                `One-way Latency: ${oneWayLatency.toFixed(2)} ms\n` +
+                `Round-trip Latency: ${roundTripLatency.toFixed(2)} ms\n` +
+                `Additional Delay: ${additionalDelay} ms\n` +
+                `Total Latency: ${totalLatency.toFixed(2)} ms\n\n` +
+                `Note: ${delayNote}\n` +
+                `Quality Assessment: ${getLatencyQuality(totalLatency)}`;
+            
+            showResult('latencyResult', output, 'success');
+        }
+
+        // Protocol Information
+        function getProtocolInfo() {
+            const protocol = document.getElementById('protocolSelect').value;
+            
+            const protocols = {
+                HTTP: {
+                    port: 80,
+                    layer: 'Application (Layer 7)',
+                    transport: 'TCP',
+                    description: 'HyperText Transfer Protocol - Foundation of web communication',
+                    security: 'Unencrypted, data transmitted in plain text',
+                    uses: 'Web browsing, API calls, file transfers'
+                },
+                HTTPS: {
+                    port: 443,
+                    layer: 'Application (Layer 7)',
+                    transport: 'TCP over TLS/SSL',
+                    description: 'HTTP Secure - Encrypted version of HTTP',
+                    security: 'Encrypted with TLS/SSL, secure data transmission',
+                    uses: 'Secure web browsing, e-commerce, sensitive data transfer'
+                },
+                FTP: {
+                    port: '20/21',
+                    layer: 'Application (Layer 7)',
+                    transport: 'TCP',
+                    description: 'File Transfer Protocol - For file transfers',
+                    security: 'Unencrypted, credentials sent in plain text',
+                    uses: 'File uploads/downloads, website maintenance'
+                },
+                SSH: {
+                    port: 22,
+                    layer: 'Application (Layer 7)',
+                    transport: 'TCP',
+                    description: 'Secure Shell - Encrypted remote access',
+                    security: 'Strong encryption, secure authentication',
+                    uses: 'Remote server administration, secure file transfers'
+                },
+                SMTP: {
+                    port: 25,
+                    layer: 'Application (Layer 7)',
+                    transport: 'TCP',
+                    description: 'Simple Mail Transfer Protocol - Email sending',
+                    security: 'Can use TLS encryption (SMTPS on port 587/465)',
+                    uses: 'Email transmission between servers'
+                },
+                DNS: {
+                    port: 53,
+                    layer: 'Application (Layer 7)',
+                    transport: 'UDP (primary), TCP (for large responses)',
+                    description: 'Domain Name System - Resolves domain names to IP addresses',
+                    security: 'DNS over HTTPS (DoH) and DNS over TLS (DoT) available',
+                    uses: 'Domain name resolution, service discovery'
+                },
+                DHCP: {
+                    port: '67/68',
+                    layer: 'Application (Layer 7)',
+                    transport: 'UDP',
+                    description: 'Dynamic Host Configuration Protocol - Automatic IP assignment',
+                    security: 'Limited security, can use DHCP authentication',
+                    uses: 'Automatic network configuration, IP address management'
+                },
+                SNMP: {
+                    port: 161,
+                    layer: 'Application (Layer 7)',
+                    transport: 'UDP',
+                    description: 'Simple Network Management Protocol - Network monitoring',
+                    security: 'SNMPv3 provides encryption and authentication',
+                    uses: 'Network device monitoring, performance management'
+                },
+                TCP: {
+                    port: 'Various',
+                    layer: 'Transport (Layer 4)',
+                    transport: 'N/A (IS the transport protocol)',
+                    description: 'Transmission Control Protocol - Reliable, connection-oriented',
+                    security: 'No inherent encryption, reliability through acknowledgments',
+                    uses: 'HTTP, HTTPS, FTP, SSH, email protocols'
+                },
+                UDP: {
+                    port: 'Various',
+                    layer: 'Transport (Layer 4)',
+                    transport: 'N/A (IS the transport protocol)',
+                    description: 'User Datagram Protocol - Fast, connectionless',
+                    security: 'No inherent encryption or reliability guarantees',
+                    uses: 'DNS, DHCP, streaming media, online gaming'
+                }
+            };
+
+            const info = protocols[protocol];
+            
+            const output = `${protocol} Protocol Information:\n\n` +
+                `Port(s): ${info.port}\n` +
+                `OSI Layer: ${info.layer}\n` +
+                `Transport: ${info.transport}\n\n` +
+                `Description:\n${info.description}\n\n` +
+                `Security:\n${info.security}\n\n` +
+                `Common Uses:\n${info.uses}\n\n` +
+                `Network+ Exam Tips:\n` +
+                `- Remember port numbers for certification\n` +
+                `- Understand security implications\n` +
+                `- Know when to use vs alternatives`;
+            
+            showResult('protocolResult', output, 'info');
+        }
+
+        // Helper Functions
+        function showResult(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.textContent = message;
+            element.className = `result ${type}`;
+        }
+
+        function showLoading(elementId) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.innerHTML = '<div class="loading"></div> Loading...';
+            element.className = 'result info';
+        }
+
+        function cidrToSubnetMask(cidr) {
+            const mask = [];
+            for (let i = 0; i < 4; i++) {
+                const bits = Math.max(0, Math.min(8, cidr - i * 8));
+                mask.push(256 - Math.pow(2, 8 - bits));
+            }
+            return mask.join('.');
+        }
+
+        function calculateNetworkAddress(ip, mask) {
+            const ipParts = ip.split('.').map(Number);
+            const maskParts = mask.split('.').map(Number);
+            return ipParts.map((part, i) => part & maskParts[i]).join('.');
+        }
+
+        function calculateBroadcastAddress(network, cidr) {
+            const networkParts = network.split('.').map(Number);
+            const hostBits = 32 - cidr;
+            const broadcastParts = [...networkParts];
+            
+            let remainingBits = hostBits;
+            for (let i = 3; i >= 0 && remainingBits > 0; i--) {
+                const bitsInOctet = Math.min(8, remainingBits);
+                broadcastParts[i] |= (Math.pow(2, bitsInOctet) - 1);
+                remainingBits -= bitsInOctet;
+            }
+            
+            return broadcastParts.join('.');
+        }
+
+        function incrementIP(ip) {
+            const parts = ip.split('.').map(Number);
+            parts[3]++;
+            return parts.join('.');
+        }
+
+        function decrementIP(ip) {
+            const parts = ip.split('.').map(Number);
+            parts[3]--;
+            return parts.join('.');
+        }
+
+        function getNetworkClass(firstOctet) {
+            if (firstOctet >= 1 && firstOctet <= 126) return 'Class A';
+            if (firstOctet >= 128 && firstOctet <= 191) return 'Class B';
+            if (firstOctet >= 192 && firstOctet <= 223) return 'Class C';
+            if (firstOctet >= 224 && firstOctet <= 239) return 'Class D (Multicast)';
+            if (firstOctet >= 240 && firstOctet <= 255) return 'Class E (Reserved)';
+            return 'Invalid';
+        }
+
+        function isValidMAC(mac) {
+            return /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/.test(mac);
+        }
+
+        function getMACVendor(oui) {
+            const vendors = {
+                '005056': 'VMware',
+                '000C29': 'VMware',
+                '001C42': 'VMware',
+                '00155D': 'Microsoft',
+                '001DD8': 'Microsoft',
+                '000F4B': 'Microsoft',
+                '0016CB': 'Apple',
+                '001F5B': 'Apple',
+                '0050E4': 'Apple',
+                '00037F': 'Atheros',
+                '001AA0': 'Atheros',
+                '0002E3': 'Cisco',
+                '0007EB': 'Cisco',
+                '0019E7': 'Cisco'
+            };
+            return vendors[oui] || 'Unknown Vendor';
+        }
+
+        function getMACType(mac) {
+            const cleanMac = mac.replace(/[:-]/g, '').toUpperCase();
+            if (cleanMac === 'FFFFFFFFFFFF') return 'Broadcast';
+            if (parseInt(cleanMac.charAt(1), 16) & 1) return 'Multicast';
+            return 'Unicast';
+        }
+
+        function getPortCategory(port) {
+            if (port >= 0 && port <= 1023) return 'Well-known/System Ports';
+            if (port >= 1024 && port <= 49151) return 'Registered Ports';
+            if (port >= 49152 && port <= 65535) return 'Dynamic/Private Ports';
+            return 'Invalid Port Range';
+        }
+
+        function getPortRange(port) {
+            if (port >= 0 && port <= 1023) return '0-1023 (Privileged)';
+            if (port >= 1024 && port <= 49151) return '1024-49151 (Registered)';
+            if (port >= 49152 && port <= 65535) return '49152-65535 (Ephemeral)';
+            return 'Invalid';
+        }
+
+        function getPortSecurityNote(port) {
+            const secureNotes = {
+                21: 'FTP sends credentials in plain text - use SFTP instead',
+                23: 'Telnet is unencrypted - use SSH instead',
+                80: 'HTTP is unencrypted - use HTTPS when possible',
+                443: 'HTTPS is encrypted and secure',
+                22: 'SSH is encrypted and secure'
+            };
+            return secureNotes[port] || 'Check if encryption is needed for this service';
+        }
+
+        function calculatePasswordEntropy(password) {
+            const charset = getCharsetSize(password);
+            return Math.log2(Math.pow(charset, password.length));
+        }
+
+        function getCharsetSize(password) {
+            let size = 0;
+            if (/[a-z]/.test(password)) size += 26;
+            if (/[A-Z]/.test(password)) size += 26;
+            if (/\d/.test(password)) size += 10;
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) size += 32;
+            if (/\s/.test(password)) size += 1;
+            return size;
+        }
+
+        function calculatePasswordScore(analysis) {
+            let score = 0;
+            
+            // Length scoring
+            if (analysis.length >= 8) score += 25;
+            if (analysis.length >= 12) score += 25;
+            if (analysis.length >= 16) score += 25;
+            
+            // Character variety
+            if (analysis.hasLower) score += 5;
+            if (analysis.hasUpper) score += 5;
+            if (analysis.hasNumbers) score += 5;
+            if (analysis.hasSpecial) score += 10;
+            
+            return Math.min(100, score);
+        }
+
+        function getPasswordStrength(score) {
+            if (score >= 80) return 'Very Strong';
+            if (score >= 60) return 'Strong';
+            if (score >= 40) return 'Moderate';
+            if (score >= 20) return 'Weak';
+            return 'Very Weak';
+        }
+
+        function getPasswordRecommendations(analysis) {
+            const recs = [];
+            if (analysis.length < 12) recs.push('• Use at least 12 characters');
+            if (!analysis.hasUpper) recs.push('• Include uppercase letters');
+            if (!analysis.hasLower) recs.push('• Include lowercase letters');
+            if (!analysis.hasNumbers) recs.push('• Include numbers');
+            if (!analysis.hasSpecial) recs.push('• Include special characters');
+            if (recs.length === 0) recs.push('• Consider using a passphrase');
+            return recs.join('\n');
+        }
+
+        function simpleMD5Like(str) {
+            // Simple hash function (NOT actual MD5)
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32-bit integer
+            }
+            return Math.abs(hash).toString(16).padStart(8, '0');
+        }
+
+        function isValidBase64(str) {
+            try {
+                return btoa(atob(str)) === str;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        function getWildcardMask(subnetMask) {
+            return subnetMask.split('.').map(octet => 255 - parseInt(octet)).join('.');
+        }
+
+        function getLatencyQuality(latency) {
+            if (latency < 20) return 'Excellent (Real-time applications)';
+            if (latency < 50) return 'Good (Most applications)';
+            if (latency < 100) return 'Fair (Web browsing)';
+            if (latency < 200) return 'Poor (Noticeable delays)';
+            return 'Very Poor (Significant delays)';
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Network+ Toolkit loaded successfully!');
+        });
+    </script>
+</body>
+</html>
