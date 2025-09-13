@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CinemaVerse - Discover Amazing Movies & Shows</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Kumar+One+Outline&family=Londrina+Outline&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -209,6 +213,130 @@
       font-size: 1rem;
       color: rgba(255, 255, 255, 0.8);
       margin-top: 0;
+    }
+
+    /* Profile Video Background Styles */
+    .profile-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+      z-index: 1;
+    }
+
+    .profile-bg-video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
+      z-index: 1;
+      object-fit: cover;
+    }
+
+    .profile-bg-video.fade-out {
+      opacity: 0;
+    }
+
+    .profile-content {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .centered-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      font-size: 4em;
+      z-index: 3;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      background: linear-gradient(45deg, #fff, #000, #fff);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+
+    .top-left-text {
+      position: absolute;
+      top: 0;
+      left: 2rem;
+      padding: 10px;
+      color: white;
+      font-size: 1.5em;
+      z-index: 3;
+    }
+
+    .top-left-text .description {
+      font-size: 0.7em;
+      color: rgba(255, 255, 255, 0.9);
+      margin-top: 0.1rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+    }
+
+    .top-left-text .uwu-style {
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.95);
+      font-weight: 500;
+      text-shadow: 0 0 15px rgba(255, 182, 193, 0.4);
+      font-size: 1.1em;
+    }
+
+    /* Bottom Center Text */
+    .bottom-center-text {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      text-align: center;
+    }
+
+    .bottom-center-text .uwu-style {
+      font-style: italic;
+      color: #ffffff;
+      font-weight: 600;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      font-size: 1.2em;
+      display: block;
+    }
+
+    .big {
+      font-size: 1.1em;
+      font-family: 'Black Ops One', cursive;
+    }
+
+
+    .font {
+      font-family: 'Gabarito', sans-serif;
+      font-size: 1em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
     /* Ensure profile and settings content is visible when their tabs are active */
@@ -1683,6 +1811,99 @@
       .tab-content:not(.active) .bottom-search {
         display: none;
       }
+
+      /* Hide section nav and search on profile/settings tabs specifically on mobile */
+      #tab-profile .section-nav,
+      #tab-profile .bottom-search,
+      #tab-settings .section-nav,
+      #tab-settings .bottom-search {
+        display: none !important;
+      }
+
+      /* Additional hiding rules for active profile and settings tabs on mobile */
+      #tab-profile.active .section-nav,
+      #tab-profile.active .bottom-search,
+      #tab-settings.active .section-nav,
+      #tab-settings.active .bottom-search {
+        display: none !important;
+      }
+
+      /* Bottom Center Text Mobile */
+      .bottom-center-text {
+        bottom: 90px;
+      }
+
+      .bottom-center-text .uwu-style {
+        font-size: 1.1em;
+      }
+
+    /* Additional hiding rules for profile and settings tabs */
+    #tab-profile.active .section-nav,
+    #tab-profile.active .bottom-search,
+    #tab-settings.active .section-nav,
+    #tab-settings.active .bottom-search {
+      display: none !important;
+    }
+
+    /* Force hide section nav and search when profile or settings is active */
+    body:has(#tab-profile.active) .section-nav,
+    body:has(#tab-profile.active) .bottom-search,
+    body:has(#tab-settings.active) .section-nav,
+    body:has(#tab-settings.active) .bottom-search {
+      display: none !important;
+    }
+
+
+      /* Mobile Profile Video Styles */
+      .profile-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .profile-bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        min-width: 100vw;
+        min-height: 100vh;
+        object-fit: cover;
+        transform: none;
+      }
+
+      .centered-text {
+        font-size: 2.5em;
+        top: 45%;
+        letter-spacing: 0.05em;
+        background: linear-gradient(45deg, #fff, #000, #fff);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 3s ease-in-out infinite;
+      }
+
+      .top-left-text {
+        left: 1rem;
+        font-size: 1.2em;
+        top: 1rem;
+      }
+
+      .top-left-text .description {
+        font-size: 0.6em;
+        margin-top: 0.05rem;
+        line-height: 1.2;
+      }
+
+      .top-left-text .uwu-style {
+        font-size: 1.05em;
+      }
+
     }
 
     /* Small Mobile - Further optimizations */
@@ -1748,6 +1969,70 @@
       #tab-settings .content-section {
         margin-top: 4rem;
         padding: 0.75rem;
+      }
+
+      /* Small Mobile Profile Video Styles */
+      .profile-bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        min-width: 100vw;
+        min-height: 100vh;
+        object-fit: cover;
+        transform: none;
+      }
+
+      .centered-text {
+        font-size: 2em;
+        letter-spacing: 0.03em;
+        background: linear-gradient(45deg, #fff, #000, #fff);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 3s ease-in-out infinite;
+      }
+
+      .top-left-text {
+        left: 0.5rem;
+        font-size: 1em;
+      }
+
+      .top-left-text .description {
+        font-size: 0.5em;
+        margin-top: 0.02rem;
+        line-height: 1.1;
+      }
+
+      .top-left-text .uwu-style {
+        font-size: 1.0em;
+      }
+
+      /* Bottom Center Text Mobile */
+      .bottom-center-text {
+        bottom: 80px;
+      }
+
+      .bottom-center-text .uwu-style {
+        font-size: 1.0em;
+      }
+
+      /* Hide section nav and search on profile/settings tabs on small mobile */
+      #tab-profile .section-nav,
+      #tab-profile .bottom-search,
+      #tab-settings .section-nav,
+      #tab-settings .bottom-search {
+        display: none !important;
+      }
+
+      /* Additional hiding rules for active profile and settings tabs on small mobile */
+      #tab-profile.active .section-nav,
+      #tab-profile.active .bottom-search,
+      #tab-settings.active .section-nav,
+      #tab-settings.active .bottom-search {
+        display: none !important;
       }
     }
 
@@ -1912,12 +2197,29 @@
     </div>
 
     <div id="tab-profile" class="tab-content">
-      <div class="content-section">
-        <h1 class="section-title">Your Profile</h1>
-        <p class="section-description">Profile details go here. This content should be visible when you switch to the Profile tab.</p>
-        <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
-          <h3 style="color: #ffffff; margin-bottom: 0.5rem;">Profile Information</h3>
-          <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">Add your profile details, preferences, and settings here.</p>
+      <div class="profile-container">
+        <!-- Video Background -->
+        <video autoplay loop muted id="bgVideo" class="profile-bg-video">
+          <source src="https://www.prada.com/content/dam/pradanux/home_page/2023/09/Collection_FW23/hero/loop_DT.mp4/_jcr_content/renditions/cq5dam.video.pradanux-large.1920.1080.mp4" type="video/mp4">
+          <source src="https://www.prada.com/content/dam/pradanux/home_page/2023/09/Collection_FW23/hero/loop_DT.mp4/_jcr_content/renditions/cq5dam.video.pradanux-large.1920.1080.mp4" type="video/mp4">
+          <source src="https://www.prada.com/content/dam/pradanux/home_page/2023/09/Collection_FW23/hero/loop_DT.mp4/_jcr_content/renditions/cq5dam.video.pradanux-large.1920.1080.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+          <!-- Centered Brand Text -->
+          <div class="centered-text" id="brandText">
+            <h1>CODE WIZARD</h1>
+          </div>
+
+          <!-- Top Left Text -->
+         
+          
+          <!-- Bottom Center Text -->
+          <div class="bottom-center-text">
+            <span class="uwu-style">Making the web more kawaii, one pixel at a time! UwU</span>
+          </div>
         </div>
       </div>
     </div>
@@ -2103,6 +2405,13 @@
           if (sectionNav) sectionNav.style.display = 'flex';
           if (searchBox) searchBox.style.display = 'block';
           showSection('trending');
+        } else if (tabId === 'profile') {
+          if (sectionNav) sectionNav.style.display = 'none';
+          if (searchBox) searchBox.style.display = 'none';
+          // Initialize profile video when switching to profile tab
+          setTimeout(() => {
+            initializeProfileVideo();
+          }, 100);
         } else {
           if (sectionNav) sectionNav.style.display = 'none';
           if (searchBox) searchBox.style.display = 'none';
@@ -3607,6 +3916,57 @@
         }
       }
     });
+
+    // Profile Video Background Functionality
+    let profileVideoInitialized = false;
+
+    function initializeProfileVideo() {
+      if (profileVideoInitialized) return;
+      
+      const video = document.getElementById('bgVideo');
+      const brandText = document.getElementById('brandText');
+      
+      if (!video || !brandText) return;
+      
+      profileVideoInitialized = true;
+      
+      // Ensure video is muted
+      video.muted = true;
+      
+      // Brand switching functionality
+      const brands = [
+        "CODE WIZARD",
+        "BUG HUNTER", 
+        "DIGITAL NINJA",
+        "BYTE MASTER",
+        "PIXEL PIRATE",
+        "ALGORITHM ARTIST",
+        "CYBER TINKERER",
+        "GAME CHANGER",
+        "STACK OVERFLOW",
+        "GITHUB LEGEND",
+        "TERMINAL TITAN",
+        "FULL STACK",
+        "UI/UX MAGICIAN",
+        "CINEMAVERSE",
+        "DEVELOPER GOD"
+      ];
+      let currentIndex = 0;
+      const brandTitle = brandText.getElementsByTagName('h1')[0];
+
+      function changeBrand() {
+        if (brandTitle) {
+          brandTitle.innerHTML = brands[currentIndex];
+          currentIndex = (currentIndex + 1) % brands.length;
+        }
+      }
+
+      // Start brand switching
+      const brandInterval = setInterval(changeBrand, 2000);
+
+      // Store interval ID for cleanup
+      video.brandInterval = brandInterval;
+    }
 
     // Simple and reliable initialization
     let hasInitialized = false;
