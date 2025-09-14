@@ -2248,6 +2248,327 @@
       }
     }
 
+    /* Cloud Upload Styles */
+    .cloud-container{max-width:1400px; margin:0 auto; padding:20px;}
+    
+    .cloud-header {
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between;
+      gap:12px; 
+      margin-bottom:30px; 
+      padding:20px 0; 
+      border-bottom:1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .cloud-h1{font-size:32px; margin:0; font-weight:600; color:#00ff41; letter-spacing:1px;}
+    .cloud-subtitle{font-size:16px; margin:8px 0 0 0; opacity:0.8; font-weight:400; color:rgba(255, 255, 255, 0.6);}
+    
+    .cloud-card{
+      background:rgba(255, 255, 255, 0.05); 
+      border:1px solid rgba(255, 255, 255, 0.1); 
+      padding:20px; 
+      margin-bottom:20px;
+      position:relative;
+    }
+    
+    .cloud-card h3{margin:0 0 20px 0; font-size:20px; color:#ffffff; font-weight:600; text-transform:uppercase; letter-spacing:1px;}
+    
+    .cloud-controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:20px;}
+    
+    .cloud-input[type=file]{
+      padding:12px; 
+      border:1px solid rgba(255, 255, 255, 0.1); 
+      background:rgba(255, 255, 255, 0.05); 
+      color:#cccccc; 
+      cursor:pointer; 
+      font-size:14px; 
+      font-family:inherit;
+      min-width:200px;
+    }
+    
+    .cloud-input[type=file]:hover{border-color:#00ff41;}
+    
+    .cloud-button{
+      background:transparent; 
+      color:#cccccc; 
+      border:1px solid rgba(255, 255, 255, 0.1); 
+      padding:10px 18px; 
+      cursor:pointer; 
+      font-size:14px; 
+      font-family:inherit;
+      transition:all 0.2s;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+      font-weight:500;
+    }
+    
+    .cloud-button:hover{
+      border-color:#00ff41; 
+      color:#00ff41;
+      box-shadow:0 0 10px rgba(0,255,65,0.2);
+    }
+    
+    .cloud-button:disabled{opacity:.4; cursor:default;}
+    
+    .cloud-btn-danger{border-color:#ff0040; color:#ff0040;}
+    .cloud-btn-danger:hover{border-color:#ff0040; color:#ff0040; box-shadow:0 0 10px rgba(255,0,64,0.2);}
+    
+    .cloud-btn-success{border-color:#00ff41; color:#00ff41;}
+    .cloud-btn-success:hover{border-color:#00ff41; color:#00ff41; box-shadow:0 0 10px rgba(0,255,65,0.2);}
+    
+    .cloud-btn-warning{border-color:#ffaa00; color:#ffaa00;}
+    .cloud-btn-warning:hover{border-color:#ffaa00; color:#ffaa00; box-shadow:0 0 10px rgba(255,170,0,0.2);}
+    
+    .cloud-btn-info{border-color:#00aaff; color:#00aaff;}
+    .cloud-btn-info:hover{border-color:#00aaff; color:#00aaff; box-shadow:0 0 10px rgba(0,170,255,0.2);}
+    
+    .cloud-muted{color:rgba(255, 255, 255, 0.6); font-size:12px;}
+    
+    .cloud-stats{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin-top:20px;}
+    .cloud-stat{
+      background:rgba(255, 255, 255, 0.1); 
+      padding:12px; 
+      font-size:11px; 
+      border:1px solid rgba(255, 255, 255, 0.1);
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+    .cloud-stat-value{font-size:16px; font-weight:400; color:#00ff41; margin-top:4px; font-family:monospace;}
+    
+    .cloud-file-list{margin-top:20px;}
+    .cloud-file-item{
+      display:flex; 
+      gap:12px; 
+      align-items:center; 
+      padding:12px; 
+      border:1px solid rgba(255, 255, 255, 0.1); 
+      background:rgba(255, 255, 255, 0.05); 
+      margin-bottom:8px; 
+      transition:all 0.2s;
+    }
+    
+    .cloud-file-item:hover{border-color:#00ff41; background:rgba(255, 255, 255, 0.1);}
+    .cloud-file-item.selected{border-color:#00ff41; background:rgba(0,255,65,0.05);}
+    
+    .cloud-file-checkbox{margin-right:8px; transform:scale(1.1);}
+    .cloud-meta{flex:1; min-width:0;}
+    .cloud-fname{font-weight:500; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:4px; font-family:monospace;}
+    .cloud-fsmall{font-size:12px; color:rgba(255, 255, 255, 0.6); margin-bottom:4px;}
+    .cloud-file-type{display:inline-block; background:#00ff41; color:#0a0a0a; padding:1px 6px; font-size:9px; font-weight:400; margin-right:6px; text-transform:uppercase; letter-spacing:0.5px;}
+    
+    .cloud-actions{display:flex; gap:6px; flex-wrap:wrap;}
+    .cloud-delete-btn{border-color:#ff0040; color:#ff0040; padding:6px 12px; font-size:12px;}
+    
+    .cloud-tiny{font-size:10px; color:rgba(255, 255, 255, 0.6);}
+    .cloud-success{color:#00ff41;}
+    .cloud-error{color:#ff0040;}
+    .cloud-small-muted{font-size:13px; color:rgba(255, 255, 255, 0.6); line-height:1.5;}
+    
+    .cloud-footer{font-size:12px; color:rgba(255, 255, 255, 0.6); margin-top:30px; padding:20px; background:rgba(255, 255, 255, 0.1); border:1px solid rgba(255, 255, 255, 0.1); text-align:center; line-height:1.6;}
+    
+    .cloud-badge{
+      background:rgba(255, 255, 255, 0.1); 
+      color:#cccccc; 
+      padding:8px 12px; 
+      font-size:12px; 
+      cursor:pointer; 
+      transition:all 0.2s;
+      border:1px solid rgba(255, 255, 255, 0.1);
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+    
+    .cloud-badge:hover{border-color:#00ff41; color:#00ff41;}
+    
+    .cloud-bulk-actions{
+      display:flex; 
+      gap:6px; 
+      margin-bottom:15px; 
+      padding:10px; 
+      background:rgba(255, 255, 255, 0.1); 
+      border:1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .cloud-bulk-actions button{font-size:12px; padding:8px 12px;}
+    
+    .cloud-info-box{
+      background:rgba(255, 255, 255, 0.1); 
+      border:1px solid rgba(255, 255, 255, 0.1); 
+      padding:15px; 
+      margin:15px 0;
+    }
+    
+    .cloud-info-box h4{margin:0 0 12px 0; color:#00ff41; font-size:16px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600;}
+    
+    .cloud-limit-info{
+      background:rgba(255, 255, 255, 0.1); 
+      border:1px solid #ffaa00; 
+      padding:10px; 
+      margin:8px 0;
+    }
+    
+    .cloud-empty-state{text-align:center; padding:30px; color:rgba(255, 255, 255, 0.6); font-style:italic; font-size:14px;}
+    
+    .cloud-status-indicator{display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:6px;}
+    .cloud-status-pending{background:#ffaa00;}
+    .cloud-status-uploading{background:#00aaff; animation:cloud-pulse 1.5s infinite;}
+    .cloud-status-done{background:#00ff41;}
+    .cloud-status-error{background:#ff0040;}
+    
+    @keyframes cloud-pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+    
+    .cloud-upload-zone{
+      border:1px dashed rgba(255, 255, 255, 0.1); 
+      padding:30px; 
+      text-align:center; 
+      background:rgba(255, 255, 255, 0.05); 
+      margin:15px 0; 
+      transition:all 0.3s;
+    }
+    
+    .cloud-upload-zone:hover{border-color:#00ff41; background:rgba(255, 255, 255, 0.1);}
+    .cloud-upload-zone.dragover{border-color:#00ff41; background:rgba(0,255,65,0.05);}
+    
+    /* Individual file progress indicators */
+    .cloud-file-progress {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 8px;
+    }
+    
+    .cloud-progress-circle-small {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: conic-gradient(#00ff41 0deg, #00ff41 0deg, rgba(255, 255, 255, 0.1) 0deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 0 8px rgba(0,255,65,0.2);
+    }
+    
+    .cloud-progress-circle-small::before {
+      content: '';
+      position: absolute;
+      width: 70%;
+      height: 70%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .cloud-progress-text-small {
+      position: relative;
+      z-index: 1;
+      color: #00ff41;
+      font-size: 8px;
+      font-weight: bold;
+      font-family: monospace;
+    }
+    
+    /* Toast notification styles */
+    .cloud-toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .cloud-toast {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 16px;
+      border-radius: 4px;
+      color: #cccccc;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transform: translateX(100%);
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      opacity: 0;
+      max-width: 300px;
+      word-wrap: break-word;
+    }
+    
+    .cloud-toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    .cloud-toast.success {
+      border-color: #00ff41;
+      background: rgba(0,255,65,0.1);
+    }
+    
+    .cloud-toast.error {
+      border-color: #ff0040;
+      background: rgba(255,0,64,0.1);
+    }
+    
+    .cloud-toast.warning {
+      border-color: #ffaa00;
+      background: rgba(255,170,0,0.1);
+    }
+    
+    .cloud-toast.info {
+      border-color: #00aaff;
+      background: rgba(0,170,255,0.1);
+    }
+    
+    /* Concurrency info styles */
+    .cloud-concurrency-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 8px;
+    }
+    
+    .cloud-info-tooltip {
+      position: relative;
+      cursor: help;
+    }
+    
+    .cloud-info-tooltip::after {
+      content: '?';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: #00ff41;
+      color: #0a0a0a;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 16px;
+    }
+    
+    .cloud-tooltip-content {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+      z-index: 1000;
+      margin-bottom: 5px;
+    }
+    
+    .cloud-info-tooltip:hover .cloud-tooltip-content {
+      opacity: 1;
+      visibility: visible;
+    }
+
     /* Animations */
     .fade-in {
       animation: fadeIn 0.6s ease-in;
@@ -2447,11 +2768,96 @@
 
     <div id="tab-settings" class="tab-content">
       <div class="content-section">
-        <h1 class="section-title">Settings</h1>
-        <p class="section-description">Adjust your preferences here. This content should be visible when you switch to the Settings tab.</p>
-        <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
-          <h3 style="color: #ffffff; margin-bottom: 0.5rem;">Application Settings</h3>
-          <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">Configure your app preferences, notifications, and other settings.</p>
+        <!-- Toast notification container -->
+        <div class="cloud-toast-container" id="cloudToastContainer"></div>
+
+        <div class="cloud-container">
+          <div class="cloud-header">
+            <div>
+              <h1 class="cloud-h1">Serverless / Cloud</h1>
+              <div class="cloud-subtitle">Multi-File Uploader with Progress Tracking & Bulk Management UwU</div>
+            </div>
+          </div>
+
+          <div class="cloud-info-box">
+            <h4>📋 How it works</h4>
+            <p>Uses Telegram's bot to upload files to the group. Uses JSONBin.io to store the file metadata.</p><br>
+            <p><strong>⚠️ Security Notice:</strong> This is a free solution for convenience. Files are stored on Telegram servers and metadata is stored on JSONBin.io. Do not upload sensitive or private data as it's not encrypted or secure.</p>
+          </div>
+
+          <section class="cloud-card">
+            <h3>📁 File Upload</h3>
+            
+            <div class="cloud-upload-zone" id="cloudUploadZone">
+              <div class="file-input-wrapper">
+                <input id="cloudFileInput" type="file" multiple accept="*/*" class="cloud-input">
+              </div>
+              <p class="cloud-muted" style="margin:12px 0 0 0;">Click to select files or drag & drop them here</p>
+              <p class="cloud-small-muted">Supports all file types • Recommended: under 50 MB per file for best performance</p>
+            </div>
+
+            <div class="cloud-controls">
+              <button id="cloudUploadBtn" class="cloud-button cloud-btn-success">🚀 Start Upload</button>
+              <div class="cloud-concurrency-info">
+                <div class="cloud-badge" id="cloudConcurrencyBadge">Concurrency: 3</div>
+                <div class="cloud-info-tooltip">
+                  <div class="cloud-tooltip-content">
+                    Number of files uploaded simultaneously. Higher = faster but more resource intensive. Recommended: 3-5
+                  </div>
+                </div>
+              </div>
+              <button id="cloudClearFilesBtn" class="cloud-button cloud-btn-warning">🗑️ Clear Selection</button>
+            </div>
+
+            <div class="cloud-limit-info">
+              <strong>📊 Upload Limits:</strong> Maximum <span id="cloudLimitText">200 MB</span> total per batch (prevents timeouts) • Individual files up to 50 MB recommended
+            </div>
+
+            <div class="cloud-stats">
+              <div class="cloud-stat">
+                <div>Selected Files</div>
+                <div class="cloud-stat-value" id="cloudSelCount">0</div>
+              </div>
+              <div class="cloud-stat">
+                <div>Total Size</div>
+                <div class="cloud-stat-value" id="cloudSelSize">0 B</div>
+              </div>
+              <div class="cloud-stat">
+                <div>Remaining Space</div>
+                <div class="cloud-stat-value" id="cloudAllowedRemain">200 MB</div>
+              </div>
+              <div class="cloud-stat">
+                <div>Upload Speed</div>
+                <div class="cloud-stat-value" id="cloudUploadSpeed">-</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="cloud-card">
+            <h3>⏳ Upload Queue</h3>
+            <div id="cloudQueue" class="cloud-file-list">
+              <div class="cloud-empty-state">No files in queue. Select files and click Start Upload.</div>
+            </div>
+          </section>
+
+          <section class="cloud-card">
+            <h3>📚 Uploaded Files</h3>
+            
+            <div class="cloud-bulk-actions" id="cloudBulkActions" style="display:none;">
+              <button id="cloudSelectAllBtn" class="cloud-button cloud-btn-info">☑️ Select All</button>
+              <button id="cloudDeselectAllBtn" class="cloud-button cloud-btn-info">☐ Deselect All</button>
+              <button id="cloudDeleteSelectedBtn" class="cloud-button cloud-btn-danger">🗑️ Delete Selected from Telegram</button>
+              <button id="cloudClearStorageBtn" class="cloud-button cloud-btn-warning">🧹 Clear All History</button>
+              <button id="cloudSyncBtn" class="cloud-button cloud-btn-info">🔄 Sync Files</button>
+              <span id="cloudSelectedCount" class="cloud-muted">0 selected</span>
+            </div>
+            
+            <div id="cloudUploaded" class="cloud-file-list">
+              <div class="cloud-empty-state">No uploads yet. Upload some files to see them here.</div>
+            </div>
+          </section>
+
+          
         </div>
       </div>
     </div>
@@ -2551,13 +2957,13 @@
   <!-- Pill Navigation -->
   <div class="pill-container">
     <button data-tab="home" class="pill-btn active">
-      <i class="fas fa-home"></i> Home
+      <i class="fas fa-home"></i> NekoFlix
     </button>
     <button data-tab="profile" class="pill-btn">
-      <i class="fas fa-user"></i> Profile
+      <i class="fas fa-user"></i> About Me
     </button>
     <button data-tab="settings" class="pill-btn">
-      <i class="fas fa-cog"></i> Settings
+      <i class="fas fa-cog"></i> Cloud
     </button>
   </div>
 
@@ -4082,6 +4488,893 @@
         }
       }
     }
+
+    // Cloud Upload Functionality
+    /*
+      CONFIG — change these values as needed.
+      NOTE: TOKEN in frontend is visible. For production, put it on a secure backend.
+    */
+    const CLOUD_BOT_TOKEN = "8400147454:AAFlsxl_IXH99LGl6n2sScbiq48Wgeexalw"; // <-- your token
+    const CLOUD_CHAT_ID   = "-4881580248"; // <-- your group chat id
+
+    // Maximum total upload size allowed per "batch" (in bytes)
+    const CLOUD_MAX_TOTAL_UPLOAD_BYTES = 200 * 1024 * 1024; // default 200 MB — change as desired
+
+    // Maximum concurrent uploads at once (pseudo-multithreading)
+    let CLOUD_CONCURRENCY = 3; // change to 1,2,3,... Use UI badge to show
+
+    // JSONBin.io configuration
+    const CLOUD_JSONBIN_API_KEY = "$2a$10$VKwg9QXG3h1bXfZPby1z0uIt5CMlQYyFdKOE8iBD7XlUz0mfxLvF.";
+    const CLOUD_JSONBIN_BIN_ID = "68c6bfe4ae596e708fee6cb3";
+    const CLOUD_JSONBIN_BASE_URL = "https://api.jsonbin.io/v3/b";
+
+    // Utility: format bytes (digit-by-digit careful)
+    function cloudFormatBytes(bytes) {
+      if (bytes === 0) return "0 B";
+      const k = 1024;
+      const sizes = ["B","KB","MB","GB","TB"];
+      let i = Math.floor(Math.log(bytes) / Math.log(k));
+      if (i < 0) i = 0;
+      const value = bytes / Math.pow(k, i);
+      // show up to 2 decimals
+      return `${Math.round(value * 100) / 100} ${sizes[i]}`;
+    }
+
+    // Get file type from extension
+    function cloudGetFileType(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      const types = {
+        // Images
+        'jpg': '🖼️ IMG', 'jpeg': '🖼️ IMG', 'png': '🖼️ IMG', 'gif': '🖼️ IMG', 'webp': '🖼️ IMG', 'svg': '🖼️ IMG', 'bmp': '🖼️ IMG',
+        // Videos
+        'mp4': '🎥 VID', 'avi': '🎥 VID', 'mov': '🎥 VID', 'wmv': '🎥 VID', 'flv': '🎥 VID', 'webm': '🎥 VID', 'mkv': '🎥 VID',
+        // Audio
+        'mp3': '🎵 AUD', 'wav': '🎵 AUD', 'flac': '🎵 AUD', 'aac': '🎵 AUD', 'ogg': '🎵 AUD', 'm4a': '🎵 AUD',
+        // Documents
+        'pdf': '📄 PDF', 'doc': '📄 DOC', 'docx': '📄 DOC', 'txt': '📄 TXT', 'rtf': '📄 RTF',
+        'xls': '📊 XLS', 'xlsx': '📊 XLS', 'ppt': '📊 PPT', 'pptx': '📊 PPT',
+        // Archives
+        'zip': '📦 ZIP', 'rar': '📦 RAR', '7z': '📦 7Z', 'tar': '📦 TAR', 'gz': '📦 GZ',
+        // Code
+        'js': '💻 JS', 'html': '💻 HTML', 'css': '💻 CSS', 'py': '💻 PY', 'java': '💻 JAVA', 'cpp': '💻 C++', 'c': '💻 C',
+        // Other
+        'exe': '⚙️ EXE', 'dmg': '💿 DMG', 'iso': '💿 ISO'
+      };
+      return types[ext] || '📄 FILE';
+    }
+
+    // Calculate upload speed
+    function cloudUpdateUploadSpeed(bytesUploaded, timeElapsed) {
+      if (timeElapsed === 0) return;
+      const speed = bytesUploaded / timeElapsed; // bytes per second
+      cloudUploadSpeed.textContent = cloudFormatBytes(speed) + '/s';
+    }
+
+    // Toast notification functions
+    function cloudShowToast(message, type = 'info', duration = 4000) {
+      const toastContainer = document.getElementById('cloudToastContainer');
+      const toast = document.createElement('div');
+      toast.className = `cloud-toast ${type}`;
+      toast.textContent = message;
+      
+      toastContainer.appendChild(toast);
+      
+      // Trigger animation
+      setTimeout(() => toast.classList.add('show'), 10);
+      
+      // Auto remove
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 300);
+      }, duration);
+    }
+
+    // Individual file progress functions
+    function cloudUpdateFileProgress(qi, percentage) {
+      const progressElement = document.getElementById(`${qi.id}-progress`);
+      if (progressElement) {
+        const degrees = (percentage / 100) * 360;
+        const circle = progressElement.querySelector('.cloud-progress-circle-small');
+        const text = progressElement.querySelector('.cloud-progress-text-small');
+        
+        if (circle) {
+          circle.style.background = `conic-gradient(#00ff41 ${degrees}deg, rgba(255, 255, 255, 0.1) ${degrees}deg)`;
+        }
+        if (text) {
+          text.textContent = `${Math.round(percentage)}%`;
+        }
+      }
+    }
+
+    // Drag and drop handlers
+    function cloudSetupDragAndDrop() {
+      cloudUploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        cloudUploadZone.classList.add('dragover');
+      });
+      
+      cloudUploadZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        cloudUploadZone.classList.remove('dragover');
+      });
+      
+      cloudUploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        cloudUploadZone.classList.remove('dragover');
+        const files = Array.from(e.dataTransfer.files);
+        cloudHandleFileSelection(files);
+      });
+    }
+
+    // DOM refs
+    const cloudFileInput = document.getElementById("cloudFileInput");
+    const cloudUploadBtn = document.getElementById("cloudUploadBtn");
+    const cloudClearFilesBtn = document.getElementById("cloudClearFilesBtn");
+    const cloudQueueDiv = document.getElementById("cloudQueue");
+    const cloudUploadedDiv = document.getElementById("cloudUploaded");
+    const cloudSelCount = document.getElementById("cloudSelCount");
+    const cloudSelSize = document.getElementById("cloudSelSize");
+    const cloudAllowedRemain = document.getElementById("cloudAllowedRemain");
+    const cloudLimitText = document.getElementById("cloudLimitText");
+    const cloudConcurrencyBadge = document.getElementById("cloudConcurrencyBadge");
+    const cloudUploadSpeed = document.getElementById("cloudUploadSpeed");
+    const cloudUploadZone = document.getElementById("cloudUploadZone");
+    const cloudBulkActions = document.getElementById("cloudBulkActions");
+    const cloudSelectAllBtn = document.getElementById("cloudSelectAllBtn");
+    const cloudDeselectAllBtn = document.getElementById("cloudDeselectAllBtn");
+    const cloudDeleteSelectedBtn = document.getElementById("cloudDeleteSelectedBtn");
+    const cloudClearStorageBtn = document.getElementById("cloudClearStorageBtn");
+    const cloudSyncBtn = document.getElementById("cloudSyncBtn");
+    const cloudSelectedCount = document.getElementById("cloudSelectedCount");
+    const cloudToastContainer = document.getElementById("cloudToastContainer");
+
+    // Initialize UI texts
+    cloudLimitText.textContent = cloudFormatBytes(CLOUD_MAX_TOTAL_UPLOAD_BYTES);
+    cloudAllowedRemain.textContent = cloudFormatBytes(CLOUD_MAX_TOTAL_UPLOAD_BYTES);
+    cloudConcurrencyBadge.textContent = `Concurrency: ${CLOUD_CONCURRENCY}`;
+
+    // Internal state
+    let cloudSelectedFiles = []; // File objects selected in current batch
+    let cloudQueueItems = []; // list of {file, id, state}
+    let cloudUploading = false;
+    let cloudSelectedUploadedFiles = new Set(); // Set of message_ids for bulk operations
+    let cloudUploadStartTime = 0;
+    let cloudUploadedBytes = 0;
+
+    // Upload queue for JSONBin updates to prevent race conditions
+    let cloudUploadQueue = [];
+    let cloudIsProcessingQueue = false;
+
+    // JSONBin.io API functions
+    async function cloudLoadPersisted() {
+      try {
+        const response = await fetch(`${CLOUD_JSONBIN_BASE_URL}/${CLOUD_JSONBIN_BIN_ID}/latest`, {
+          headers: {
+            'X-Master-Key': CLOUD_JSONBIN_API_KEY
+          }
+        });
+        
+        if (!response.ok) {
+          console.warn('Failed to load from JSONBin:', response.status);
+          return [];
+        }
+        
+        const data = await response.json();
+        const arr = data.record?.files || [];
+        
+        if (Array.isArray(arr)) {
+          console.log(`Loaded ${arr.length} files from JSONBin`);
+          return arr;
+        }
+        console.log('No files array found in bin, returning empty array');
+        return [];
+      } catch(e) {
+        console.error('Error loading from JSONBin:', e);
+        return [];
+      }
+    }
+
+    async function cloudSavePersisted(arr, retries = 3) {
+      for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+          const response = await fetch(`${CLOUD_JSONBIN_BASE_URL}/${CLOUD_JSONBIN_BIN_ID}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Master-Key': CLOUD_JSONBIN_API_KEY
+            },
+            body: JSON.stringify({ files: arr })
+          });
+          
+          if (!response.ok) {
+            console.warn(`Attempt ${attempt}: Failed to save to JSONBin: ${response.status}`);
+            if (attempt === retries) {
+              console.error('All retry attempts failed');
+              return false;
+            }
+            // Wait before retry
+            await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+            continue;
+          }
+          
+          console.log(`Saved ${arr.length} files to JSONBin (attempt ${attempt})`);
+          return true;
+        } catch(e) {
+          console.warn(`Attempt ${attempt}: Error saving to JSONBin:`, e);
+          if (attempt === retries) {
+            console.error('All retry attempts failed');
+            return false;
+          }
+          // Wait before retry
+          await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+        }
+      }
+      return false;
+    }
+
+    // Queue-based entry addition to prevent race conditions
+    async function cloudAddPersistedEntry(entry) {
+      // Add to queue instead of processing immediately
+      cloudUploadQueue.push(entry);
+      console.log(`Queued entry for ${entry.display_name}, queue length: ${cloudUploadQueue.length}`);
+      
+      // Process queue if not already processing
+      if (!cloudIsProcessingQueue) {
+        cloudProcessUploadQueue();
+      }
+    }
+
+    // Process upload queue sequentially to prevent race conditions
+    async function cloudProcessUploadQueue() {
+      if (cloudIsProcessingQueue || cloudUploadQueue.length === 0) return;
+      
+      cloudIsProcessingQueue = true;
+      console.log(`Processing upload queue with ${cloudUploadQueue.length} entries`);
+      
+      try {
+        // Load current state
+        const arr = await cloudLoadPersisted();
+        console.log(`Loaded ${arr.length} existing files from JSONBin`);
+        
+        // Add all queued entries
+        while (cloudUploadQueue.length > 0) {
+          const entry = cloudUploadQueue.shift();
+          arr.unshift(entry); // newest first
+          console.log(`Added ${entry.display_name} to array`);
+        }
+        
+        // Save updated array
+        const success = await cloudSavePersisted(arr);
+        if (success) {
+          console.log(`Successfully saved ${arr.length} files to JSONBin`);
+          await cloudRenderPersisted();
+        } else {
+          console.error('Failed to save to JSONBin, re-queuing entries');
+          // Re-queue the entries if save failed
+          cloudUploadQueue.unshift(...arr.slice(0, cloudUploadQueue.length));
+        }
+      } catch(e) {
+        console.error('Error processing upload queue:', e);
+        // Re-queue entries on error
+        cloudUploadQueue.unshift(...cloudUploadQueue);
+      } finally {
+        cloudIsProcessingQueue = false;
+        
+        // Process any new entries that were added while processing
+        if (cloudUploadQueue.length > 0) {
+          setTimeout(() => cloudProcessUploadQueue(), 100);
+        }
+      }
+    }
+
+    // Manual sync function to recover any missing files
+    async function cloudSyncMissingFiles() {
+      console.log('Starting manual sync to recover missing files...');
+      try {
+        const currentFiles = await cloudLoadPersisted();
+        console.log(`Current files in JSONBin: ${currentFiles.length}`);
+        
+        // This would require getting message history from Telegram
+        // For now, just log the current state
+        console.log('Manual sync completed. Check console for details.');
+      } catch(e) {
+        console.error('Error during manual sync:', e);
+      }
+    }
+
+    async function cloudRemovePersistedByMsgId(message_id) {
+      try {
+        let arr = await cloudLoadPersisted();
+        console.log(`Before removal: ${arr.length} items in storage`);
+        console.log(`Removing message_id: ${message_id} (type: ${typeof message_id})`);
+        
+        // Debug: show all message IDs in storage
+        console.log(`Message IDs in storage:`, arr.map(x => `${x.message_id} (type: ${typeof x.message_id})`));
+        
+        // Try both string and number comparison
+        const originalLength = arr.length;
+        arr = arr.filter(x => {
+          const matches = x.message_id != message_id; // Use != instead of !== for type coercion
+          if (!matches) {
+            console.log(`Found match: ${x.message_id} == ${message_id}`);
+          }
+          return matches;
+        });
+        
+        console.log(`After removal: ${arr.length} items in storage (removed ${originalLength - arr.length})`);
+        
+        const success = await cloudSavePersisted(arr);
+        return success;
+      } catch(e) {
+        console.error('Error removing entry:', e);
+        return false;
+      }
+    }
+
+    async function cloudRenderPersisted() {
+      try {
+        const arr = await cloudLoadPersisted();
+        cloudUploadedDiv.innerHTML = "";
+        
+        if (arr.length === 0) {
+          cloudUploadedDiv.innerHTML = '<div class="cloud-empty-state">No uploads yet. Upload some files to see them here.</div>';
+          cloudBulkActions.style.display = 'none';
+          return;
+        }
+        
+        cloudBulkActions.style.display = 'flex';
+        cloudUpdateSelectedCount();
+        
+        arr.forEach((item) => {
+        const el = document.createElement("div");
+        el.className = `cloud-file-item ${cloudSelectedUploadedFiles.has(item.message_id) ? 'selected' : ''}`;
+        el.dataset.messageId = item.message_id;
+        
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "cloud-file-checkbox";
+        checkbox.checked = cloudSelectedUploadedFiles.has(item.message_id);
+        checkbox.onchange = () => {
+          if (checkbox.checked) {
+            cloudSelectedUploadedFiles.add(item.message_id);
+          } else {
+            cloudSelectedUploadedFiles.delete(item.message_id);
+          }
+          el.classList.toggle('selected', checkbox.checked);
+          cloudUpdateSelectedCount();
+        };
+        
+        const meta = document.createElement("div");
+        meta.className = "cloud-meta";
+        const fileType = cloudGetFileType(item.display_name);
+        meta.innerHTML = `
+          <div class="cloud-fname">
+            <span class="cloud-file-type">${fileType}</span>
+            ${item.display_name}
+          </div>
+          <div class="cloud-fsmall">
+            <span class="cloud-status-indicator cloud-status-done"></span>
+            Size: ${cloudFormatBytes(item.size)} • Uploaded: ${new Date(item.date*1000).toLocaleString()}
+          </div>`;
+        
+        const actions = document.createElement("div");
+        actions.className = "cloud-actions";
+        
+        const openBtn = document.createElement("button");
+        openBtn.textContent = "🔗 Open";
+        openBtn.className = "cloud-button cloud-btn-info";
+        openBtn.onclick = () => {
+          window.open(`https://t.me/c/${String(CLOUD_CHAT_ID).replace('-100','')}/${item.message_id}`, "_blank");
+        };
+        
+        const delBtn = document.createElement("button");
+        delBtn.className = "cloud-delete-btn";
+        delBtn.textContent = "🗑️ Delete";
+        delBtn.onclick = async () => {
+          if (!confirm("Delete this file message from the Telegram group?")) return;
+          delBtn.disabled = true;
+          try {
+            const ok = await cloudDeleteMessage(item.message_id);
+            if (ok) {
+              const success = await cloudRemovePersistedByMsgId(item.message_id);
+              if (success) {
+                cloudSelectedUploadedFiles.delete(item.message_id);
+                await cloudRenderPersisted();
+                cloudShowToast("Deleted from Telegram and removed from shared history.", "success");
+              } else {
+                cloudShowToast("Deleted from Telegram but failed to update shared history.", "warning");
+              }
+            } else {
+              cloudShowToast("Delete failed — check console.", "error");
+            }
+          } catch(e){
+            console.error(e);
+            cloudShowToast("Delete failed — see console.", "error");
+          } finally {
+            delBtn.disabled = false;
+          }
+        };
+        
+        actions.appendChild(openBtn);
+        actions.appendChild(delBtn);
+        el.appendChild(checkbox);
+        el.appendChild(meta);
+        el.appendChild(actions);
+        cloudUploadedDiv.appendChild(el);
+        });
+      } catch(e) {
+        console.error('Error rendering persisted files:', e);
+        cloudUploadedDiv.innerHTML = '<div class="cloud-empty-state">Error loading files. Check console for details.</div>';
+      }
+    }
+
+    function cloudUpdateSelectedCount() {
+      // Count only the actually checked checkboxes in the UI
+      const checkedBoxes = cloudUploadedDiv.querySelectorAll('.cloud-file-checkbox:checked');
+      const count = checkedBoxes.length;
+      cloudSelectedCount.textContent = `${count} selected`;
+      cloudDeleteSelectedBtn.disabled = count === 0;
+    }
+
+    // Renders a queue UI for selected files
+    function cloudRenderQueue() {
+      cloudQueueDiv.innerHTML = "";
+      if (cloudQueueItems.length === 0) {
+        cloudQueueDiv.innerHTML = '<div class="cloud-empty-state">No files in queue. Select files and click Start Upload.</div>';
+        return;
+      }
+      cloudQueueItems.forEach((qi, idx) => {
+        let el = document.getElementById(qi.id);
+        if (!el) {
+          el = document.createElement("div");
+          el.id = qi.id;
+          el.className = "cloud-file-item";
+          const fileType = cloudGetFileType(qi.displayName);
+          const statusClass = qi.state === 'uploading' ? 'cloud-status-uploading' : 
+                             qi.state === 'done' ? 'cloud-status-done' : 
+                             qi.state === 'error' ? 'cloud-status-error' : 'cloud-status-pending';
+          
+          el.innerHTML = `
+            <div class="cloud-meta">
+              <div class="cloud-fname">
+                <span class="cloud-file-type">${fileType}</span>
+                ${qi.displayName}
+              </div>
+              <div class="cloud-fsmall">
+                <span class="cloud-status-indicator ${statusClass}"></span>
+                Size: ${cloudFormatBytes(qi.size)} • <span id="${qi.id}-status">${qi.status || 'Waiting'}</span>
+                <div class="cloud-file-progress" id="${qi.id}-progress" style="display: ${qi.state === 'uploading' ? 'inline-flex' : 'none'};">
+                  <div class="cloud-progress-circle-small">
+                    <div class="cloud-progress-text-small">0%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cloud-actions">
+              <button id="${qi.id}-cancel" class="cloud-delete-btn">❌ Cancel</button>
+            </div>`;
+          cloudQueueDiv.appendChild(el);
+
+          // cancel behavior
+          document.getElementById(`${qi.id}-cancel`).onclick = () => {
+            if (qi.xhr) {
+              qi.xhr.abort();
+            }
+            qi.state = "canceled";
+            document.getElementById(`${qi.id}-status`).textContent = "Canceled";
+            document.getElementById(`${qi.id}-cancel`).disabled = true;
+          };
+        } else {
+          // update status text
+          const status = document.getElementById(`${qi.id}-status`);
+          if (status) status.textContent = qi.status || "";
+          
+          // update status indicator
+          const statusIndicator = el.querySelector('.cloud-status-indicator');
+          if (statusIndicator) {
+            statusIndicator.className = `cloud-status-indicator ${
+              qi.state === 'uploading' ? 'cloud-status-uploading' : 
+              qi.state === 'done' ? 'cloud-status-done' : 
+              qi.state === 'error' ? 'cloud-status-error' : 'cloud-status-pending'
+            }`;
+          }
+          
+          // update progress indicator
+          const progressElement = document.getElementById(`${qi.id}-progress`);
+          if (progressElement) {
+            if (qi.state === 'uploading') {
+              progressElement.style.display = 'inline-flex';
+              cloudUpdateFileProgress(qi, qi.progress || 0);
+            } else {
+              progressElement.style.display = 'none';
+            }
+          }
+        }
+      });
+    }
+
+    // Delete message using Telegram API (returns true if ok)
+    async function cloudDeleteMessage(message_id) {
+      try {
+        const res = await fetch(`https://api.telegram.org/bot${CLOUD_BOT_TOKEN}/deleteMessage`, {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify({ chat_id: CLOUD_CHAT_ID, message_id })
+        });
+        const data = await res.json();
+        if (data && data.ok) return true;
+        console.warn("deleteMessage failed", data);
+        return false;
+      } catch (e) {
+        console.error(e);
+        return false;
+      }
+    }
+
+    // Upload single file using XMLHttpRequest to provide upload progress
+    function cloudUploadSingle(qi) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        qi.xhr = xhr;
+        qi.state = "uploading";
+        qi.status = "Uploading...";
+        cloudRenderQueue();
+
+        xhr.upload.onprogress = (ev) => {
+          if (ev.lengthComputable) {
+            const pct = Math.round((ev.loaded / ev.total) * 100);
+            qi.progress = pct;
+            qi.status = `Uploading — ${pct}%`;
+            
+            // Update individual file progress
+            cloudUpdateFileProgress(qi, pct);
+            
+            // Update upload speed
+            const timeElapsed = (Date.now() - cloudUploadStartTime) / 1000;
+            cloudUploadedBytes += ev.loaded - (cloudUploadedBytes || 0);
+            cloudUpdateUploadSpeed(cloudUploadedBytes, timeElapsed);
+            
+            cloudRenderQueue();
+          }
+        };
+
+        xhr.timeout = 1000 * 60 * 10; // 10 minutes
+        xhr.onerror = () => {
+          qi.state = "error";
+          qi.status = "Network error";
+          cloudRenderQueue();
+          reject(new Error("Network error"));
+        };
+        xhr.ontimeout = () => {
+          qi.state = "error";
+          qi.status = "Timeout";
+          cloudRenderQueue();
+          reject(new Error("Timeout"));
+        };
+        xhr.onabort = () => {
+          qi.state = "aborted";
+          qi.status = "Aborted";
+          cloudRenderQueue();
+          reject(new Error("Aborted"));
+        };
+
+        xhr.onload = async () => {
+          let json;
+          try {
+            json = JSON.parse(xhr.responseText);
+          } catch (e) {
+            qi.state = "error";
+            qi.status = "Invalid response";
+            cloudRenderQueue();
+            return reject(new Error("Invalid JSON response"));
+          }
+          if (json.ok) {
+            qi.state = "done";
+            qi.progress = 100;
+            qi.status = "Uploaded";
+            // result contains message_id and document.file_name etc.
+            const message_id = json.result.message_id;
+            const fileSize = qi.size;
+            const display_name = qi.displayNameTelegram || qi.displayName;
+            const date = Math.floor(Date.now()/1000);
+            // Persist metadata
+            cloudAddPersistedEntry({ message_id, size: fileSize, display_name, date });
+            
+            // Remove completed file from queue after a short delay
+            setTimeout(() => {
+              const index = cloudQueueItems.findIndex(item => item.id === qi.id);
+              if (index !== -1) {
+                cloudQueueItems.splice(index, 1);
+                cloudRenderQueue();
+              }
+            }, 2000); // 2 second delay to show completion status
+            
+            cloudRenderQueue();
+            resolve(json.result);
+          } else {
+            qi.state = "error";
+            qi.status = `Error: ${json.description || 'unknown'}`;
+            cloudRenderQueue();
+            reject(new Error(json.description || "Telegram error"));
+          }
+        };
+
+        // Prepare FormData
+        const form = new FormData();
+        form.append("chat_id", CLOUD_CHAT_ID);
+
+        // Give the file a prefixed name so you can easily identify it in Telegram later
+        const ts = Date.now();
+        const safeName = `${ts}_${qi.displayName}`; // timestamp prefix
+        // Also add a caption including the original name and a short id to help identify
+        const caption = `u:${ts} name:${qi.displayName}`;
+        form.append("caption", caption);
+        // document: (field name, file object, filename)
+        form.append("document", qi.file, safeName);
+
+        // send
+        xhr.open("POST", `https://api.telegram.org/bot${CLOUD_BOT_TOKEN}/sendDocument`);
+        // no custom headers for multipart; browser sets them
+        xhr.send(form);
+      });
+    }
+
+    // Promise pool to run N concurrent uploads
+    async function cloudRunUploads(poolItems) {
+      cloudUploading = true;
+      cloudUploadBtn.disabled = true;
+      cloudUploadStartTime = Date.now();
+      cloudUploadedBytes = 0;
+      cloudUploadSpeed.textContent = '-';
+      
+      const results = [];
+      const executing = [];
+      for (const qi of poolItems) {
+        const p = cloudUploadSingle(qi).then(r => { 
+          executing.splice(executing.indexOf(p),1); 
+          return r; 
+        });
+        executing.push(p);
+        // maintain concurrency
+        if (executing.length >= CLOUD_CONCURRENCY) {
+          try {
+            await Promise.race(executing);
+          } catch (e) {
+            // continue; race will remove finished/errored promises
+          }
+        }
+      }
+      // wait for all to finish (allow errors to reject individually)
+      await Promise.allSettled(executing);
+      cloudUploading = false;
+      cloudUploadBtn.disabled = false;
+      cloudUploadSpeed.textContent = 'Complete';
+      
+      // Refresh persisted list UI
+      await cloudRenderPersisted();
+    }
+
+    // Handle file selection and queueing
+    function cloudHandleFileSelection(files) {
+      cloudSelectedFiles = files;
+      // compute totals
+      let total = 0;
+      for (const f of files) total += f.size;
+      cloudSelCount.textContent = files.length;
+      cloudSelSize.textContent = cloudFormatBytes(total);
+      const remain = Math.max(0, CLOUD_MAX_TOTAL_UPLOAD_BYTES - total);
+      cloudAllowedRemain.textContent = cloudFormatBytes(remain);
+      // build queueItems but do not clear persisted list
+      cloudQueueItems = files.map((file, idx) => {
+        const id = `q-${Date.now()}-${idx}`;
+        return {
+          id,
+          file,
+          displayName: file.name,
+          displayNameTelegram: null,
+          size: file.size,
+          progress: 0,
+          status: "Waiting",
+          state: "pending",
+          xhr: null
+        };
+      });
+      cloudRenderQueue();
+    }
+
+    cloudFileInput.addEventListener("change", () => {
+      const fl = Array.from(cloudFileInput.files || []);
+      cloudHandleFileSelection(fl);
+    });
+
+    // click Start Upload
+    cloudUploadBtn.addEventListener("click", async () => {
+      if (cloudUploading) return;
+      if (!cloudSelectedFiles || cloudSelectedFiles.length === 0) return cloudShowToast("Select files first.", "warning");
+      // check total size limit
+      let total = 0;
+      for (const f of cloudSelectedFiles) total += f.size;
+      if (total > CLOUD_MAX_TOTAL_UPLOAD_BYTES) {
+        if (!confirm(`Selected files total ${cloudFormatBytes(total)} exceed the per-batch limit of ${cloudFormatBytes(CLOUD_MAX_TOTAL_UPLOAD_BYTES)}. Continue anyway?`)) {
+          return;
+        }
+      }
+      // create upload pool items referencing queueItems
+      const poolItems = cloudQueueItems.map(q => ({...q, file:q.file}));
+      // run uploads with concurrency
+      try {
+        await cloudRunUploads(poolItems);
+        cloudShowToast("Uploads finished (successful entries are saved in shared history).", "success");
+      } catch (e) {
+        console.error(e);
+        cloudShowToast("Error during uploads (see console).", "error");
+      } finally {
+        // clear selectedFiles and file input to allow reselect
+        cloudSelectedFiles = [];
+        cloudFileInput.value = "";
+        cloudSelCount.textContent = 0;
+        cloudSelSize.textContent = "0 B";
+        cloudAllowedRemain.textContent = cloudFormatBytes(CLOUD_MAX_TOTAL_UPLOAD_BYTES);
+        cloudQueueItems = [];
+        cloudRenderQueue();
+      }
+    });
+
+    // allow changing concurrency by clicking badge (cycles 1..6)
+    cloudConcurrencyBadge.onclick = () => {
+      CLOUD_CONCURRENCY = CLOUD_CONCURRENCY >= 6 ? 1 : CLOUD_CONCURRENCY + 1;
+      cloudConcurrencyBadge.textContent = `Concurrency: ${CLOUD_CONCURRENCY}`;
+    };
+
+    // Clear files button
+    cloudClearFilesBtn.addEventListener("click", () => {
+      cloudSelectedFiles = [];
+      cloudFileInput.value = "";
+      cloudQueueItems = [];
+      cloudSelCount.textContent = "0";
+      cloudSelSize.textContent = "0 B";
+      cloudAllowedRemain.textContent = cloudFormatBytes(CLOUD_MAX_TOTAL_UPLOAD_BYTES);
+      cloudUploadSpeed.textContent = "-";
+      cloudRenderQueue();
+    });
+
+    // Bulk actions
+    cloudSelectAllBtn.addEventListener("click", () => {
+      const checkboxes = cloudUploadedDiv.querySelectorAll('.cloud-file-checkbox');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = true;
+        const messageId = checkbox.closest('.cloud-file-item').dataset.messageId;
+        cloudSelectedUploadedFiles.add(messageId);
+      });
+      // Update the UI to show selected state
+      const fileItems = cloudUploadedDiv.querySelectorAll('.cloud-file-item');
+      fileItems.forEach(item => {
+        item.classList.add('selected');
+      });
+      cloudUpdateSelectedCount();
+    });
+
+    cloudDeselectAllBtn.addEventListener("click", () => {
+      cloudSelectedUploadedFiles.clear();
+      const checkboxes = cloudUploadedDiv.querySelectorAll('.cloud-file-checkbox');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      // Update the UI to remove selected state
+      const fileItems = cloudUploadedDiv.querySelectorAll('.cloud-file-item');
+      fileItems.forEach(item => {
+        item.classList.remove('selected');
+      });
+      cloudUpdateSelectedCount();
+    });
+
+    cloudDeleteSelectedBtn.addEventListener("click", async () => {
+      // Get only the actually checked files from the UI
+      const checkedBoxes = cloudUploadedDiv.querySelectorAll('.cloud-file-checkbox:checked');
+      const filesToDelete = Array.from(checkedBoxes).map(checkbox => 
+        checkbox.closest('.cloud-file-item').dataset.messageId
+      );
+      
+      if (filesToDelete.length === 0) return;
+      if (!confirm(`Delete ${filesToDelete.length} selected files from Telegram?`)) return;
+      
+      cloudDeleteSelectedBtn.disabled = true;
+      cloudDeleteSelectedBtn.textContent = "Deleting...";
+      
+      let successCount = 0;
+      let failCount = 0;
+      
+      console.log(`Starting bulk delete of ${filesToDelete.length} files:`, filesToDelete);
+      
+      // Get initial count
+      const initialCount = (await cloudLoadPersisted()).length;
+      console.log(`Initial storage count: ${initialCount}`);
+      
+      for (const messageId of filesToDelete) {
+        try {
+          console.log(`Attempting to delete message_id: ${messageId}`);
+          const ok = await cloudDeleteMessage(messageId);
+          if (ok) {
+            // Remove from shared storage
+            const success = await cloudRemovePersistedByMsgId(messageId);
+            if (success) {
+              cloudSelectedUploadedFiles.delete(messageId); // Remove from selection
+              successCount++;
+              console.log(`Successfully deleted and removed from storage: ${messageId}`);
+            } else {
+              console.log(`Deleted from Telegram but failed to update storage: ${messageId}`);
+            }
+          } else {
+            failCount++;
+            console.log(`Failed to delete from Telegram: ${messageId}`);
+          }
+        } catch (e) {
+          console.error(`Error deleting ${messageId}:`, e);
+          failCount++;
+        }
+      }
+      
+      // Clear any remaining selections
+      cloudSelectedUploadedFiles.clear();
+      
+      // Check final count
+      const finalCount = (await cloudLoadPersisted()).length;
+      console.log(`Final storage count: ${finalCount} (removed ${initialCount - finalCount})`);
+      
+      // Force refresh the UI
+      await cloudRenderPersisted();
+      
+      cloudDeleteSelectedBtn.disabled = false;
+      cloudDeleteSelectedBtn.textContent = "🗑️ Delete Selected from Telegram";
+      
+      cloudShowToast(`Deleted ${successCount} files successfully. ${failCount} failed.`, failCount > 0 ? "warning" : "success");
+    });
+
+    cloudClearStorageBtn.addEventListener("click", async () => {
+      if (!confirm("Clear all upload history from shared storage? This cannot be undone.")) return;
+      
+      try {
+        const success = await cloudSavePersisted([]);
+        if (success) {
+          cloudSelectedUploadedFiles.clear();
+          await cloudRenderPersisted();
+          cloudShowToast("All upload history cleared from shared storage.", "success");
+        } else {
+          cloudShowToast("Failed to clear shared storage. Check console for details.", "error");
+        }
+      } catch(e) {
+        console.error('Error clearing storage:', e);
+        cloudShowToast("Error clearing storage. Check console for details.", "error");
+      }
+    });
+
+    cloudSyncBtn.addEventListener("click", async () => {
+      cloudSyncBtn.disabled = true;
+      cloudSyncBtn.textContent = "🔄 Syncing...";
+      
+      try {
+        await cloudSyncMissingFiles();
+        await cloudRenderPersisted();
+        cloudShowToast("Sync completed. Check console for details.", "info");
+      } catch(e) {
+        console.error('Error during sync:', e);
+        cloudShowToast("Sync failed. Check console for details.", "error");
+      } finally {
+        cloudSyncBtn.disabled = false;
+        cloudSyncBtn.textContent = "🔄 Sync Files";
+      }
+    });
+
+    // Setup drag and drop
+    cloudSetupDragAndDrop();
+
+    // initial render
+    cloudRenderPersisted();
+    cloudRenderQueue();
   </script>
 </body>
 </html>
