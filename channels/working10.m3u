@@ -1,0 +1,389 @@
+#EXTM3U
+#EXTINF:-1,LiveNOW from FOX
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/vizioAAAA-foxnewsnow-vizio/playlist.m3u8
+#EXTINF:-1,LiveNOW from FOX Alt
+https://fox-foxnewsnow-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,CNN Headlines (Geo)
+https://amg01918-cnnus-amg01918c1-vizio-us-1813.playouts.now.amagi.tv/playlist/amg01918-cnnus-cnnheadlines-vizious/playlist.m3u8
+#EXTINF:-1,NBC News Now by Pluto TV
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5df97894467dfa00091c873c/master.m3u8?deviceType=vizio-watchfreeplus&deviceMake=vizio&deviceModel=vizio&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&vizio_app_domain=%7BAPP_DOMAIN%7D&vizio_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=vizio-watchfreeplus
+#EXTINF:-1,CBSN News 24x7 by Pluto TV
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5a6b92f6e22a617379789618/master.m3u8?deviceType=vizio-watchfreeplus&deviceMake=vizio&deviceModel=vizio&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&vizio_app_domain=%7BAPP_DOMAIN%7D&vizio_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=vizio-watchfreeplus
+#EXTINF:-1,Newsmax 2
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/vizioAAAA-newsmax-vizio/playlist.m3u8
+#EXTINF:-1,Newsmax 2 Alt
+https://newsmax-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,Real America's Voice
+https://ca88f6e89f1b450b89e492bb1a909db6.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/Vizio_AmericasVoice/playlist.m3u8?
+#EXTINF:-1,OAN Plus
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/vizioAAAA-oneamericanews-vizio/playlist.m3u8
+#EXTINF:-1,OAN Plus Alt
+https://oneamericanews-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,BBC News
+https://b638a299.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/Vml6aW9fQkJDTmV3c19ITFM/playlist.m3u8
+#EXTINF:-1,FOX Weather
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01542-foxweatherllc-weather-vizious/playlist.m3u8
+#EXTINF:-1,WeatherNation
+https://867201d948f94717a5224db6777289ec.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/Vizio_WeatherNationTV/playlist.m3u8
+#EXTINF:-1,USA Today
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg00731-gannettcoinc-usatodaynews-vizious/playlist.m3u8
+#EXTINF:-1,Reuters (Geo)
+https://amg00453-reuters-amg00453c1-vizio-us-2107.playouts.now.amagi.tv/playlist/amg00453-reuters-reuters-vizious/playlist.m3u8
+#EXTINF:-1,Yahoo Finance (Geo)
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/yahoofina-yahoofinance-vizio/playlist.m3u8
+#EXTINF:-1,Yahoo Finance Alt
+https://yahoo-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,Schwab Network
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/vizioAAAA-tdameritrade-vizio/playlist.m3u8
+#EXTINF:-1,Schwab Network Alt
+https://tdameritrade-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,CBC News
+https://d3is52sgpnlx4c.cloudfront.net/10901/88885505/hls/master.m3u8?withResolution=true&ads.xumo_channelId=88885505
+#EXTINF:-1,Fox 5 Atlanta
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox5atlantawaga-vizious/playlist.m3u8
+#EXTINF:-1,Fox 5 Washington DC
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox5dcwttg-vizious/playlist.m3u8
+#EXTINF:-1,Fox 2 Detroit
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox2detroitwjbk-vizious/playlist.m3u8
+#EXTINF:-1,Fox 4 Dallas - Fort Worth
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox4dallaskdfw-vizious/playlist.m3u8
+#EXTINF:-1,Fox 13 Tampa Bay
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox13tampabaywtvt-vizious/playlist.m3u8
+#EXTINF:-1,Fox 2 San Francisco
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox2sanfranciscoktvu-vizious/playlist.m3u8
+#EXTINF:-1,Fox 29 Philadelphia
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox29philadelphiawtx-vizious/playlist.m3u8
+#EXTINF:-1,Fox 35 Orlando
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox35orlandowofl-vizious/playlist.m3u8
+#EXTINF:-1,Fox 13 Seattle
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox13seattlekcpq-vizious/playlist.m3u8
+#EXTINF:-1,Fox 11 Los Angeles
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00488-foxdigital-fox11losangeleskttv-vizious/playlist.m3u8
+#EXTINF:-1,Fox 5 New York (Geo)
+https://amg00488-foxdigital-amg00488c7-vizio-us-903.playouts.now.amagi.tv/playlist/amg00488-foxdigitalfast-fox5newyorkwnyw-vizious/playlist.m3u8
+#EXTINF:-1,Fox 32 Chicago (Geo)
+https://amg00488-foxdigital-amg00488c4-vizio-us-900.playouts.now.amagi.tv/playlist/amg00488-foxdigitalfast-fox32chicagowfld-vizious/playlist.m3u8
+#EXTINF:-1,Fox 26 Houston (Geo)
+https://amg00488-foxdigital-amg00488c1-vizio-us-892.playouts.now.amagi.tv/playlist/amg00488-foxdigitalfast-fox26houstonkriv-vizious/playlist.m3u8
+#EXTINF:-1,Fox 10 Phoenix (Geo)
+https://amg00488-foxdigital-amg00488c2-vizio-us-898.playouts.now.amagi.tv/playlist/amg00488-foxdigitalfast-fox10ksazphoenix-vizious/playlist.m3u8
+#EXTINF:-1,Fox 9 Minneapolis (Geo)
+https://amg00488-foxdigital-amg00488c8-vizio-us-904.playouts.now.amagi.tv/playlist/amg00488-foxdigitalfast-fox9minneapoliskmsp-vizious/playlist.m3u8
+#EXTINF:-1,Fox 6 Milwaukee (Geo)
+https://amg00488-foxdigital-amg00488c5-vizio-us-901.playouts.now.amagi.tv/playlist/amg00488-foxdigitalfast-fox6milwaukeewiti-vizious/playlist.m3u8
+#EXTINF:-1,Fox 7 Austin (Geo)
+https://amg00488-foxdigital-amg00488c3-vizio-us-899.playouts.now.amagi.tv/playlist/amg00488-foxdigitalfast-fox7austinktbc-vizious/playlist.m3u8
+#EXTINF:-1,CBS News New York by Pluto TV
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dc48170e280c80009a861ab/master.m3u8?deviceType=vizio-watchfreeplus&deviceMake=vizio&deviceModel=vizio&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&vizio_app_domain=%7BAPP_DOMAIN%7D&vizio_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=vizio-watchfreeplus
+#EXTINF:-1,CBS News Los Angeles by Pluto TV
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5dc481cda1d430000948a1b4/master.m3u8?deviceType=vizio-watchfreeplus&deviceMake=vizio&deviceModel=vizio&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&vizio_app_domain=%7BAPP_DOMAIN%7D&vizio_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=vizio-watchfreeplus
+#EXTINF:-1,News 12 New York
+https://cda7bae2.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/Vml6aW9fTmV3czEyTmV3WW9ya19ITFM/playlist.m3u8
+#EXTINF:-1,Atlanta News First (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-atlantanewsfirst-vizious/playlist.m3u8
+#EXTINF:-1,Arizona's Family (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-arizonasfamily-vizious/playlist.m3u8
+#EXTINF:-1,Cleveland 19 News (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-cleveland19newsplus-vizious/playlist.m3u8
+#EXTINF:-1,WBTV News Charlotte (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-wbtvnews-vizious/playlist.m3u8
+#EXTINF:-1,FOX 12 Oregon (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-kptvfox12oregon-vizious/playlist.m3u8
+#EXTINF:-1,KMOV4 News Missouri (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-kmovnews4stlouis-vizious/playlist.m3u8
+#EXTINF:-1,WSMV4 News Nashville (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-wsmv4news-vizious/playlist.m3u8
+#EXTINF:-1,KCTV5 News Kansas City (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-kctv5news-vizious/playlist.m3u8
+#EXTINF:-1,WFSB Eyewitness News 3 Connecticut (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-wfsbplus-vizious/playlist.m3u8
+#EXTINF:-1,FOX19 Now Cincinnati (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00312-graytelevisioni-wxixfox19news-vizious/playlist.m3u8
+#EXTINF:-1,WSB-TV 2 Atlanta (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00327-coxmediagroup-wsbbreaking-vizious/playlist.m3u8
+#EXTINF:-1,WFTV 9 Central Florida (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00327-coxmediagroup-wftvbreakingnews-vizious/playlist.m3u8
+#EXTINF:-1,WPXI 11 Pittsburgh (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00327-coxmediagroup-wpxibreakingnews-vizious/playlist.m3u8
+#EXTINF:-1,WSOC 9 Charlotte (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00327-coxmediagroup-wsocbreakingnews-vizious/playlist.m3u8
+#EXTINF:-1,WHIO TV 7 Dayton (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00327-coxmediagroup-whiobreakingnews-vizious/playlist.m3u8
+#EXTINF:-1,CBS 47 Fox 30 Action News Jax (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00327-coxmediagroup-wjaxbreakingnews-vizious/playlist.m3u8
+#EXTINF:-1,Boston 25 News (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00327-coxmediagroup-wfxtbreakingnews-vizious/playlist.m3u8
+#EXTINF:-1,KIRO 7 Seattle (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00327-coxmediagroup-kirobreakingnews-vizious/playlist.m3u8
+#EXTINF:-1,ABC 7 Sarasota (Geo)
+https://amg00312-amg00312c1-vizio-us-2634.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wwsbabc7yourlocalstation-vizious/playlist.m3u8
+#EXTINF:-1,Fox Carolina WHNS (Geo)
+https://amg00312-amg00312c2-vizio-us-2633.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-whnsfoxcarolinanews-vizious/playlist.m3u8
+#EXTINF:-1,Fox 5 KVVU Las Vegas (Geo)
+https://amg00312-amg00312c3-vizio-us-2632.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-kvvufox5vegas-vizious/playlist.m3u8
+#EXTINF:-1,WBRC Fox 6 News Birmingham (Geo)
+https://amg00312-amg00312c4-vizio-us-2631.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wbrcwbrcfox6news-vizious/playlist.m3u8
+#EXTINF:-1,WAVE Now Louisville (Geo)
+https://amg00312-amg00312c5-vizio-us-2630.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wavewavenow-vizious/playlist.m3u8
+#EXTINF:-1,Fox 8 Local First New Orleans (Geo)
+https://amg00312-amg00312c6-vizio-us-2629.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wvuefox8wvueneworleans-vizious/playlist.m3u8
+#EXTINF:-1,Action News 5 Memphis (Geo)
+https://amg00312-amg00312c7-vizio-us-2628.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wmcactionnews5wmc-vizious/playlist.m3u8
+#EXTINF:-1,12 On Your Side Richmond (Geo)
+https://amg00312-amg00312c8-vizio-us-2627.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wwbt12onyourside-vizious/playlist.m3u8
+#EXTINF:-1,Fox 10 News Mobile-Pensacola (Geo)
+https://amg00312-amg00312c9-vizio-us-2626.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-walafox10news-vizious/playlist.m3u8
+#EXTINF:-1,WVLT 8 Knoxville (Geo)
+https://amg00312-amg00312c10-vizio-us-2625.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wvltwvltnews-vizious/playlist.m3u8
+#EXTINF:-1,WKYT Lexington (Geo)
+https://amg00312-amg00312c11-vizio-us-2635.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wkytwkytnews-vizious/playlist.m3u8
+#EXTINF:-1,13 News KOLD Tucson (Geo)
+https://amg00312-amg00312c16-vizio-us-2639.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-koldkoldnews13-vizious/playlist.m3u8
+#EXTINF:-1,ABC 2 WBAY-TV Green Bay (Geo)
+https://amg00312-amg00312c13-vizio-us-2636.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wbaywbayaction2news-vizious/playlist.m3u8
+#EXTINF:-1,12 News KWCH Wichita (Geo)
+https://amg00312-amg00312c14-vizio-us-2637.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-kwchkwch12news-vizious/playlist.m3u8
+#EXTINF:-1,WDBJ 7 Roanoke (Geo)
+https://amg00312-amg00312c15-vizio-us-2638.playouts.now.amagi.tv/playlist/amg00312-graytelevisionfast-wdbjwdbj7news-vizious/playlist.m3u8
+#EXTINF:-1,Free Movie Network (Geo)
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg00346-vizioinc-fear-vizious/playlist.m3u8
+#EXTINF:-1,Romance: Summer Rom-Coms (Geo)
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00346-vizioinc-vizioromance-vizious/playlist.m3u8
+#EXTINF:-1,ACTION! (Geo)
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg00346-vizioinc-action-vizious/playlist.m3u8
+#EXTINF:-1,MovieSphere (Geo)
+https://amg00353-lionsgatestudios-amg00353c2-vizio-us-801.playouts.now.amagi.tv/playlist/amg00353-lionsgatetvfast-moviesphere-vizious/playlist.m3u8
+#EXTINF:-1,Pluto TV Spotlight
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5ba3fb9c4b078e0f37ad34e8/master.m3u8?deviceType=vizio-watchfreeplus&deviceMake=vizio&deviceModel=vizio&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&vizio_app_domain=%7BAPP_DOMAIN%7D&vizio_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=vizio-watchfreeplus
+#EXTINF:-1,Pluto TV Action
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/561d7d484dc7c8770484914a/master.m3u8?deviceType=vizio-watchfreeplus&deviceMake=vizio&deviceModel=vizio&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&vizio_app_domain=%7BAPP_DOMAIN%7D&vizio_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=vizio-watchfreeplus
+#EXTINF:-1,Pluto TV Comedy
+https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/5a4d3a00ad95e4718ae8d8db/master.m3u8?deviceType=vizio-watchfreeplus&deviceMake=vizio&deviceModel=vizio&deviceVersion=unknown&appVersion=unknown&deviceLat=0&deviceLon=0&deviceDNT=%7BTARGETOPT%7D&deviceId=%7BPSID%7D&advertisingId=%7BPSID%7D&us_privacy=1YNY&vizio_app_domain=%7BAPP_DOMAIN%7D&vizio_app_name=%7BAPP_NAME%7D&profileLimit=&profileFloor=&embedPartner=vizio-watchfreeplus
+#EXTINF:-1,FilmRise Action
+https://d3is52sgpnlx4c.cloudfront.net/10901/88885508/hls/master.m3u8?withResolution=true&ads.xumo_channelId=88885508
+#EXTINF:-1,FilmRise Free Movies
+https://d3is52sgpnlx4c.cloudfront.net/10901/88885512/hls/master.m3u8?withResolution=true&ads.xumo_channelId=88885512
+#EXTINF:-1,Hallmark Movies & More
+https://d3is52sgpnlx4c.cloudfront.net/10901/88885520/hls/master.m3u8?withResolution=true&ads.xumo_channelId=88885520
+#EXTINF:-1,Movie Favorites by Lifetime
+https://5ee29b66.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/Vml6aW9fSG9saWRheU1vdmllRmF2b3JpdGVzYnlMaWZldGltZV9ITFM/playlist.m3u8
+#EXTINF:-1,Tribeca Channel (Geo)
+https://amg02507-amg02507c1-vizio-us-3176.playouts.now.amagi.tv/playlist/amg02507-giantpicturesfast-tribeca-vizious/playlist.m3u8
+#EXTINF:-1,HerSphere (Geo)
+https://amg00353-lionsgatestudios-amg00353c3-vizio-us-802.playouts.now.amagi.tv/playlist/amg00353-lionsgatetvfast-hersphere-vizious/playlist.m3u8
+#EXTINF:-1,Spark TV Light & Love
+https://2a41c39edb1543cd889f15c01c180124.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/Vizio_SparkTV/playlist.m3u8
+#EXTINF:-1,Spark TV Light & Love Alt
+https://candlelightmedia-sparklightlove-1-us.vizio.wurl.tv/playlist.m3u8
+#EXTINF:-1,Dove Channel
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01201-cinedigmenterta-dovetv-vizious/playlist.m3u8
+#EXTINF:-1,Circle Country
+https://cdn-ue1-prod.tsv2.amagi.tv/linear/vizioAAAA-circle-vizio/playlist.m3u8
+#EXTINF:-1,Circle Country Alt
+https://circle-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,Shades of Black (Geo) Alt
+https://fuse-beats-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,ALLBLK Gems
+https://c2c42b57d47e452084d9a4dfcc490098.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/Vizio_AllBlkGems/playlist.m3u8
+#EXTINF:-1,Maverick Black Cinema
+https://c769d1503f8c498292ac25d733e738cc.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/Vizio_MaverickBlackCinema/playlist.m3u8
+#EXTINF:-1,AMC Thrillers Alt
+https://amc-rushbyamc-1-us.vizio.wurl.tv/playlist.m3u8
+#EXTINF:-1,Portlandia
+https://b84386a1af744d68ab1a216c8dbb5f3b.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/Vizio_Portlandia/playlist.m3u8
+#EXTINF:-1,BYUtv (Geo) CHECK
+https://amg02604-byutv-amg02604c2-vizio-us-3726.playouts.now.amagi.tv/playlist/amg02604-byutvfast-byutv-vizious/playlist.m3u8
+#EXTINF:-1,Cowboy Way
+https://api-ott-imagicomm-ime.ottera.tv/loggingmediaurlpassthrough/a.m3u8?version=12&id=10&partner=vizio_syndication&device_id=%7bADID%7d&us_privacy=%7bUSPRIVACY%7d&lmt=%7bLMT%7d&ifa_type=%7bIFATYPE%7d&app_bundle=%7bAPP_BUNDLE%7d&app_name=%7bAPP_NAME%7d&app_store_url=%7bAPP_STORE_URL%7d&app_domain=%7bDOMAIN%7d&device_height=%7bHEIGHT%7d&device_width=%7bWIDTH%7d&device_make=%7bDEVICE_MAKE%7d&vizdartoken=eyJhdWQiOiIyNDMiLCJ3ZnBjaWQiOjQwMDkyMDIxMzR9
+#EXTINF:-1,Project Runway (Geo)
+https://amg02189-spyglassmediagroup-amg02189c1-vizio-us-513.playouts.now.amagi.tv/playlist/amg02189-spyglass-projectrunway-vizious/playlist.m3u8
+#EXTINF:-1,Four in a Bed Alt
+https://all3media-four-in-a-bed-1-us.vizio.wurl.tv/playlist.m3u8
+#EXTINF:-1,FailArmy
+https://482d9335.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/Vml6aW9fRmFpbEFybXlfSExT/playlist.m3u8
+#EXTINF:-1,UnXplained Zone
+https://2fb56834.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/Vml6aW9fVW5YcGxhaW5lZFpvbmVfSExT/playlist.m3u8
+#EXTINF:-1,Real Wild Alt
+https://lds-realwild-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,Travel and Adventure (Geo)
+https://amg00136-wbd-amg00136c27-vizio-us-1809.playouts.now.amagi.tv/playlist/amg00136-warnerbrothersdiscovery-warnerbrostvtravelandadventure-vizious/playlist.m3u8
+#EXTINF:-1,Shaun the Sheep & Friends
+https://api-ott.aardman.com/loggingmediaurlpassthrough/a.m3u8?version=12&id=1062&partner=vizio_syndication&device_id=%7bADID%7d&us_privacy=%7bUSPRIVACY%7d&us_privacy=%7bUSPRIVACY%7d&lmt=%7bLMT%7d&lmt=%7bLMT%7d&ifa_type=%7bIFATYPE%7d&ifa_type=%7bIFATYPE%7d&app_bundle=%7bAPP_BUNDLE%7d&app_name=%7bAPP_NAME%7d&app_store_url=%7bAPP_STORE_URL%7d&app_domain=%7bDOMAIN%7d&device_height=%7bHEIGHT%7d&device_width=%7bWIDTH%7d&device_make=%7bDEVICE_MAKE%7d&vizdartoken=eyJhdWQiOiIyNDMiLCJ3ZnBjaWQiOjQyOTIzMjUwNDB9
+#EXTINF:-1,Super Simple Songs
+https://5350c8d38aec4989b3b9ec5d76dbe624.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/Vizio_SuperSimpleSongs/playlist.m3u8?
+#EXTINF:-1,Ninja Kidz TV
+https://fb57620e844a42628b348ebce63f15c1.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/Vizio_NinjaKidzTV/playlist.m3u8
+#EXTINF:-1,Ninja Kidz TV Alt
+https://playworksdigital-ninjakidztv-1-us.vizio.wurl.tv/playlist.m3u8
+#EXTINF:-1,Gardening with Monty Don Alt
+https://all3media-gardening-with-monty-don-us.vizio.wurl.tv/playlist.m3u8
+#EXTINF:-1,Antiques Roadshow U.K Alt
+https://bbc-antiquesroadshowuk-1-us.vizio.wurl.tv/playlist.m3u8
+#EXTINF:-1,Magellan TV Now (Geo)
+https://amg00376-magellan-amg00376c1-vizio-us-1377.playouts.now.amagi.tv/playlist/amg00376-magellantv-magellantvnowmainus-vizious/playlist.m3u8
+#EXTINF:-1,Ax Men
+https://8d46229f.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/Vml6aW9fQXhNZW5fSExT/playlist.m3u8
+#EXTINF:-1,Duck Dynasty (Geo)
+https://amg00276-amg00276c2-vizio-us-4044.playouts.now.amagi.tv/playlist/amg00276-aetelevisionnetworksfast-duckdynasty-vizious/playlist.m3u8
+#EXTINF:-1,Women's Sports Network
+https://womensnetwork-vizio.amagi.tv/hls/amagi_hls_data_vizioAAAA-womensnetwork-vizio/CDN/playlist.m3u8
+#EXTINF:-1,Overtime
+https://761ea40fc4384b73a8dac2975eae2718.mediatailor.us-east-1.amazonaws.com/v1/master/0fb304b2320b25f067414d481a779b77db81760d/Vizio_Overtime/playlist.m3u8
+#EXTINF:-1,CNN News 18 Geo
+https://amg00866-amg00866c5-xiaomi-in-3550.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1,News 18 Tamil Nadu Geo
+https://amg00866-amg00866c6-xiaomi-in-3554.playouts.now.amagi.tv/playlist.m3u8
+#EXTINF:-1,Nosey other (EU)
+https://nosey-3-eu.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Mr Bean Animated (BR) Geo
+https://amg00627-amg00627c35-xiaomi-international-4921.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanbr-xiaomiinternational/playlist.m3u8
+#EXTINF:-1,Drone TV (EU)
+https://airvuz-dronetv-1-eu.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Go USA (EU)
+https://brandusa-gousa-1-eu.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Now 80s 
+https://lightning-now80s-xiaomi.amagi.tv/playlist.m3u8
+#EXTINF:-1,Now 90s 
+https://lightning-now90s-xiaomi.amagi.tv/playlist.m3u8
+#EXTINF:-1,Kids TV (US)
+https://jansonmedia-kidstv-1-us.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Outdoor Action (EU)
+https://careco-outdoor-action-1-eu.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Teen Vee English 
+https://amg02051-soulpublishing-amg02051c5-xiaomi-international-383.playouts.now.amagi.tv/playlist/amg02051-admecyltd-teenveeenglish-xiaomiinternational/playlist.m3u8
+#EXTINF:-1,PowerNation
+https://amg01258-raycom-amg01258c1-xiaomi-international-907.playouts.now.amagi.tv/playlist/amg01258-raycomsportsfast-powernation-xiaomiinternational/playlist.m3u8
+#EXTINF:-1,TV9 Marathi (IN)
+https://amg01106-tv9-amg01106c3-xiaomi-in-1149.playouts.now.amagi.tv/playlist/amg01106-tv9fast-tv9marati-xiaomiin/playlist.m3u8
+#EXTINF:-1,TV9 Kannada (IN) Geo
+https://amg01106-tv9-amg01106c6-xiaomi-in-1185.playouts.now.amagi.tv/playlist/amg01106-tv9fast-tv9kannada-xiaomiin/playlist.m3u8
+#EXTINF:-1,Mango TV (IN) Geo
+https://amg01911-mangotv-amg01911c1-xiaomi-in-1270.playouts.now.amagi.tv/playlist/amg01911-mangomassmedia-mangotv-xiaomiin/playlist.m3u8
+#EXTINF:-1,Sport Outdoor TV (EU)
+https://gto2000-sportoutdoortv-1-eu.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Drive TV La Chaine Auto (FR) Geo
+https://amg01796-amg01796c2-xiaomi-international-2756.playouts.now.amagi.tv/playlist/amg01796-fastmediafast-drivetv-xiaomiinternational/playlist.m3u8
+#EXTINF:-1,Wasabi La Chaine Anime (FR) Geo
+https://amg01796-amg01796c3-xiaomi-international-2755.playouts.now.amagi.tv/playlist/amg01796-fastmediafast-wasabii-xiaomiinternational/playlist.m3u8
+#EXTINF:-1,Risate al Sud (IT)
+https://ixmedia-srl-risatealsud-1-it.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Chili Alta Tensione (IT)
+https://chili-chili-alta-tensione-1-it.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Telenovela TV (FR)
+https://stormcast-telenovelatv-1-fr.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Sony Comedias (MX)
+https://spt-sonyonecomedias-mx.xiaomi.wurl.tv/playlist.m3u8
+#EXTINF:-1,Baden TV Karlsruhe
+http://cdn.icu.de/rtplive/btv.stream/playlist.m3u8
+#EXTINF:-1,Radio Weser TV Bremen
+https://5857499ee635b.streamlock.net/radiowesertv-live/_definst_/mp4:livestreamTV/playlist.m3u8
+#EXTINF:-1,Regio TV Stuttgart
+https://regiotv-s.iptv-playoutcenter.de/regiotv-s/regiotv-s.stream_1/playlist.m3u8
+#EXTINF:-1,RON TV  (18:00 - 18:30)
+https://ron-i.akamaihd.net/hls/live/523496/ron/master.m3u8
+#EXTINF:-1,Saarland Fernsehen 2
+http://saarland2.iptv-playoutcenter.de/saarland2/saarland2.stream_2/playlist.m3u8
+#EXTINF:-1,Canal Alpha Jura
+https://canalalphaju.vedge.infomaniak.com/livecast/ik:canalalphaju/playlist.m3u8
+#EXTINF:-1,Tele 1
+https://cdnapisec.kaltura.com/p/1719221/sp/171922100/playManifest/entryId/1_xias5bqq/format/applehttp/protocol/https/a.m3u8
+#EXTINF:-1,Black News Channel
+https://blacknewschannel-vizio.amagi.tv/playlist.m3u8
+#EXTINF:-1,Investment Pitch
+http://www.30a-tv.com/InvPit.m3u8
+#EXTINF:-1,My time Movies Network
+https://mytime-tcl.amagi.tv/playlist.m3u8
+#EXTINF:-1,NRB TV
+http://uni6rtmp.tulix.tv/nrbnetwork/myStream.sdp/playlist.m3u8
+#EXTINF:-1,The Wall Street Journal Live
+https://d155hi8td9k2ns.cloudfront.net/out/wapo-medialive3-rtmp/live.m3u8?player=powa
+#EXTINF:-1,Yahoo! Finance
+https://yahoo-samsung.amagi.tv/playlist.m3u8
+#EXTINF:-1,CT-N TV  - Conneticut
+http://video.ct-n.com/live/ctnstream/chunklist_w1116602077_DVR.m3u8
+#EXTINF:-1,DC Council Channel
+http://video.oct.dc.gov/out/u/15_12.m3u8
+#EXTINF:-1,WCCA-TV (Worcester)
+http://worcester.vod.castus.tv/live/ch1.m3u8
+#EXTINF:-1,NewsmaxTV
+http://nmxlive.akamaized.net/hls/live/529965/Live_1/master.m3u8
+#EXTINF:-1,Circle
+https://circle-roku.amagi.tv/playlist.m3u8
+#EXTINF:-1,5AAB TV
+http://158.69.124.9:1935/5aabtv/5aabtv/playlist.m3u8
+#EXTINF:-1,Legislative Assembly of Ontario
+http://origin-http-delivery.isilive.ca/live/_definst_/ontla/house-en/playlist.m3u8
+#EXTINF:-1,TAG TV
+http://cdn11.live247stream.com/tag/tv/playlist.m3u8
+#EXTINF:-1,TVMAS
+https://5ca9af4645e15.streamlock.net/rtv/videortv/chunklist_w192674072.m3u8
+#EXTINF:-1,QVC Japan  - iptvmate.net
+https://cdn-live1.qvc.jp/iPhone/1501/1501.m3u8
+#EXTINF:-1,Steelbird Music
+http://cdn25.live247stream.com/steelbirdmusic/tv/playlist.m3u8
+#EXTINF:-1,Crime TV
+http://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5d2c571faeb3e2738ae27933/master.m3u8?terminate=false&deviceType=web&deviceMake=web&deviceModel=web&sid=470&deviceId=5d2c571faeb3e2738ae27933&deviceVersion=DNT&appVersion=DNT&deviceDNT=0&userId=&advertisingId=&deviceLat=&deviceLon=&app_name=&appName=web&buildVersion=&appStoreUrl=&architecture=&includeExtendedEvents=false&marketingRegion=US&serverSideAds=false
+#EXTINF:-1,RTV Maastricht
+http://stream.rtvmaastricht.nl:8081/rtvm_live/tv/playlist.m3u8
+#EXTINF:-1,NoTele
+https://streaming01.divercom.be/notele_live/_definst_/direct.stream/chunklist_w1424854023.m3u8
+#EXTINF:-1,Himlen TV 7
+http://vod.tv7.fi:1935/tv7-se/_definst_/smil:tv7-se.smil/playlist.m3u8
+#EXTINF:-1,Krim 24
+http://mr2live.1tvcrimea.ru:8080/24tvcrimea.m3u8
+#EXTINF:-1,Orbita
+http://ftp.orbita.dn.ua/hls/orbita.m3u8
+#EXTINF:-1,Formula
+https://c4635.cdn.xsg.ge/c4635/TVFormula/tracks-v1a1/mono.m3u8
+#EXTINF:-1,Pervyy Muzykal'nyy BY
+http://rtmp.one.by:1200
+#EXTINF:-1,Pervyy Muzykal'nyy 2 BY
+http://rtmp.one.by:1300
+#EXTINF:-1,Pervyy Muzykal'nyy RU BY HD
+http://rtmp.one.by:2300
+#EXTINF:-1,Telewizja Regionalna TVT
+http://gargoyle.tomkow.pl/hls/tvt.m3u8
+#EXTINF:-1,Balaton TV
+https://stream.iptvservice.eu/hls/balatontv.m3u8
+#EXTINF:-1,TV7 Bekescsaba
+https://stream.y5.hu/stream/stream_bekescsaba/stream.m3u8
+#EXTINF:-1,Retro Music Television
+http://stream.mediawork.cz/retrotv/retrotvHQ1/playlist.m3u8
+#EXTINF:-1,TVPlus Suceava
+http://85.186.146.34:8080
+#EXTINF:-1,TVSat
+http://89.38.8.130:39443
+#EXTINF:-1,Al-Sharqiya
+https://5d94523502c2d.streamlock.net/home/mystream/chunklist_w1408191520.m3u8
+#EXTINF:-1,Parnian TV
+https://live2.parnian.tv/hls/live/play.m3u8
+#EXTINF:-1,Kabbalah TV Hebrew
+http://edge2.uk.kab.tv/live/tv66-heb-medium/playlist.m3u8
+#EXTINF:-1,TopEstrada TV
+http://live.topestrada.com/live/topestrada/tracks-v1a1/index.m3u8
+#EXTINF:-1,A2i TV
+https://stream.sen-gt.com/A2itv/myStream/chunklist_w1124459956.m3u8
+#EXTINF:-1,Canal 56
+https://videos.canal56.com/directe/stream/index.m3u8
+#EXTINF:-1,Canal Malaga
+http://canalmalaga-tv-live.flumotion.com/chunks.m3u8
+#EXTINF:-1,Costa Noroeste
+https://limited31.todostreaming.es/live/noroestetv-livestream.m3u8
+#EXTINF:-1,Sal Televisión
+https://www.tdtchannels.com/stream/saltv.m3u8
+#EXTINF:-1,TeleSafor
+http://video.telesafor.com/hls/video.m3u8
+#EXTINF:-1,Tuya La Janda TV
+http://185.210.20.13:8080/0.m3u8
+#EXTINF:-1,Camera dei Deputati (via RR)
+https://video-ar.radioradicale.it/diretta/camera2/playlist.m3u8
+#EXTINF:-1,RDS Social TV
+https://stream.rdstv.radio/out/v1/ec85f72b87f04555aa41d616d5be41dc/index.m3u8
+#EXTINF:-1,AltoAdige TV
+https://5f204aff97bee.streamlock.net/AltoAdigeTV/livestream/playlist.m3u8
+#EXTINF:-1,Canale 7
+http://wms.shared.streamshow.it:1935/canale7/canale7/live.m3u8
+#EXTINF:-1,Radio Company TV
+https://5929b138b139d.streamlock.net/CompanyTV/livestream_720p/playlist.m3u8
+#EXTINF:-1,Euro Indie Music Chart (IT)
+http://178.33.224.197:1935/euroindiemusic/euroindiemusic/playlist.m3u8
