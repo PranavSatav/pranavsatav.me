@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Pranav Satav | Portfolio & Streaming</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Black+Ops+One&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- PeerJS for Watch Party -->
+  <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+
+  <!-- HLS.js for Live TV -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+            glitch: ['Black Ops One', 'cursive'],
+          },
+          colors: {
+            brand: {
+              primary: '#FF3B30',
+              dark: '#050505',
+              panel: '#121212',
+              glass: 'rgba(20, 20, 20, 0.6)',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out',
+            'slide-up': 'slideUp 0.4s ease-out',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* GLOBAL SCROLLBAR REMOVAL */
+    * {
+      scrollbar-width: none !important; /* Firefox */
+      -ms-overflow-style: none !important; /* IE/Edge */
+    }
+    *::-webkit-scrollbar {
+      display: none !important; /* Chrome/Safari */
+      width: 0 !important;
+      height: 0 !important;
+    }
+    
+    body {
+      background-color: #050505;
+      color: white;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: none;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass-panel {
+      background: rgba(15, 15, 15, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    
+    .glass-nav {
+      background: rgba(5, 5, 5, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Text Gradients */
+    .text-gradient {
+      background: linear-gradient(to right, #FF3B30, #FF9F43);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+  </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="antialiased min-h-screen selection:bg-brand-primary selection:text-white pb-32">
+
+  <!-- Top Navigation -->
+  <div id="main-nav" class="fixed top-0 left-0 right-0 z-40 px-6 py-4 glass-nav flex items-center gap-6 overflow-x-auto no-scrollbar transition-all duration-300">
+    <div class="flex items-center gap-2 pr-6 border-r border-white/10 shrink-0">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-primary to-orange-600 flex items-center justify-center font-black text-white font-display text-xl shadow-lg shadow-brand-primary/20">PS</div>
+    </div>
+    
+    <!-- Home Filters -->
+    <div id="home-filters" class="flex items-center gap-2">
+        <button class="section-nav-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap active" data-section="trending">
+          <i class="fas fa-fire text-brand-primary group-[.active]:text-white"></i> <span>Trending</span>
+        </button>
+        <button class="section-nav-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-section="continue">
+            <i class="fas fa-history text-blue-400"></i> <span>Continue</span>
+        </button>
+        <button class="section-nav-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-section="horror">
+          <i class="fas fa-skull text-purple-500"></i> <span>Horror</span>
+        </button>
+        <button class="section-nav-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-section="famous">
+          <i class="fas fa-star text-yellow-500"></i> <span>Popular</span>
+        </button>
+        <button class="section-nav-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-section="anime">
+          <i class="fas fa-heart text-pink-500"></i> <span>Anime</span>
+        </button>
+        <button class="section-nav-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-section="action">
+          <i class="fas fa-bolt text-cyan-500"></i> <span>Action</span>
+        </button>
+    </div>
+
+    <!-- Live Filters (Hidden initially) -->
+    <div id="live-filters" class="hidden flex items-center gap-2">
+        <button class="live-filter-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary text-white border border-brand-primary text-sm font-medium transition-all whitespace-nowrap active" data-category="all">
+          <span>All</span>
+        </button>
+        <button class="live-filter-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-category="Sports">
+          <i class="fas fa-basketball-ball text-orange-500"></i> <span>Sports</span>
+        </button>
+        <button class="live-filter-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-category="News">
+          <i class="fas fa-newspaper text-blue-500"></i> <span>News</span>
+        </button>
+        <button class="live-filter-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-category="Entertainment">
+          <i class="fas fa-tv text-purple-500"></i> <span>Entertainment</span>
+        </button>
+        <button class="live-filter-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-category="Kids">
+          <i class="fas fa-child text-yellow-400"></i> <span>Kids</span>
+        </button>
+        <button class="live-filter-btn group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/5 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all whitespace-nowrap" data-category="Music">
+          <i class="fas fa-music text-pink-500"></i> <span>Music</span>
+        </button>
+    </div>
+  </div>
+
+  <!-- Floating Search Bar (Refined) -->
+  <div id="search-bar-container" class="fixed bottom-28 left-1/2 -translate-x-1/2 w-[90%] max-w-lg z-40 transition-all duration-300">
+    <div class="glass-panel rounded-2xl p-2 flex items-center shadow-2xl shadow-black/50 border border-white/10 ring-1 ring-white/5 backdrop-blur-3xl">
+      <div class="pl-4 text-brand-primary">
+        <i class="fas fa-search"></i>
+      </div>
+      <input type="text" id="movieSearchInput" class="flex-1 min-w-0 bg-transparent border-none focus:ring-0 text-white placeholder-gray-500 text-sm px-3 py-2 outline-none font-medium" placeholder="Search movies, shows...">
+      <button id="headerBookmarkBtn" class="w-10 h-10 flex items-center justify-center shrink-0 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all border border-white/5 active:scale-95" data-section="bookmarks" title="My List">
+        <i class="fas fa-bookmark"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="main-content pt-28 px-4 md:px-8 max-w-[1800px] mx-auto min-h-screen">
+    
+    <!-- Tab: Home -->
+    <div id="tab-home" class="tab-content active animate-fade-in pb-20">
+      <!-- Content Sections -->
+      
+      <!-- Trending Section -->
+      <div id="trending-section" class="content-section">
+        <div class="section-header flex items-end justify-between mb-6 px-1">
+          <div>
+            <h2 class="text-3xl md:text-4xl font-bold font-display text-white tracking-tight">Trending Now</h2>
+            <p class="text-gray-500 text-sm mt-1 font-medium">Most watched this week</p>
+          </div>
+        </div>
+        <div id="trendingGrid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4"></div>
+      </div>
+
+      <!-- Continue Watching Section -->
+      <div id="continue-section" class="content-section hidden">
+        <div class="section-header flex items-end justify-between mb-6 px-1">
+          <div>
+            <h2 class="text-3xl md:text-4xl font-bold font-display text-white tracking-tight">Continue Watching</h2>
+            <p class="text-gray-500 text-sm mt-1 font-medium">Pick up where you left off</p>
+          </div>
+          <button id="clearHistoryBtn" class="text-xs font-bold text-gray-500 hover:text-white uppercase tracking-wider bg-white/5 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-all">Clear History</button>
+        </div>
+        <div id="continueGrid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4"></div>
+      </div>
+
+      <!-- Other Sections (Standard Grid) -->
+      <div id="horror-section" class="content-section hidden">
+        <div class="section-header mb-8 px-1">
+           <h2 class="text-3xl md:text-4xl font-bold font-display text-white">Horror & Thriller</h2>
+           <p class="text-gray-500 text-sm mt-1">Spooky vibes only</p>
+        </div>
+        <div id="horrorGrid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4"></div>
+      </div>
+
+      <div id="famous-section" class="content-section hidden">
+        <div class="section-header mb-8 px-1">
+           <h2 class="text-3xl md:text-4xl font-bold font-display text-white">Popular & Famous</h2>
+           <p class="text-gray-500 text-sm mt-1">All time favorites</p>
+        </div>
+        <div id="famousGrid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4"></div>
+      </div>
+
+      <div id="anime-section" class="content-section hidden">
+        <div class="section-header mb-8 px-1">
+           <h2 class="text-3xl md:text-4xl font-bold font-display text-white">Anime Collection</h2>
+           <p class="text-gray-500 text-sm mt-1">Best from Japan</p>
+        </div>
+        <div id="animeGrid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4"></div>
+      </div>
+
+      <div id="action-section" class="content-section hidden">
+        <div class="section-header mb-8 px-1">
+           <h2 class="text-3xl md:text-4xl font-bold font-display text-white">Action Packed</h2>
+           <p class="text-gray-500 text-sm mt-1">Adrenaline rush</p>
+        </div>
+        <div id="actionGrid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4"></div>
+      </div>
+
+      <!-- Bookmarks Section -->
+      <div id="bookmarks-section" class="content-section hidden">
+        <div class="section-header mb-8 px-1">
+           <h2 class="text-3xl md:text-4xl font-bold font-display text-white">My List</h2>
+           <p class="text-gray-500 text-sm mt-1">Your personal library</p>
+        </div>
+        <div id="bookmarksGrid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4"></div>
+      </div>
+
+      <!-- Search Results Container -->
+      <div id="search-section" class="content-section hidden">
+        <div class="section-header mb-8 px-1">
+           <h2 class="text-3xl md:text-4xl font-bold font-display text-white">Search Results</h2>
+           <p class="text-gray-500 text-sm mt-1">Exploring the universe</p>
+        </div>
+        <div id="searchGrid" class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4"></div>
+      </div>
+    </div>
+
+    <!-- Tab: Live TV -->
+    <div id="tab-live" class="tab-content hidden animate-fade-in pb-20 pt-4">
+       <div class="flex flex-col gap-6">
+          <!-- Live Header -->
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 px-1">
+             <div>
+                <h2 class="text-3xl md:text-4xl font-bold font-display text-white flex items-center gap-3">
+                   <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div> Live TV
+                </h2>
+                <p class="text-gray-500 text-sm mt-1">Stream global & Indian channels instantly.</p>
+             </div>
+             <!-- Live Search -->
+             <div class="relative w-full md:w-72">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+                <input type="text" id="liveSearchInput" placeholder="Find a channel..." class="w-full bg-white/5 border border-white/10 rounded-full pl-9 pr-4 py-2 text-sm text-white focus:border-brand-primary focus:bg-white/10 transition-all outline-none">
+             </div>
+          </div>
+
+          <!-- Live Content Container -->
+          <div id="liveContentArea">
+              <!-- Channels injected here as sections -->
+              <div class="flex flex-col items-center py-20">
+                 <div class="w-8 h-8 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
+                 <span class="text-xs text-gray-500 font-mono mt-2">Scanning satellites...</span>
+              </div>
+          </div>
+       </div>
+    </div>
+
+    <!-- Tab: Profile (Fixed, No Scroll) -->
+    <div id="tab-profile" class="tab-content hidden fixed inset-0 z-50 bg-black w-screen h-screen overflow-hidden">
+        <!-- Background Video Only -->
+        <video autoplay loop muted playsinline id="bgVideo" class="absolute inset-0 w-full h-full object-cover">
+          <source src="https://www.prada.com/content/dam/pradanux/home_page/2023/09/Collection_FW23/hero/loop_DT.mp4/_jcr_content/renditions/cq5dam.video.pradanux-large.1920.1080.mp4" type="video/mp4">
+        </video>
+    </div>
+
+  </main>
+
+  <!-- Detail Modal (Opens before player) -->
+  <div id="detailModal" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4 [&.active]:opacity-100 [&.active]:pointer-events-auto">
+     <div class="w-full max-w-4xl bg-[#121212] rounded-2xl overflow-hidden shadow-2xl shadow-black ring-1 ring-white/10 relative flex flex-col md:flex-row max-h-[85vh]">
+        
+        <!-- Close Button -->
+        <button id="closeDetailBtn" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 flex items-center justify-center text-white hover:bg-brand-primary transition-colors">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Backdrop Image Section -->
+        <div class="w-full md:w-2/5 h-64 md:h-auto relative shrink-0">
+           <img id="detailBackdrop" src="" class="w-full h-full object-cover">
+           <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent md:bg-gradient-to-r"></div>
+           <!-- Play Button Overlay -->
+           <button id="detailPlayBtn" class="absolute inset-0 flex items-center justify-center group bg-black/20 hover:bg-black/40 transition-all">
+              <div class="w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/40 group-hover:scale-110 transition-transform">
+                 <i class="fas fa-play text-white text-xl ml-1"></i>
+              </div>
+           </button>
+        </div>
+
+        <!-- Info Section -->
+        <div class="flex-1 p-6 md:p-8 overflow-y-auto custom-scrollbar">
+           <div class="mb-2 flex items-center gap-3">
+              <span id="detailYear" class="text-gray-400 font-mono text-sm">2023</span>
+              <span id="detailRating" class="px-2 py-0.5 rounded bg-white/10 text-green-400 text-xs font-bold border border-white/5">98% Match</span>
+              <span id="detailType" class="text-xs font-bold text-gray-500 uppercase tracking-wider">Movie</span>
+           </div>
+           
+           <h2 id="detailTitle" class="text-3xl md:text-4xl font-bold font-display text-white mb-4 leading-tight">Movie Title</h2>
+           
+           <p id="detailOverview" class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+              Description loading...
+           </p>
+           
+           <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                 <div class="text-xs text-gray-500 uppercase tracking-wider mb-1">Genres</div>
+                 <div id="detailGenres" class="text-sm text-white">Action, Adventure</div>
+              </div>
+              <div>
+                 <div class="text-xs text-gray-500 uppercase tracking-wider mb-1">Status</div>
+                 <div class="text-sm text-white">Released</div>
+              </div>
+           </div>
+
+           <div class="flex gap-3 mt-auto">
+              <button id="detailWatchBtn" class="flex-1 bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                 <i class="fas fa-play"></i> Play Now
+              </button>
+              <button id="detailBookmarkBtn" class="px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-colors">
+                 <i class="far fa-bookmark"></i>
+              </button>
+           </div>
+        </div>
+     </div>
+  </div>
+
+  <!-- Player Modal -->
+  <div id="playerModal" class="fixed inset-0 z-[70] bg-black/95 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-500 flex flex-col [&.active]:opacity-100 [&.active]:pointer-events-auto">
+    <!-- Player Header -->
+    <div class="flex items-center justify-between p-4 border-b border-white/10 bg-black/50 z-10">
+      <div class="flex items-center gap-4 min-w-0">
+         <button id="closePlayer" class="w-10 h-10 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors flex items-center justify-center">
+           <i class="fas fa-arrow-left"></i>
+         </button>
+         <h2 id="playerTitle" class="text-lg font-medium text-white truncate">Loading...</h2>
+      </div>
+      
+      <div class="flex items-center gap-2">
+         <button id="watchPartyBtn" class="px-4 py-2 rounded-full bg-purple-600/20 text-purple-400 border border-purple-500/30 text-xs font-bold hover:bg-purple-600 hover:text-white transition-all flex items-center gap-2">
+            <i class="fas fa-users"></i> Watch Party
+         </button>
+      </div>
+    </div>
+
+    <!-- Warning Banner -->
+    <div id="adWarning" class="bg-brand-primary/10 border-b border-brand-primary/20 px-4 py-2 flex items-center justify-between">
+       <p class="text-xs text-brand-primary font-medium flex items-center gap-2">
+          <i class="fas fa-shield-alt"></i> 
+          Tip: Video servers are third-party. Close any popups/ads that appear. We don't control them.
+       </p>
+       <button onclick="document.getElementById('adWarning').style.display='none'" class="text-brand-primary hover:text-white"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      
+      <!-- Main Video Area -->
+      <div class="flex-1 flex flex-col relative bg-black">
+         <div class="flex-1 relative w-full h-full">
+            <!-- Iframe for Movies/TV -->
+            <iframe id="videoFrame" class="absolute inset-0 w-full h-full border-none" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <!-- Video Tag for Live TV (HLS) -->
+            <video id="hlsPlayer" class="absolute inset-0 w-full h-full hidden" controls autoplay playsinline></video>
+         </div>
+      </div>
+
+      <!-- Sidebar Controls (Scrollable) -->
+      <div class="w-full lg:w-96 bg-[#0a0a0a] border-l border-white/5 flex flex-col h-[40vh] lg:h-auto">
+         
+         <!-- Watch Party Panel (Hidden by default) -->
+         <div id="watchPartyPanel" class="hidden flex-1 flex-col bg-[#151515]">
+            <div class="p-4 border-b border-white/5 flex items-center justify-between bg-purple-900/20">
+               <div class="flex items-center gap-2">
+                   <div id="connectionStatus" class="w-2 h-2 rounded-full bg-red-500"></div>
+                   <span class="font-bold text-purple-400 text-sm">Watch Party</span>
+               </div>
+               <button id="closePartyBtn" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="wpJoinView" class="p-6 flex flex-col gap-4">
+               <div class="text-center mb-4">
+                  <div class="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mx-auto mb-3">
+                     <i class="fas fa-users text-2xl text-purple-400"></i>
+                  </div>
+                  <h3 class="text-white font-bold">Watch Together</h3>
+                  <p class="text-gray-500 text-xs mt-1">Sync chat with friends in real-time</p>
+               </div>
+               <button id="wpCreateBtn" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm transition-all">Create New Room</button>
+               <div class="relative">
+                  <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/10"></div></div>
+                  <div class="relative flex justify-center text-xs uppercase"><span class="bg-[#151515] px-2 text-gray-500">Or Join</span></div>
+               </div>
+               <div class="flex gap-2">
+                  <input type="text" id="wpJoinInput" placeholder="Enter ID" class="flex-1 bg-black border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-purple-500 outline-none uppercase">
+                  <button id="wpJoinActionBtn" class="px-4 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold text-sm">Join</button>
+               </div>
+            </div>
+
+            <div id="wpRoomView" class="hidden flex-1 flex flex-col">
+               <div class="p-3 bg-black/50 text-xs font-mono text-center text-gray-400 border-b border-white/5">
+                  Your ID: <span id="myPeerId" class="text-white font-bold select-all cursor-pointer">...</span>
+               </div>
+               <div id="wpChat" class="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
+                  <!-- Chat items will appear here -->
+               </div>
+               <div class="p-3 border-t border-white/5 flex gap-2">
+                  <input id="wpChatInput" type="text" placeholder="Type a message..." class="flex-1 bg-black border border-white/10 rounded-full px-4 py-2 text-xs text-white focus:border-purple-500 outline-none">
+                  <button id="wpSendBtn" class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white"><i class="fas fa-paper-plane text-xs"></i></button>
+               </div>
+            </div>
+         </div>
+
+         <!-- Default Controls Panel -->
+         <div id="defaultControlsPanel" class="flex-1 flex flex-col overflow-hidden">
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-6">
+               
+               <!-- Server Select (Movies/TV) -->
+               <div id="serverSelectSection">
+                  <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                     <i class="fas fa-server text-brand-primary"></i> Servers
+                  </div>
+                  <div id="sourceButtons" class="flex flex-wrap gap-2"></div>
+               </div>
+
+               <!-- TV Show Controls -->
+               <div id="seasonsEpisodesSection" class="hidden">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
+                       <i class="fas fa-layer-group text-brand-primary"></i> Episodes
+                    </div>
+                    <span id="episodesCount" class="text-[10px] font-mono bg-white/10 px-2 py-1 rounded text-gray-300">0</span>
+                  </div>
+                  
+                  <div class="mb-4">
+                    <div id="seasonsList" class="flex gap-2 overflow-x-auto no-scrollbar pb-2"></div>
+                  </div>
+
+                  <div id="episodesList" class="space-y-2"></div>
+               </div>
+
+               <!-- Live TV Sidebar Channel List -->
+               <div id="liveInfoSection" class="hidden">
+                   <div class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-2">
+                     <i class="fas fa-broadcast-tower text-brand-primary"></i> Channels
+                   </div>
+                   <div id="sidebarChannelList" class="space-y-2">
+                       <!-- Populated by JS -->
+                   </div>
+               </div>
+
+            </div>
+         </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav (Fixed & Centered) -->
+  <div class="fixed bottom-6 left-0 right-0 z-[50] flex justify-center pointer-events-none">
+    <div class="glass-panel rounded-full p-1.5 flex items-center ring-1 ring-white/10 backdrop-blur-2xl bg-black/80 shadow-2xl shadow-black pointer-events-auto">
+      <button class="w-[90px] pill-btn active h-12 rounded-full text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2 text-sm font-medium [&.active]:bg-white/15 [&.active]:text-white [&.active]:shadow-inner" data-tab="home">
+        <i class="fas fa-home"></i> <span>Home</span>
+      </button>
+      <button class="w-[90px] pill-btn h-12 rounded-full text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2 text-sm font-medium [&.active]:bg-white/15 [&.active]:text-white [&.active]:shadow-inner" data-tab="live">
+        <i class="fas fa-tv"></i> <span>Live</span>
+      </button>
+      <button class="w-[90px] pill-btn h-12 rounded-full text-gray-400 hover:text-white transition-all flex items-center justify-center gap-2 text-sm font-medium [&.active]:bg-white/15 [&.active]:text-white [&.active]:shadow-inner" data-tab="profile">
+        <i class="fas fa-user"></i> <span>Profile</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    const tmdbToken = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2QyMWU2NDIxNDAwNTdjZDYzNjJiZjI5ZjlhMzNkMiIsIm5iZiI6MTY5MTkzOTQxNi45OTUwMDAxLCJzdWIiOiI2NGQ4ZjI1ODAwMWJiZDAwYzZjN2FmZjYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.1iAwqbg9q-TXSi6Sb8DPXAAcw29zd02GJarwO7QodcU";
+    
+    // DOM Elements
+    const searchInput = document.getElementById("movieSearchInput");
+    const liveSearchInput = document.getElementById("liveSearchInput");
+    const playerModal = document.getElementById("playerModal");
+    const detailModal = document.getElementById("detailModal");
+    const videoFrame = document.getElementById("videoFrame");
+    const hlsPlayer = document.getElementById("hlsPlayer");
+    
+    // State
+    let searchDebounce;
+    let currentMediaType = null;
+    let currentMediaId = null;
+    let currentMediaTitle = null;
+    let currentMediaItem = null; 
+    let embedSources = [];
+    let currentSection = 'trending';
+    let bookmarks = JSON.parse(localStorage.getItem('cinemaverse_bookmarks') || '[]');
+    let watchHistory = JSON.parse(localStorage.getItem('cinemaverse_history') || '[]');
+    let currentSeason = 1;
+    let currentEpisode = 1;
+    let allChannels = [];
+    let hls = null;
+    
+    // PeerJS State
+    let peer = null;
+    let conn = null;
+
+    // Logo Mapping for Popular Channels
+    const logoMap = {
+        "Star Plus": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e6/Star_Plus_logo.svg/1200px-Star_Plus_logo.svg.png",
+        "Zee TV": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Zee_TV_logo.svg/1200px-Zee_TV_logo.svg.png",
+        "Sony SAB": "https://upload.wikimedia.org/wikipedia/en/thumb/2/26/Sony_SAB_logo.svg/1200px-Sony_SAB_logo.svg.png",
+        "Sony Entertainment": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Sony_Entertainment_Television_logo.svg/1200px-Sony_Entertainment_Television_logo.svg.png",
+        "Colors": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c1/Colors_TV_Logo.svg/1200px-Colors_TV_Logo.svg.png",
+        "Star Gold": "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/Star_Gold_logo.svg/1200px-Star_Gold_logo.svg.png",
+        "Zee Cinema": "https://upload.wikimedia.org/wikipedia/en/thumb/6/65/Zee_Cinema_logo.svg/1200px-Zee_Cinema_logo.svg.png",
+        "Sony Max": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Sony_Max_logo.svg/1200px-Sony_Max_logo.svg.png",
+        "Star Sports": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Star_Sports_Network_logo.svg/1200px-Star_Sports_Network_logo.svg.png",
+        "Ten Sports": "https://upload.wikimedia.org/wikipedia/en/thumb/7/7d/Ten_Sports_logo.svg/1200px-Ten_Sports_logo.svg.png",
+        "Aaj Tak": "https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Aaj_Tak.svg/1200px-Aaj_Tak.svg.png",
+        "NDTV": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/NDTV_logo.svg/1200px-NDTV_logo.svg.png",
+        "Republic TV": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0e/Republic_TV_logo.svg/1200px-Republic_TV_logo.svg.png",
+        "CN": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cartoon_Network_logo_%282010%29.svg/1200px-Cartoon_Network_logo_%282010%29.svg.png",
+        "Cartoon Network": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cartoon_Network_logo_%282010%29.svg/1200px-Cartoon_Network_logo_%282010%29.svg.png",
+        "Nick": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Nickelodeon_logo_2009.svg/1200px-Nickelodeon_logo_2009.svg.png",
+        "Disney": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Disney_Channel_logo.svg/1200px-Disney_Channel_logo.svg.png",
+        "MTV": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/MTV_Logo_2021.svg/1200px-MTV_Logo_2021.svg.png",
+        "9XM": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/9XM_Logo.svg/1200px-9XM_Logo.svg.png",
+        "HBO": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/1200px-HBO_logo.svg.png"
+    };
+
+    // Intersection Observer for Lazy Loading Status Checks
+    const statusObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const url = entry.target.dataset.url;
+                const badgeId = entry.target.id;
+                checkChannelStatus(url, badgeId);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: "100px" });
+    
+    // Initial Load
+    window.onload = () => {
+       showSection('trending');
+    };
+
+    // --- Navigation Logic ---
+    const buttons = document.querySelectorAll(".pill-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        tabContents.forEach(c => {
+          c.classList.remove("active");
+          c.classList.add("hidden");
+        });
+        
+        const tabId = btn.getAttribute("data-tab");
+        const targetTab = document.getElementById(`tab-${tabId}`);
+        if (targetTab) {
+          targetTab.classList.add("active");
+          targetTab.classList.remove("hidden");
+        }
+        
+        const mainNav = document.getElementById('main-nav');
+        const searchBar = document.getElementById('search-bar-container');
+        const homeFilters = document.getElementById('home-filters');
+        const liveFilters = document.getElementById('live-filters');
+        
+        if (tabId === 'home') {
+           mainNav.classList.remove('-translate-y-full');
+           homeFilters.classList.remove('hidden');
+           liveFilters.classList.add('hidden');
+           searchBar.classList.remove('translate-y-full', 'opacity-0');
+           showSection('trending'); 
+        } else if (tabId === 'live') {
+            mainNav.classList.remove('-translate-y-full');
+            homeFilters.classList.add('hidden');
+            liveFilters.classList.remove('hidden');
+            searchBar.classList.add('translate-y-full', 'opacity-0');
+            if(allChannels.length === 0) fetchChannels();
+        } else if (tabId === 'profile') {
+           mainNav.classList.add('-translate-y-full');
+           searchBar.classList.add('translate-y-full', 'opacity-0');
+           initializeProfileVideo();
+        }
+      });
+    });
+
+    document.querySelectorAll('.section-nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const section = btn.getAttribute('data-section');
+        showSection(section);
+      });
+    });
+    
+    document.querySelectorAll('.live-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.live-filter-btn').forEach(b => {
+                b.classList.remove('bg-brand-primary', 'text-white', 'border-brand-primary');
+                b.classList.add('bg-white/5', 'text-gray-400', 'border-white/5');
+            });
+            btn.classList.remove('bg-white/5', 'text-gray-400', 'border-white/5');
+            btn.classList.add('bg-brand-primary', 'text-white', 'border-brand-primary');
+            
+            const cat = btn.getAttribute('data-category');
+            renderLiveSections(cat === 'all' ? null : cat);
+        });
+    });
+
+    document.getElementById('headerBookmarkBtn').addEventListener('click', () => showSection('bookmarks'));
+
+    // --- Search Logic ---
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchDebounce);
+        const query = e.target.value.trim();
+        if (query.length > 2) {
+            searchDebounce = setTimeout(() => {
+                showSection('search');
+                fetchSearch(query);
+            }, 500);
+        } else if (query.length === 0) {
+            showSection('trending');
+        }
+    });
+
+    // Live Search
+    liveSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        if(!query) {
+            renderLiveSections(null);
+            return;
+        }
+        const filtered = allChannels.filter(c => c.name.toLowerCase().includes(query));
+        renderLiveGrid(filtered, 'Search Results');
+    });
+
+    function fetchSearch(query) {
+        const gridId = 'searchGrid';
+        const grid = document.getElementById(gridId);
+        grid.innerHTML = `<div class="col-span-full flex justify-center py-20"><div class="w-8 h-8 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div></div>`;
+        
+        fetch(`https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(query)}&include_adult=false`, { 
+            headers: { 'Authorization': 'Bearer ' + tmdbToken } 
+        })
+        .then(res => res.json())
+        .then(data => renderMovies(data.results, gridId));
+    }
+
+    // --- Section Logic ---
+    function showSection(sectionName) {
+      document.querySelectorAll('#tab-home .content-section').forEach(s => s.classList.add('hidden'));
+      const target = document.getElementById(`${sectionName}-section`);
+      if (target) target.classList.remove('hidden');
+      
+      // Update nav styling
+      document.querySelectorAll('.section-nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.className = btn.className.replace('bg-white/10 text-white border-white/20', 'bg-white/5 text-gray-400 border-white/5');
+      });
+      const activeBtn = document.querySelector(`.section-nav-btn[data-section="${sectionName}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        activeBtn.className = activeBtn.className.replace('bg-white/5 text-gray-400 border-white/5', 'bg-white/10 text-white border-white/20');
+      }
+      
+      currentSection = sectionName;
+      // Only load if not search
+      if(sectionName !== 'search') loadSectionContent(sectionName);
+    }
+
+    function loadSectionContent(name) {
+      const gridId = `${name}Grid`;
+      const grid = document.getElementById(gridId);
+      
+      if(name === 'bookmarks') { loadBookmarks(gridId); return; }
+      if(name === 'continue') { loadHistory(gridId); return; }
+
+      if (grid.children.length === 0) {
+        switch(name) {
+          case 'trending': fetchAPI("https://api.themoviedb.org/3/trending/movie/week", gridId); break;
+          case 'horror': fetchGenre(gridId, 27); break;
+          case 'famous': fetchAPI("https://api.themoviedb.org/3/movie/popular", gridId); break;
+          case 'anime': fetchGenre(gridId, 16); break;
+          case 'action': fetchGenre(gridId, 28); break;
+        }
+      }
+    }
+
+    // --- Live TV Logic ---
+    async function fetchChannels() {
+        allChannels = [];
+        const promises = [];
+        for(let i=1; i<=13; i++) {
+            const url = `https://raw.githubusercontent.com/PranavSatav/pranavsatav.me/main/channels/working${i}.m3u`;
+            promises.push(
+                fetch(url).then(r => r.ok ? r.text() : null).catch(e => null)
+            );
+        }
+
+        const results = await Promise.all(promises);
+        results.forEach(text => {
+            if(text) parseM3U(text);
+        });
+
+        // Process Channels (Categorize & Logo)
+        processChannels(allChannels);
+        renderLiveSections(null);
+    }
+
+    function processChannels(channels) {
+        channels.forEach(ch => {
+            // Map Categories
+            const name = ch.name.toLowerCase();
+            if (name.includes('sport') || name.includes('cricket') || name.includes('football') || name.includes('ten') || name.includes('espn')) ch.category = 'Sports';
+            else if (name.includes('news') || name.includes('aaj tak') || name.includes('ndtv') || name.includes('republic') || name.includes('cnn') || name.includes('bbc')) ch.category = 'News';
+            else if (name.includes('cartoon') || name.includes('nick') || name.includes('disney') || name.includes('pogo') || name.includes('hungama') || name.includes('animax')) ch.category = 'Kids';
+            else if (name.includes('music') || name.includes('mtv') || name.includes('vh1') || name.includes('9xm') || name.includes('b4u music')) ch.category = 'Music';
+            else if (name.includes('movie') || name.includes('cinema') || name.includes('film') || name.includes('star gold') || name.includes('sony max') || name.includes('zee cinema')) ch.category = 'Movies';
+            else if (name.includes('india') || name.includes('hindi') || name.includes('star') || name.includes('zee') || name.includes('colors') || name.includes('sony')) ch.category = 'Entertainment';
+            else ch.category = 'Others';
+
+            // Better Logos
+            if ((!ch.logo || ch.logo.length < 5) || ch.logo.includes('default')) {
+                for (const [key, url] of Object.entries(logoMap)) {
+                    if (ch.name.toLowerCase().includes(key.toLowerCase())) {
+                        ch.logo = url;
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
+    function parseM3U(content) {
+        const lines = content.split('\n');
+        let currentChannel = {};
+        
+        lines.forEach(line => {
+            line = line.trim();
+            if(line.startsWith('#EXTINF')) {
+                const logoMatch = line.match(/tvg-logo="([^"]*)"/);
+                const nameMatch = line.match(/,(.+)$/);
+                
+                currentChannel = {
+                    logo: logoMatch ? logoMatch[1] : null,
+                    name: nameMatch ? nameMatch[1].trim() : 'Unknown Channel',
+                    url: '',
+                    category: 'Others'
+                };
+            } else if (line.startsWith('http')) {
+                currentChannel.url = line;
+                if(currentChannel.name && currentChannel.url) {
+                    allChannels.push({...currentChannel});
+                }
+                currentChannel = {};
+            }
+        });
+    }
+
+    function renderLiveSections(filterCategory) {
+        const container = document.getElementById('liveContentArea');
+        container.innerHTML = "";
+
+        const categories = filterCategory ? [filterCategory] : ['Entertainment', 'Sports', 'News', 'Kids', 'Music', 'Movies', 'Others'];
+        
+        categories.forEach(cat => {
+            const channels = allChannels.filter(c => c.category === cat);
+            if(channels.length > 0) {
+                const section = document.createElement('div');
+                section.className = "mb-8";
+                section.innerHTML = `
+                    <div class="section-header mb-4 px-1 flex items-center gap-2">
+                       <h3 class="text-xl font-bold font-display text-white">${cat}</h3>
+                       <span class="text-xs font-mono text-gray-500 bg-white/5 px-2 py-0.5 rounded">${channels.length}</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+                        ${channels.map((ch, idx) => createChannelCardHTML(ch, idx)).join('')}
+                    </div>
+                `;
+                container.appendChild(section);
+            }
+        });
+
+        // Observe for status checks
+        document.querySelectorAll('.channel-status-badge').forEach(el => statusObserver.observe(el));
+    }
+    
+    function renderLiveGrid(channels, title) {
+        const container = document.getElementById('liveContentArea');
+        container.innerHTML = `
+            <div class="mb-8">
+                <div class="section-header mb-4 px-1">
+                   <h3 class="text-xl font-bold font-display text-white">${title}</h3>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+                    ${channels.map((ch, idx) => createChannelCardHTML(ch, idx)).join('')}
+                </div>
+            </div>
+        `;
+        document.querySelectorAll('.channel-status-badge').forEach(el => statusObserver.observe(el));
+    }
+
+    function createChannelCardHTML(ch, idx) {
+        const hasLogo = ch.logo && ch.logo.length > 5;
+        // Escape quotes in JSON for onclick
+        const safeCh = JSON.stringify(ch).replace(/"/g, '&quot;');
+        
+        return `
+            <div class="bg-[#1a1a1a] rounded-xl overflow-hidden group cursor-pointer hover:bg-[#222] transition-all hover:ring-1 hover:ring-brand-primary/50 flex flex-col aspect-[4/3] relative" onclick="openPlayerForLive(${safeCh})">
+                <div class="flex-1 p-4 flex items-center justify-center relative bg-gradient-to-b from-white/5 to-transparent">
+                    ${hasLogo 
+                       ? `<img src="${ch.logo}" class="max-w-[80%] max-h-[80%] object-contain group-hover:scale-110 transition-transform drop-shadow-lg" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                          <div class="hidden text-3xl font-bold text-gray-700 group-hover:text-white">${ch.name[0]}</div>`
+                       : `<div class="text-3xl font-bold text-gray-700 group-hover:text-white">${ch.name[0]}</div>`
+                    }
+                    
+                    <!-- Status Badge (Lazy Loaded) -->
+                    <div id="status-${ch.url.hashCode()}" data-url="${ch.url}" class="channel-status-badge absolute top-2 left-2 right-2 text-[9px] font-bold bg-black/60 backdrop-blur rounded py-1 px-2 flex items-center justify-center gap-1 text-gray-400">
+                       <i class="fas fa-circle-notch fa-spin text-[8px]"></i> Checking
+                    </div>
+
+                    <div class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg translate-y-2 group-hover:translate-y-0"><i class="fas fa-play text-xs text-white ml-0.5"></i></div>
+                </div>
+                <div class="px-3 py-2 bg-black/20 border-t border-white/5">
+                    <div class="text-xs font-bold text-gray-300 truncate group-hover:text-brand-primary transition-colors">${ch.name}</div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Simple hash for ID generation
+    String.prototype.hashCode = function() {
+      var hash = 0, i, chr;
+      if (this.length === 0) return hash;
+      for (i = 0; i < this.length; i++) {
+        chr = this.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0; 
+      }
+      return hash;
+    };
+
+    async function checkChannelStatus(url, badgeId) {
+        const badge = document.getElementById(badgeId);
+        if(!badge) return;
+        
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
+            
+            const response = await fetch(url, { method: 'HEAD', signal: controller.signal });
+            clearTimeout(timeoutId);
+            
+            if (response.ok) {
+                badge.innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]"></div> Online';
+                badge.className = "channel-status-badge absolute top-2 left-2 right-2 text-[9px] font-bold bg-black/80 backdrop-blur rounded py-1 px-2 flex items-center justify-center gap-1.5 text-green-400 border border-green-500/20";
+            } else {
+                // 404 or 500
+                badge.innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-red-500"></div> Offline';
+                badge.className = "channel-status-badge absolute top-2 left-2 right-2 text-[9px] font-bold bg-black/80 backdrop-blur rounded py-1 px-2 flex items-center justify-center gap-1.5 text-red-400 border border-red-500/20";
+            }
+        } catch (error) {
+            // Network Error / CORS -> Treat as Unknown/Protected (Likely works in player)
+            badge.innerHTML = '<i class="fas fa-shield-alt"></i> Protected';
+            badge.className = "channel-status-badge absolute top-2 left-2 right-2 text-[9px] font-bold bg-black/40 backdrop-blur rounded py-1 px-2 flex items-center justify-center gap-1.5 text-gray-400";
+            badge.title = "Stream is protected by CORS but likely playable.";
+        }
+    }
+
+    // --- Rendering Logic ---
+    function renderMovies(items, gridId) {
+      const grid = document.getElementById(gridId);
+      grid.innerHTML = "";
+      
+      if (!items || items.length === 0) {
+        grid.innerHTML = `<div class="col-span-full flex flex-col items-center justify-center py-32 text-gray-600"><i class="fas fa-film text-4xl mb-4 opacity-20"></i><p>Nothing to show here</p></div>`;
+        return;
+      }
+
+      const valid = items.filter(i => i.poster_path && (i.media_type === 'movie' || i.media_type === 'tv' || !i.media_type));
+      valid.forEach((item, idx) => {
+        const card = createMovieCard(item);
+        card.style.animationDelay = `${idx * 30}ms`;
+        grid.appendChild(card);
+      });
+    }
+
+    function createMovieCard(item) {
+      const card = document.createElement("div");
+      card.className = "group relative aspect-[2/3] rounded-lg overflow-hidden bg-[#1a1a1a] animate-slide-up cursor-pointer ring-1 ring-white/5 hover:ring-brand-primary/50 transition-all duration-300 hover:z-20 hover:scale-105 hover:shadow-xl hover:shadow-black";
+      
+      const mediaType = item.media_type || (item.first_air_date ? "tv" : "movie");
+      const year = (item.release_date || item.first_air_date || "").split("-")[0];
+      
+      card.innerHTML = `
+        <img src="https://image.tmdb.org/t/p/w342${item.poster_path}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+          <h3 class="text-white font-bold text-xs leading-tight mb-1 line-clamp-2">${item.title || item.name}</h3>
+          <div class="flex items-center justify-between text-[10px] text-gray-300">
+            <span>${year}</span>
+            <span class="uppercase font-bold text-brand-primary">${mediaType}</span>
+          </div>
+        </div>
+        ${currentSection === 'continue' ? '<button class="remove-hist-btn absolute top-1 right-1 w-6 h-6 bg-red-500/80 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-600 transition-all z-20"><i class="fas fa-times text-[10px]"></i></button>' : ''}
+      `;
+
+      card.addEventListener('click', (e) => {
+         if(e.target.closest('.remove-hist-btn')) {
+             e.stopPropagation();
+             removeFromHistory(item.id);
+             return;
+         }
+         openDetailModal(item, mediaType);
+      });
+
+      return card;
+    }
+
+    // --- Detail Modal Logic ---
+    function openDetailModal(item, type) {
+        currentMediaItem = item;
+        currentMediaId = item.id;
+        currentMediaType = type;
+        currentMediaTitle = item.title || item.name;
+
+        document.getElementById('detailTitle').textContent = currentMediaTitle;
+        document.getElementById('detailOverview').textContent = item.overview || "No description available.";
+        document.getElementById('detailYear').textContent = (item.release_date || item.first_air_date || "N/A").split('-')[0];
+        document.getElementById('detailType').textContent = type;
+        
+        const backdrop = document.getElementById('detailBackdrop');
+        backdrop.src = item.backdrop_path 
+            ? `https://image.tmdb.org/t/p/w1280${item.backdrop_path}` 
+            : `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+            
+        updateDetailBookmarkBtn();
+        detailModal.classList.add('active');
+    }
+
+    document.getElementById('closeDetailBtn').onclick = () => detailModal.classList.remove('active');
+    
+    const playAction = () => {
+        detailModal.classList.remove('active');
+        addToHistory(currentMediaItem);
+        openPlayer();
+    };
+    
+    document.getElementById('detailPlayBtn').onclick = playAction;
+    document.getElementById('detailWatchBtn').onclick = playAction;
+
+    document.getElementById('detailBookmarkBtn').onclick = () => {
+        toggleBookmark(currentMediaItem, currentMediaType);
+        updateDetailBookmarkBtn();
+    };
+
+    function updateDetailBookmarkBtn() {
+        const btn = document.getElementById('detailBookmarkBtn');
+        const isBookmarked = bookmarks.some(b => b.id === currentMediaId);
+        btn.innerHTML = `<i class="${isBookmarked ? 'fas' : 'far'} fa-bookmark"></i>`;
+        btn.className = `px-4 rounded-xl border transition-colors ${isBookmarked ? 'bg-brand-primary border-brand-primary text-white' : 'bg-white/10 hover:bg-white/20 border-white/10 text-white'}`;
+    }
+
+    // --- Player Logic ---
+    function openPlayer() {
+      currentMediaType = currentMediaType; // ensure set
+      document.getElementById('playerTitle').textContent = currentMediaTitle;
+      
+      // UI State
+      document.getElementById('serverSelectSection').classList.remove('hidden');
+      document.getElementById('liveInfoSection').classList.add('hidden');
+      videoFrame.classList.remove('hidden');
+      hlsPlayer.classList.add('hidden');
+      
+      // TV Show Specific
+      const section = document.getElementById('seasonsEpisodesSection');
+      if (currentMediaType === "tv") {
+        section.classList.remove('hidden');
+        fetchSeasons(currentMediaId);
+        currentSeason = 1;
+        currentEpisode = 1;
+        fetchEpisodes(currentMediaId, 1);
+      } else {
+        section.classList.add('hidden');
+      }
+      
+      buildEmbedSources();
+      populateSourceButtons();
+      loadSource(0);
+      
+      playerModal.classList.add("active");
+    }
+
+    function openPlayerForLive(channel) {
+        currentMediaType = 'live';
+        document.getElementById('playerTitle').textContent = channel.name;
+        
+        // Toggle UI for Live
+        document.getElementById('serverSelectSection').classList.add('hidden');
+        document.getElementById('seasonsEpisodesSection').classList.add('hidden');
+        document.getElementById('liveInfoSection').classList.remove('hidden');
+        
+        // Populate Sidebar with same category
+        const sidebarList = document.getElementById('sidebarChannelList');
+        sidebarList.innerHTML = "";
+        const related = allChannels.filter(c => c.category === channel.category).slice(0, 20); // limit to 20
+        related.forEach(c => {
+            const div = document.createElement('div');
+            div.className = "flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer group " + (c.url === channel.url ? "bg-white/10 border border-brand-primary/50" : "");
+            div.innerHTML = `
+               <div class="w-8 h-8 rounded bg-white/10 overflow-hidden flex items-center justify-center">
+                 ${c.logo ? `<img src="${c.logo}" class="w-full h-full object-contain">` : `<span class="text-[10px] font-bold">${c.name[0]}</span>`}
+               </div>
+               <div class="flex-1 min-w-0">
+                   <div class="text-xs font-medium text-gray-200 truncate group-hover:text-brand-primary">${c.name}</div>
+               </div>
+            `;
+            div.onclick = () => openPlayerForLive(c);
+            sidebarList.appendChild(div);
+        });
+        
+        // Toggle Video Elements
+        videoFrame.classList.add('hidden');
+        hlsPlayer.classList.remove('hidden');
+        videoFrame.src = "";
+
+        playerModal.classList.add('active');
+        
+        // HLS Playback
+        if (Hls.isSupported()) {
+            if(hls) hls.destroy();
+            hls = new Hls();
+            hls.loadSource(channel.url);
+            hls.attachMedia(hlsPlayer);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                hlsPlayer.play();
+            });
+        } else if (hlsPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+            hlsPlayer.src = channel.url;
+            hlsPlayer.addEventListener('loadedmetadata', function() {
+                hlsPlayer.play();
+            });
+        }
+    }
+
+    document.getElementById('closePlayer').onclick = () => {
+        playerModal.classList.remove('active');
+        videoFrame.src = "";
+        if(hls) { hls.destroy(); hls = null; }
+        hlsPlayer.pause();
+        hlsPlayer.src = "";
+        
+        // Disconnect Peer
+        if(peer) { peer.destroy(); peer = null; conn = null; }
+        
+        document.getElementById('watchPartyPanel').classList.add('hidden');
+        document.getElementById('defaultControlsPanel').classList.remove('hidden');
+        document.getElementById('wpChat').innerHTML = '';
+    };
+
+    // --- Watch Party (PeerJS) Implementation ---
+    const wpPanel = document.getElementById('watchPartyPanel');
+    const defPanel = document.getElementById('defaultControlsPanel');
+    const statusIndicator = document.getElementById('connectionStatus');
+
+    document.getElementById('watchPartyBtn').onclick = () => {
+        wpPanel.classList.remove('hidden');
+        defPanel.classList.add('hidden');
+        document.getElementById('wpJoinView').classList.remove('hidden');
+        document.getElementById('wpRoomView').classList.add('hidden');
+    };
+
+    document.getElementById('closePartyBtn').onclick = () => {
+        wpPanel.classList.add('hidden');
+        defPanel.classList.remove('hidden');
+    };
+
+    // 1. Create Room (Host)
+    document.getElementById('wpCreateBtn').onclick = () => {
+        initializePeer(null); // null id = create new
+    };
+
+    // 2. Join Room (Guest)
+    document.getElementById('wpJoinActionBtn').onclick = () => {
+        const hostId = document.getElementById('wpJoinInput').value.trim();
+        if (hostId) initializePeer(null, hostId);
+    };
+
+    function initializePeer(forcedId, connectToId) {
+        if (peer) peer.destroy();
+        
+        // Initialize PeerJS
+        peer = new Peer(forcedId, {
+            debug: 2
+        });
+
+        peer.on('open', (id) => {
+            document.getElementById('myPeerId').textContent = id;
+            document.getElementById('wpJoinView').classList.add('hidden');
+            document.getElementById('wpRoomView').classList.remove('hidden');
+            addChatMessage('System', 'Room Created. Share ID above.');
+
+            if (connectToId) {
+                // Connect to Host
+                conn = peer.connect(connectToId);
+                setupConnection(conn);
+            }
+        });
+
+        peer.on('connection', (connection) => {
+            // When someone connects to us (Host)
+            conn = connection;
+            setupConnection(conn);
+            addChatMessage('System', 'User connected!');
+        });
+
+        peer.on('error', (err) => {
+            addChatMessage('Error', 'Connection failed: ' + err.type);
+        });
+    }
+
+    function setupConnection(connection) {
+        statusIndicator.className = "w-2 h-2 rounded-full bg-green-500 animate-pulse";
+        
+        connection.on('open', () => {
+            addChatMessage('System', 'Connected to party!');
+        });
+
+        connection.on('data', (data) => {
+            if(data.type === 'chat') {
+                addChatMessage('Friend', data.msg);
+            }
+        });
+
+        connection.on('close', () => {
+            addChatMessage('System', 'Peer disconnected.');
+            statusIndicator.className = "w-2 h-2 rounded-full bg-red-500";
+        });
+    }
+
+    document.getElementById('wpSendBtn').onclick = () => {
+        const input = document.getElementById('wpChatInput');
+        const msg = input.value.trim();
+        if(msg) {
+            // Display locally
+            addChatMessage('You', msg);
+            // Send to peer
+            if(conn && conn.open) {
+                conn.send({ type: 'chat', msg: msg });
+            } else {
+                addChatMessage('System', 'Not connected to anyone.');
+            }
+            input.value = "";
+        }
+    };
+
+    function addChatMessage(user, text) {
+        const div = document.createElement('div');
+        const isMe = user === 'You';
+        const isSys = user === 'System' || user === 'Error';
+        
+        if(isSys) {
+            div.className = "text-center text-[10px] text-gray-500 my-2 italic";
+            div.innerText = text;
+        } else {
+            div.className = `flex items-start gap-2 ${isMe ? 'flex-row-reverse' : ''}`;
+            div.innerHTML = `
+               <div class="w-6 h-6 rounded-full ${isMe ? 'bg-brand-primary' : 'bg-purple-600'} flex items-center justify-center text-[10px] font-bold text-white shrink-0">${user[0]}</div>
+               <div class="bg-white/10 rounded-lg px-3 py-2 text-xs text-gray-200 max-w-[80%] ${isMe ? 'bg-brand-primary/20 text-brand-primary' : ''}">${text}</div>
+            `;
+        }
+        
+        const chatContainer = document.getElementById('wpChat');
+        chatContainer.appendChild(div);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // --- Embeds ---
+    function buildEmbedSources() {
+      if (currentMediaType === 'movie') {
+        embedSources = [
+          { name: "111Movies", url: `https://111movies.com/movie/${currentMediaId}` },
+          { name: "VidJoy", url: `https://vidjoy.pro/embed/movie/${currentMediaId}` },
+          { name: "VideoEasy", url: `https://player.videasy.net/movie/${currentMediaId}` },
+          { name: "Vidsrc.to", url: `https://vidsrc.to/embed/movie/${currentMediaId}` },
+          { name: "Vidzee", url: `https://player.vidzee.wtf/embed/movie/${currentMediaId}`, external: true }
+        ];
+      } else {
+        embedSources = [
+          { name: "111Movies", url: `https://111movies.com/tv/${currentMediaId}/${currentSeason}/${currentEpisode}` },
+          { name: "VidJoy", url: `https://vidjoy.pro/embed/tv/${currentMediaId}/${currentSeason}/${currentEpisode}` },
+          { name: "VideoEasy", url: `https://player.videasy.net/tv/${currentMediaId}/${currentSeason}/${currentEpisode}` },
+          { name: "Vidsrc.to", url: `https://vidsrc.to/embed/tv/${currentMediaId}/${currentSeason}/${currentEpisode}` },
+          { name: "Vidzee", url: `https://player.vidzee.wtf/embed/tv/${currentMediaId}/${currentSeason}/${currentEpisode}`, external: true }
+        ];
+      }
+    }
+
+    function populateSourceButtons() {
+       const c = document.getElementById('sourceButtons'); c.innerHTML = "";
+       embedSources.forEach((s, i) => {
+          const b = document.createElement('button');
+          b.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all border " + (i===0 ? "bg-brand-primary border-brand-primary text-white" : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10");
+          b.textContent = s.name;
+          b.onclick = () => {
+             Array.from(c.children).forEach(x => x.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all border bg-white/5 text-gray-400 border-white/10 hover:bg-white/10");
+             b.className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all border bg-brand-primary border-brand-primary text-white";
+             loadSource(i);
+          };
+          c.appendChild(b);
+       });
+    }
+
+    function loadSource(i) {
+       const s = embedSources[i];
+       s.external ? window.open(s.url, "_blank") : videoFrame.src = s.url;
+    }
+
+    function fetchSeasons(id) {
+       fetch(`https://api.themoviedb.org/3/tv/${id}`, { headers: { Authorization: 'Bearer ' + tmdbToken } })
+       .then(r=>r.json()).then(d => {
+          const l = document.getElementById('seasonsList'); l.innerHTML = "";
+          if(d.seasons) d.seasons.filter(x=>x.season_number>0).forEach(s => {
+             const b = document.createElement('button');
+             b.className = `shrink-0 px-4 py-2 rounded-lg text-xs font-bold border transition-all ${s.season_number === currentSeason ? 'bg-white text-black' : 'bg-white/5 text-gray-400 border-white/10'}`;
+             b.textContent = `Season ${s.season_number}`;
+             b.onclick = () => { currentSeason = s.season_number; fetchEpisodes(id, s.season_number); };
+             l.appendChild(b);
+          });
+       });
+    }
+    
+    function fetchEpisodes(id, sNum) {
+       const l = document.getElementById('episodesList'); l.innerHTML = `<div class="text-center text-gray-500 text-xs py-4">Loading...</div>`;
+       fetch(`https://api.themoviedb.org/3/tv/${id}/season/${sNum}`, { headers: { Authorization: 'Bearer ' + tmdbToken } })
+       .then(r=>r.json()).then(d => {
+          l.innerHTML = "";
+          document.getElementById('episodesCount').textContent = d.episodes?.length || 0;
+          if(d.episodes) d.episodes.forEach(ep => {
+             const div = document.createElement('div');
+             div.className = "flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer group";
+             div.innerHTML = `
+                <div class="w-10 h-10 rounded bg-white/10 flex items-center justify-center text-xs font-bold text-gray-500 group-hover:text-white group-hover:bg-brand-primary transition-colors">${ep.episode_number}</div>
+                <div class="flex-1 min-w-0">
+                   <div class="text-sm font-medium text-gray-200 truncate group-hover:text-brand-primary transition-colors">${ep.name}</div>
+                   <div class="text-[10px] text-gray-500">${ep.runtime?ep.runtime+'m':''}</div>
+                </div>
+                <i class="fas fa-play text-xs text-white opacity-0 group-hover:opacity-100"></i>
+             `;
+             div.onclick = () => {
+                currentEpisode = ep.episode_number;
+                buildEmbedSources();
+                loadSource(0);
+             };
+             l.appendChild(div);
+          });
+       });
+    }
+
+    // History & Bookmarks Helpers
+    function addToHistory(item) {
+        if(!item.media_type) item.media_type = currentMediaType;
+        watchHistory = watchHistory.filter(i => i.id !== item.id);
+        watchHistory.unshift(item);
+        if(watchHistory.length > 50) watchHistory.pop();
+        localStorage.setItem('cinemaverse_history', JSON.stringify(watchHistory));
+        if(currentSection === 'continue') loadHistory('continueGrid');
+    }
+    function loadHistory(gridId) { 
+        const h = JSON.parse(localStorage.getItem('cinemaverse_history') || '[]'); 
+        renderMovies(h, gridId); 
+    }
+    function removeFromHistory(id) { 
+        watchHistory = watchHistory.filter(i => i.id !== id); 
+        localStorage.setItem('cinemaverse_history', JSON.stringify(watchHistory)); 
+        loadHistory('continueGrid'); 
+    }
+    document.getElementById('clearHistoryBtn').onclick = () => {
+        if(confirm("Clear all watch history?")) {
+            watchHistory = [];
+            localStorage.removeItem('cinemaverse_history');
+            loadHistory('continueGrid');
+        }
+    };
+    function toggleBookmark(item, type) {
+        bookmarks = JSON.parse(localStorage.getItem('cinemaverse_bookmarks') || '[]');
+        const idx = bookmarks.findIndex(b => b.id === item.id);
+        if (idx > -1) {
+            bookmarks.splice(idx, 1);
+            showNotification('Removed from list', 'info');
+        } else {
+            bookmarks.push({ ...item, media_type: type });
+            showNotification('Added to list', 'success');
+        }
+        localStorage.setItem('cinemaverse_bookmarks', JSON.stringify(bookmarks));
+        if(currentSection === 'bookmarks') loadBookmarks('bookmarksGrid');
+    }
+    function loadBookmarks(gridId) { renderMovies(bookmarks, gridId); }
+    
+    function fetchAPI(url, gridId) {
+        const grid = document.getElementById(gridId);
+        grid.innerHTML = `<div class="col-span-full flex justify-center py-20"><div class="w-8 h-8 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div></div>`;
+        fetch(url, { headers: { 'Authorization': 'Bearer ' + tmdbToken } })
+        .then(res => res.json()).then(data => renderMovies(data.results, gridId));
+    }
+    
+    function fetchGenre(gridId, id) {
+        fetchAPI(`https://api.themoviedb.org/3/discover/movie?with_genres=${id}&sort_by=popularity.desc`, gridId);
+    }
+
+    function showNotification(msg, type) {
+       const t = document.createElement('div');
+       t.className = "fixed top-4 right-4 z-[80] px-4 py-3 rounded-xl bg-[#1a1a1a] border border-white/10 text-white text-sm font-bold flex items-center gap-3 shadow-2xl animate-fade-in";
+       t.innerHTML = `<i class="fas fa-${type==='success'?'check':'info'}-circle text-${type==='success'?'green':'blue'}-500"></i> ${msg}`;
+       document.body.appendChild(t);
+       setTimeout(() => t.remove(), 3000);
+    }
+    
+    function initializeProfileVideo() {
+       const v = document.getElementById('bgVideo');
+       if(v) v.play().catch(()=>{});
+    }
+  </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
