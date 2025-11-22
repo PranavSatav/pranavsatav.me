@@ -269,7 +269,7 @@
                 <h2 class="text-3xl md:text-4xl font-bold font-display text-white flex items-center gap-3">
                    <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div> Live TV
                 </h2>
-                <p class="text-gray-500 text-sm mt-1">Stream global & Indian channels instantly.</p>
+                <p class="text-gray-500 text-sm mt-1">Stream global & Indian channels.</p>
              </div>
              <!-- Live Search -->
              <div class="relative w-full md:w-72">
@@ -278,8 +278,16 @@
              </div>
           </div>
 
+          <!-- List Header -->
+          <div class="hidden md:flex items-center px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-white/5">
+              <div class="w-12"></div>
+              <div class="flex-1">Channel Name</div>
+              <div class="w-24">Quality</div>
+              <div class="w-24 text-right">Status</div>
+          </div>
+
           <!-- Live Content Container -->
-          <div id="liveContentArea">
+          <div id="liveContentArea" class="flex flex-col gap-8">
               <!-- Channels injected here as sections -->
               <div class="flex flex-col items-center py-20">
                  <div class="w-8 h-8 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
@@ -558,18 +566,9 @@
         "HBO": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/1200px-HBO_logo.svg.png"
     };
 
-    // Intersection Observer for Lazy Loading Status Checks
-    const statusObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const url = entry.target.dataset.url;
-                const badgeId = entry.target.id;
-                checkChannelStatus(url, badgeId);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { rootMargin: "100px" });
-    
+    // Status check debouncing map
+    const statusCheckTimeouts = {};
+
     // Initial Load
     window.onload = () => {
        showSection('trending');
@@ -753,6 +752,12 @@
             else if (name.includes('india') || name.includes('hindi') || name.includes('star') || name.includes('zee') || name.includes('colors') || name.includes('sony')) ch.category = 'Entertainment';
             else ch.category = 'Others';
 
+            // Extract Tech Details (Resolution) if in name
+            if(name.includes('fhd')) ch.quality = 'FHD';
+            else if(name.includes('hd')) ch.quality = 'HD';
+            else if(name.includes('4k')) ch.quality = '4K';
+            else ch.quality = 'SD';
+
             // Better Logos
             if ((!ch.logo || ch.logo.length < 5) || ch.logo.includes('default')) {
                 for (const [key, url] of Object.entries(logoMap)) {
@@ -779,7 +784,8 @@
                     logo: logoMatch ? logoMatch[1] : null,
                     name: nameMatch ? nameMatch[1].trim() : 'Unknown Channel',
                     url: '',
-                    category: 'Others'
+                    category: 'Others',
+                    quality: 'SD'
                 };
             } else if (line.startsWith('http')) {
                 currentChannel.url = line;
@@ -801,22 +807,19 @@
             const channels = allChannels.filter(c => c.category === cat);
             if(channels.length > 0) {
                 const section = document.createElement('div');
-                section.className = "mb-8";
+                section.className = "mb-4";
                 section.innerHTML = `
-                    <div class="section-header mb-4 px-1 flex items-center gap-2">
-                       <h3 class="text-xl font-bold font-display text-white">${cat}</h3>
-                       <span class="text-xs font-mono text-gray-500 bg-white/5 px-2 py-0.5 rounded">${channels.length}</span>
+                    <div class="section-header mb-2 px-2 flex items-center gap-2">
+                       <h3 class="text-lg font-bold font-display text-white">${cat}</h3>
+                       <span class="text-[10px] font-mono text-gray-500 bg-white/5 px-2 py-0.5 rounded">${channels.length}</span>
                     </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
-                        ${channels.map((ch, idx) => createChannelCardHTML(ch, idx)).join('')}
+                    <div class="flex flex-col gap-1">
+                        ${channels.map((ch, idx) => createChannelRowHTML(ch, idx)).join('')}
                     </div>
                 `;
                 container.appendChild(section);
             }
         });
-
-        // Observe for status checks
-        document.querySelectorAll('.channel-status-badge').forEach(el => statusObserver.observe(el));
     }
     
     function renderLiveGrid(channels, title) {
@@ -826,37 +829,58 @@
                 <div class="section-header mb-4 px-1">
                    <h3 class="text-xl font-bold font-display text-white">${title}</h3>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
-                    ${channels.map((ch, idx) => createChannelCardHTML(ch, idx)).join('')}
+                <div class="flex flex-col gap-1">
+                    ${channels.map((ch, idx) => createChannelRowHTML(ch, idx)).join('')}
                 </div>
             </div>
         `;
-        document.querySelectorAll('.channel-status-badge').forEach(el => statusObserver.observe(el));
     }
 
-    function createChannelCardHTML(ch, idx) {
+    function createChannelRowHTML(ch, idx) {
         const hasLogo = ch.logo && ch.logo.length > 5;
-        // Escape quotes in JSON for onclick
         const safeCh = JSON.stringify(ch).replace(/"/g, '&quot;');
+        const rowId = `row-${idx}-${ch.url.hashCode()}`;
+        const statusId = `status-${ch.url.hashCode()}`;
         
-        return `
-            <div class="bg-[#1a1a1a] rounded-xl overflow-hidden group cursor-pointer hover:bg-[#222] transition-all hover:ring-1 hover:ring-brand-primary/50 flex flex-col aspect-[4/3] relative" onclick="openPlayerForLive(${safeCh})">
-                <div class="flex-1 p-4 flex items-center justify-center relative bg-gradient-to-b from-white/5 to-transparent">
-                    ${hasLogo 
-                       ? `<img src="${ch.logo}" class="max-w-[80%] max-h-[80%] object-contain group-hover:scale-110 transition-transform drop-shadow-lg" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                          <div class="hidden text-3xl font-bold text-gray-700 group-hover:text-white">${ch.name[0]}</div>`
-                       : `<div class="text-3xl font-bold text-gray-700 group-hover:text-white">${ch.name[0]}</div>`
-                    }
-                    
-                    <!-- Status Badge (Lazy Loaded) -->
-                    <div id="status-${ch.url.hashCode()}" data-url="${ch.url}" class="channel-status-badge absolute top-2 left-2 right-2 text-[9px] font-bold bg-black/60 backdrop-blur rounded py-1 px-2 flex items-center justify-center gap-1 text-gray-400">
-                       <i class="fas fa-circle-notch fa-spin text-[8px]"></i> Checking
-                    </div>
+        // Quality Badge Color
+        let qColor = 'text-gray-500 border-gray-700';
+        if(ch.quality === 'HD') qColor = 'text-blue-400 border-blue-500/30';
+        if(ch.quality === 'FHD') qColor = 'text-purple-400 border-purple-500/30';
+        if(ch.quality === '4K') qColor = 'text-yellow-400 border-yellow-500/30';
 
-                    <div class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg translate-y-2 group-hover:translate-y-0"><i class="fas fa-play text-xs text-white ml-0.5"></i></div>
+        return `
+            <div id="${rowId}" class="group flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 border border-transparent hover:border-white/5 transition-all cursor-pointer" 
+                 onclick="openPlayerForLive(${safeCh})"
+                 onmouseenter="triggerStatusCheck('${ch.url}', '${statusId}')">
+                
+                <!-- Logo -->
+                <div class="w-12 h-8 shrink-0 bg-white/5 rounded flex items-center justify-center overflow-hidden">
+                    ${hasLogo 
+                       ? `<img src="${ch.logo}" class="max-w-full max-h-full object-contain" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                          <div class="hidden text-xs font-bold text-gray-500">${ch.name[0]}</div>`
+                       : `<div class="text-xs font-bold text-gray-500">${ch.name[0]}</div>`
+                    }
                 </div>
-                <div class="px-3 py-2 bg-black/20 border-t border-white/5">
-                    <div class="text-xs font-bold text-gray-300 truncate group-hover:text-brand-primary transition-colors">${ch.name}</div>
+
+                <!-- Info -->
+                <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-gray-200 truncate group-hover:text-white">${ch.name}</div>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-[10px] px-1.5 py-0.5 rounded border ${qColor} bg-black/20 font-mono">${ch.quality}</span>
+                        <span class="text-[10px] text-gray-500">${ch.category}</span>
+                    </div>
+                </div>
+
+                <!-- Tech Details (Desktop) -->
+                <div class="hidden md:block w-24 text-right text-[10px] font-mono text-gray-600 group-hover:text-gray-400">
+                    HLS Stream
+                </div>
+
+                <!-- Status -->
+                <div id="${statusId}" class="w-24 flex justify-end">
+                     <div class="text-[10px] font-medium px-2 py-1 rounded-full bg-white/5 text-gray-500 group-hover:bg-white/10 transition-colors">
+                        Check
+                     </div>
                 </div>
             </div>
         `;
@@ -874,10 +898,27 @@
       return hash;
     };
 
+    // Debounced Status Check on Hover
+    function triggerStatusCheck(url, badgeId) {
+        // Clear existing timeout if user re-enters quickly
+        if(statusCheckTimeouts[badgeId]) clearTimeout(statusCheckTimeouts[badgeId]);
+
+        // Set new timeout to check after 300ms of hovering
+        statusCheckTimeouts[badgeId] = setTimeout(() => {
+            const badge = document.getElementById(badgeId);
+            if(badge && badge.innerText.trim() === "Check") {
+                checkChannelStatus(url, badgeId);
+            }
+        }, 200);
+    }
+
     async function checkChannelStatus(url, badgeId) {
         const badge = document.getElementById(badgeId);
         if(!badge) return;
         
+        // Set Loading State
+        badge.innerHTML = `<div class="flex items-center gap-1 text-[10px] text-gray-400"><i class="fas fa-circle-notch fa-spin"></i> Checking</div>`;
+
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
@@ -886,18 +927,13 @@
             clearTimeout(timeoutId);
             
             if (response.ok) {
-                badge.innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]"></div> Online';
-                badge.className = "channel-status-badge absolute top-2 left-2 right-2 text-[9px] font-bold bg-black/80 backdrop-blur rounded py-1 px-2 flex items-center justify-center gap-1.5 text-green-400 border border-green-500/20";
+                badge.innerHTML = `<div class="text-[10px] font-bold text-green-400 flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]"></div> Online</div>`;
             } else {
-                // 404 or 500
-                badge.innerHTML = '<div class="w-1.5 h-1.5 rounded-full bg-red-500"></div> Offline';
-                badge.className = "channel-status-badge absolute top-2 left-2 right-2 text-[9px] font-bold bg-black/80 backdrop-blur rounded py-1 px-2 flex items-center justify-center gap-1.5 text-red-400 border border-red-500/20";
+                badge.innerHTML = `<div class="text-[10px] font-bold text-red-400 flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div> Offline</div>`;
             }
         } catch (error) {
-            // Network Error / CORS -> Treat as Unknown/Protected (Likely works in player)
-            badge.innerHTML = '<i class="fas fa-shield-alt"></i> Protected';
-            badge.className = "channel-status-badge absolute top-2 left-2 right-2 text-[9px] font-bold bg-black/40 backdrop-blur rounded py-1 px-2 flex items-center justify-center gap-1.5 text-gray-400";
-            badge.title = "Stream is protected by CORS but likely playable.";
+            // Network Error / CORS -> Treat as Likely Online but Protected
+            badge.innerHTML = `<div class="text-[10px] font-bold text-gray-400 flex items-center gap-1.5" title="CORS Protected"><i class="fas fa-shield-alt text-[10px]"></i> Stream</div>`;
         }
     }
 
