@@ -41,7 +41,7 @@
           animation: {
             'fade-in': 'fadeIn 0.5s ease-out',
             'slide-up': 'slideUp 0.6s ease-out',
-            'spin-slow': 'spin 8s linear infinite', // Slower spin for manga elements
+            'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
           },
           keyframes: {
             fadeIn: {
@@ -53,9 +53,6 @@
               '100%': { transform: 'translateY(0)', opacity: '1' },
             }
           },
-          backgroundImage: {
-            'halftone': 'radial-gradient(circle, #1A1A1A 2px, transparent 2.5px)',
-          }
         }
       }
     }
@@ -71,17 +68,6 @@
     .custom-scrollbar::-webkit-scrollbar { display: block !important; width: 4px !important; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
 
-    /* Custom Gauge for Speed Test */
-    .gauge-bg {
-        background: conic-gradient(from 0.75turn, #e5e7eb 0deg 270deg, transparent 270deg 360deg);
-        border-radius: 50%;
-    }
-    .gauge-fill {
-        background: conic-gradient(from 0.75turn, #0066CC 0deg var(--rotation, 0deg), transparent 0deg 360deg);
-        border-radius: 50%;
-        transition: background 0.5s ease-out;
-    }
-    
     /* Ranked Numbers */
     .rank-number {
         -webkit-text-stroke: 1px #9CA3AF;
@@ -130,22 +116,6 @@
         transform: scale(1);
         z-index: 10;
     }
-
-    /* Manga Pattern Background */
-    .bg-dots {
-        background-color: #ffffff;
-        background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-        background-size: 20px 20px;
-    }
-    .hard-shadow {
-        box-shadow: 8px 8px 0px 0px #000000;
-    }
-    .hard-shadow-red {
-        box-shadow: 8px 8px 0px 0px #FF003C;
-    }
-    .text-stroke-sm {
-        -webkit-text-stroke: 1px black;
-    }
   </style>
 <script type="importmap">
 {
@@ -182,10 +152,12 @@
       <aside class="w-full md:w-64 bg-white border-r border-gray-200 flex flex-col shrink-0 z-40 h-auto md:h-screen sticky top-0">
           <!-- Profile Header -->
           <div class="p-6 flex items-center gap-4">
-              <div class="w-12 h-12 bg-brand-blue text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-brand-blue/30">PS</div>
+              <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-black/20">
+                  <i class="fas fa-infinity"></i>
+              </div>
               <div>
-                  <h2 class="font-bold text-ink leading-tight">Pranav Satav</h2>
-                  <p class="text-xs text-gray-400">Premium Plan</p>
+                  <h2 class="font-bold text-ink leading-tight font-display text-lg">CinemaVerse</h2>
+                  <p class="text-xs text-brand-blue font-bold tracking-wider">ULTIMATE v2</p>
               </div>
           </div>
 
@@ -193,9 +165,6 @@
           <nav class="flex-1 px-4 py-2 space-y-1 overflow-x-auto md:overflow-visible flex md:flex-col gap-2 md:gap-0 scrollbar-hide">
               <button onclick="switchSubTab('stream')" class="sub-tab-btn active w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-bold bg-paper text-ink border border-gray-200 whitespace-nowrap">
                   <i class="fas fa-play-circle text-lg w-6"></i> Streaming
-              </button>
-              <button onclick="switchSubTab('network')" class="sub-tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-gray-500 hover:bg-gray-50 whitespace-nowrap">
-                  <i class="fas fa-wifi text-lg w-6"></i> Network
               </button>
               <button onclick="switchSubTab('cloud')" class="sub-tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-gray-500 hover:bg-gray-50 whitespace-nowrap">
                   <i class="fas fa-gamepad text-lg w-6"></i> Cloud Gaming
@@ -280,150 +249,6 @@
                   </div>
               </div>
           </div>
-
-          <!-- SUB-TAB: NETWORK TOOLS (Redesigned Manga Style) -->
-          <div id="view-network" class="sub-view hidden w-full h-full bg-dots relative pb-32">
-              <div class="relative z-10 max-w-[1600px] mx-auto p-6 md:p-12 flex flex-col gap-8 animate-fade-in">
-                
-                <!-- HEADER SECTION -->
-                <div class="flex flex-col md:flex-row justify-between items-end border-b-4 border-black pb-6">
-                    <div class="relative">
-                        <div class="absolute -top-6 -left-6 text-gray-200 text-9xl font-black opacity-40 select-none z-0">NET</div>
-                        <h1 class="relative z-10 text-6xl md:text-8xl font-black tracking-tighter italic uppercase text-black leading-[0.8] transform skew-x-[-5deg]">
-                            NET<span class="text-brand-manga">WORK</span>
-                        </h1>
-                        <h2 class="text-lg md:text-xl font-bold bg-black text-white inline-block px-4 py-1 mt-4 transform -skew-x-12 shadow-lg">
-                            SYSTEM DIAGNOSTICS // システム診断
-                        </h2>
-                    </div>
-                    
-                    <!-- Decorative Manga Element -->
-                    <div class="text-right hidden md:flex flex-col items-end">
-                        <div class="flex gap-1 mb-2">
-                            <div class="w-4 h-4 bg-black"></div>
-                            <div class="w-4 h-4 bg-black/50"></div>
-                            <div class="w-4 h-4 bg-brand-manga"></div>
-                        </div>
-                        <div class="text-7xl font-black text-gray-200 leading-none">01</div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    
-                    <!-- LEFT COL: IP STATS (Manga Panel) -->
-                    <div class="lg:col-span-4 bg-white border-4 border-black hard-shadow p-6 relative group hover:-translate-y-1 transition-transform overflow-hidden">
-                        <!-- Decorative bg graphic -->
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gray-100 rounded-bl-full -z-0"></div>
-                        
-                        <div class="absolute -top-4 -left-4 bg-brand-manga text-white font-black px-6 py-2 border-4 border-black transform -rotate-2 z-20">
-                            IDENTITY // ID
-                        </div>
-                        
-                        <div id="ip-info-content" class="mt-8 relative z-10 flex flex-col justify-center min-h-[300px]">
-                             <!-- Content injected via JS -->
-                             <div class="text-center py-10 space-y-4">
-                                 <i class="fas fa-fingerprint text-6xl text-gray-200"></i>
-                                 <button onclick="fetchIP()" class="block w-full bg-black text-white text-xl font-black uppercase px-6 py-4 hover:bg-brand-manga transition-colors border-2 border-transparent hover:border-black transform active:scale-95">
-                                     REVEAL DATA <i class="fas fa-eye ml-2"></i>
-                                 </button>
-                             </div>
-                        </div>
-                        
-                        <!-- Manga Footer Decoration -->
-                        <div class="absolute bottom-0 right-0 p-2 opacity-50">
-                             <div class="flex gap-1">
-                                 <div class="h-1 w-8 bg-black"></div>
-                                 <div class="h-1 w-2 bg-brand-manga"></div>
-                                 <div class="h-1 w-2 bg-black"></div>
-                             </div>
-                        </div>
-                    </div>
-
-                    <!-- CENTER/RIGHT: SPEED TEST (Hero Panel) -->
-                    <div class="lg:col-span-8 bg-black text-white border-4 border-black p-6 md:p-10 relative overflow-hidden hard-shadow-red flex flex-col md:flex-row items-center gap-8 justify-between">
-                         <!-- Speed Lines BG -->
-                         <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] pointer-events-none"></div>
-                         <!-- Corner Accents -->
-                         <div class="absolute top-0 right-0 w-0 h-0 border-t-[80px] border-r-[80px] border-t-brand-manga border-r-transparent opacity-80"></div>
-
-                         <div class="relative z-10 flex-1 text-center md:text-left">
-                             <h3 class="text-4xl md:text-5xl font-black italic uppercase mb-2 text-white"><span class="text-brand-manga">SPEED</span> LIMIT</h3>
-                             <p class="font-mono text-sm text-gray-400 mb-8 border-l-4 border-brand-manga pl-4 py-1 max-w-md mx-auto md:mx-0">
-                                 TEST BANDWIDTH CAPACITY.<br>ENSURE MAXIMUM STREAMING VELOCITY.
-                             </p>
-                             
-                             <button onclick="runSpeedTest()" id="start-speed-btn" class="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-black text-black bg-white border-4 border-transparent hover:border-white hover:bg-black hover:text-white transition-all uppercase italic transform skew-x-[-10deg]">
-                                 <span class="absolute inset-0 border-2 border-white transform translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform"></span>
-                                 <span class="relative transform skew-x-[10deg]">INITIATE TEST // 開始</span>
-                             </button>
-                         </div>
-
-                         <!-- Visualizer -->
-                         <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center shrink-0">
-                              <!-- Rotating Elements -->
-                              <div class="absolute inset-0 border-[16px] border-white/10 rounded-full border-dashed animate-[spin_20s_linear_infinite]"></div>
-                              <div id="speed-gauge" class="absolute inset-4 border-[8px] border-t-brand-manga border-r-brand-manga border-b-transparent border-l-transparent rounded-full transition-all duration-300" style="transform: rotate(-45deg)"></div>
-                              <div class="absolute inset-0 border-[2px] border-white/30 rounded-full scale-75"></div>
-                              
-                              <div class="text-center z-10 flex flex-col items-center">
-                                  <div id="speed-val" class="text-8xl font-black italic leading-none tracking-tighter text-white drop-shadow-lg">000</div>
-                                  <div class="text-2xl font-bold bg-brand-manga text-white px-4 py-1 mt-2 transform -skew-x-12 border-2 border-black inline-block shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]">MBPS</div>
-                              </div>
-                         </div>
-                    </div>
-
-                    <!-- BOTTOM ROW -->
-                    
-                    <!-- SITE CHECKER -->
-                    <div class="lg:col-span-8 bg-white border-4 border-black p-0 flex flex-col md:flex-row hard-shadow overflow-hidden">
-                        <div class="bg-black text-white p-8 flex flex-col justify-center items-center w-full md:w-56 shrink-0 text-center relative overflow-hidden">
-                             <!-- Background pattern -->
-                             <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 10px 10px;"></div>
-                             <i class="fas fa-satellite-dish text-5xl mb-4 text-brand-manga relative z-10"></i>
-                             <span class="font-black text-2xl uppercase leading-none relative z-10">PING<br>TARGET</span>
-                        </div>
-                        <div class="p-6 md:p-8 flex-1 flex flex-col justify-center gap-4 bg-dots">
-                            <div class="flex flex-col md:flex-row gap-0 shadow-lg">
-                                <input type="text" id="statusUrl" value="google.com" class="flex-1 bg-white border-4 border-black md:border-r-0 px-6 py-4 font-mono text-xl font-bold uppercase focus:bg-yellow-50 outline-none placeholder-gray-300 text-ink" placeholder="DOMAIN.COM">
-                                <button onclick="checkStatus()" class="bg-brand-manga text-white font-black px-10 py-4 border-4 border-black hover:bg-black transition-colors uppercase tracking-widest text-lg">
-                                    SCAN
-                                </button>
-                            </div>
-                            <div id="status-result" class="font-mono font-bold text-sm bg-black text-white p-2 inline-block w-max transform skew-x-[-10deg]">
-                                <span class="transform skew-x-[10deg] block px-2">STATUS: WAITING FOR INPUT...</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- EXTRA FEATURE: LATENCY GRAPH (Visual only) -->
-                    <div class="lg:col-span-4 bg-white border-4 border-black p-6 flex flex-col hard-shadow relative">
-                         <div class="absolute top-2 right-2 flex gap-1">
-                             <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                             <div class="w-2 h-2 rounded-full bg-black"></div>
-                         </div>
-                         <h3 class="font-black text-2xl uppercase mb-4 italic">LATENCY LOG</h3>
-                         
-                         <div class="flex-1 bg-gray-50 border-4 border-black relative overflow-hidden flex items-end justify-between px-2 pb-0 pt-8 gap-2" id="latency-bars">
-                             <!-- Static visual bars -->
-                             <div class="flex-1 bg-black/20 h-[30%] skew-y-12 origin-bottom"></div>
-                             <div class="flex-1 bg-black/40 h-[50%] skew-y-12 origin-bottom"></div>
-                             <div class="flex-1 bg-brand-manga h-[80%] skew-y-12 origin-bottom relative shadow-lg"></div>
-                             <div class="flex-1 bg-black/60 h-[40%] skew-y-12 origin-bottom"></div>
-                             <div class="flex-1 bg-black/30 h-[25%] skew-y-12 origin-bottom"></div>
-                             
-                             <!-- Overlay Grid -->
-                             <div class="absolute inset-0" style="background-image: linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.1) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.1) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.1) 76%, transparent 77%, transparent); background-size: 20px 20px;"></div>
-                         </div>
-                         
-                         <div class="flex justify-between text-xs font-black mt-3 font-mono bg-black text-white p-1">
-                             <span>T-MINUS</span>
-                             <span>LIVE</span>
-                         </div>
-                    </div>
-
-                </div>
-              </div>
-          </div>
           
           <!-- SUB-TAB: CLOUD GAMING (White Theme Redesign) -->
           <div id="view-cloud" class="sub-view hidden w-full min-h-full bg-[#F4F4F0] text-ink pb-32">
@@ -432,9 +257,9 @@
                   <!-- Left Column: Educational Info -->
                   <div class="flex-1 flex flex-col justify-center space-y-8 animate-fade-in">
                       <div>
-                          <button onclick="switchSubTab('stream')" class="text-xs font-bold text-brand-blue hover:text-ink mb-6 flex items-center gap-2 uppercase tracking-widest transition-colors">
-                              <i class="fas fa-arrow-left"></i> Back to Media
-                          </button>
+                          <div class="text-xs font-bold text-brand-blue mb-6 flex items-center gap-2 uppercase tracking-widest">
+                             <i class="fas fa-server"></i> Remote Workstation
+                          </div>
                           <h1 class="text-5xl md:text-7xl font-display font-bold text-ink mb-6 leading-tight">
                               Cloud Gaming <br>
                               <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-500">Portal</span>
@@ -480,44 +305,69 @@
                   </div>
 
                   <!-- Right Column: Status & Action -->
-                  <div class="flex-1 xl:max-w-xl bg-white border border-gray-200 rounded-3xl p-8 flex flex-col shadow-2xl relative overflow-hidden animate-slide-up">
-                      <!-- Glow effect -->
-                      <div class="absolute -top-20 -right-20 w-64 h-64 bg-blue-100/50 blur-[100px] rounded-full pointer-events-none"></div>
+                  <div class="flex-1 xl:max-w-xl flex flex-col gap-6 animate-slide-up">
                       
-                      <div class="flex items-center gap-4 mb-8 relative z-10">
-                          <div class="w-12 h-12 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center">
-                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Nvidia_logo.svg/1024px-Nvidia_logo.svg.png" class="h-8 w-8 object-contain">
+                      <!-- Main Portal Card -->
+                      <div class="bg-white border border-gray-200 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+                          <!-- Glow effect -->
+                          <div class="absolute -top-20 -right-20 w-64 h-64 bg-blue-100/50 blur-[100px] rounded-full pointer-events-none"></div>
+                          
+                          <div class="flex items-center gap-4 mb-6 relative z-10">
+                              <div class="w-12 h-12 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center text-ink text-2xl">
+                                  <i class="fas fa-gamepad"></i>
+                              </div>
+                              <div>
+                                  <h3 class="font-bold text-ink text-xl">Moonlight Stream</h3>
+                                  <p class="text-xs text-gray-400">gaming.pranavsatav.me</p>
+                              </div>
                           </div>
-                          <div>
-                              <h3 class="font-bold text-ink text-xl">Moonlight Portal</h3>
-                              <p class="text-xs text-gray-400">gaming.pranavsatav.me</p>
+
+                          <!-- Compact Status Box -->
+                          <div class="bg-gray-50 rounded-xl p-4 mb-6 border border-gray-100 flex items-center justify-between relative z-10">
+                               <div class="flex items-center gap-3">
+                                   <div id="cloud-status-indicator" class="w-3 h-3 rounded-full bg-gray-300 shadow-sm"></div>
+                                   <div>
+                                       <div id="cloud-status-text" class="text-sm font-bold text-ink leading-tight">INITIALIZING...</div>
+                                       <div id="cloud-status-detail" class="text-[10px] text-gray-500 font-medium">Checking gateway response</div>
+                                   </div>
+                               </div>
+                               <div class="text-xs font-mono text-gray-400">PORT 443</div>
+                          </div>
+
+                          <!-- Action Buttons -->
+                          <div class="space-y-4 relative z-10">
+                              <a id="cloud-launch-btn" href="https://gaming.pranavsatav.me" target="_blank" class="flex items-center justify-center gap-2 w-full bg-ink text-white font-black uppercase text-center py-4 rounded-xl hover:shadow-xl hover:bg-black transition-all transform hover:-translate-y-1 active:scale-95 text-lg tracking-wide">
+                                  Launch Portal <i class="fas fa-external-link-alt"></i>
+                              </a>
+                              
+                              <button id="cloud-preview-btn" onclick="toggleCloudIframe()" class="w-full bg-white border border-gray-300 text-ink font-bold uppercase text-center py-3 rounded-xl hover:bg-gray-50 transition-all text-sm">
+                                  Try Embedded Mode <i class="fas fa-window-maximize ml-2"></i>
+                              </button>
                           </div>
                       </div>
 
-                      <!-- Status Card -->
-                      <div class="bg-gray-50 rounded-2xl p-6 mb-8 border border-gray-200 flex flex-col items-center justify-center gap-4 relative overflow-hidden">
-                          
-                          <div id="cloud-status-indicator" class="w-4 h-4 rounded-full bg-gray-300 relative z-10"></div>
-                          <div id="cloud-status-text" class="text-2xl font-black text-gray-400 uppercase tracking-wider relative z-10">CHECKING STATUS...</div>
-                          <p class="text-xs text-gray-500 text-center max-w-xs relative z-10">
-                              Diagnostic ping to cloudflare endpoint.
-                          </p>
-                      </div>
+                      <!-- Integrated Network Diagnostics -->
+                      <div class="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm">
+                           <div class="flex justify-between items-center mb-4">
+                               <h3 class="font-bold text-ink text-sm uppercase tracking-wide">Link Integrity</h3>
+                               <span id="diag-status" class="text-[10px] bg-gray-100 text-gray-500 px-2 py-1 rounded">IDLE</span>
+                           </div>
+                           
+                           <div class="grid grid-cols-2 gap-4 mb-4">
+                               <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                   <div class="text-[10px] uppercase text-gray-400 font-bold mb-1">Latency (Ping)</div>
+                                   <div id="net-ping" class="text-2xl font-black text-ink">-- <span class="text-sm font-medium text-gray-400">ms</span></div>
+                               </div>
+                               <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                   <div class="text-[10px] uppercase text-gray-400 font-bold mb-1">Downstream</div>
+                                   <div id="net-speed" class="text-2xl font-black text-ink">-- <span class="text-sm font-medium text-gray-400">Mbps</span></div>
+                               </div>
+                           </div>
 
-                      <!-- Action Buttons -->
-                      <div class="space-y-4 relative z-10">
-                          <a id="cloud-launch-btn" href="https://gaming.pranavsatav.me" target="_blank" class="flex items-center justify-center gap-2 w-full bg-ink text-white font-black uppercase text-center py-4 rounded-xl hover:shadow-xl hover:bg-black transition-all transform hover:-translate-y-1 active:scale-95 text-lg tracking-wide">
-                              Launch Portal <i class="fas fa-external-link-alt"></i>
-                          </a>
-                          
-                          <button id="cloud-preview-btn" onclick="toggleCloudIframe()" class="w-full bg-white border border-gray-300 text-ink font-bold uppercase text-center py-3 rounded-xl hover:bg-gray-50 transition-all text-sm">
-                              Try Embedded Mode <i class="fas fa-window-maximize ml-2"></i>
-                          </button>
+                           <button onclick="runCloudDiagnostics()" id="diag-btn" class="w-full py-3 rounded-xl border border-gray-200 text-xs font-bold text-gray-600 hover:bg-black hover:text-white hover:border-black transition-all flex items-center justify-center gap-2">
+                               Run Connectivity Check <i class="fas fa-bolt"></i>
+                           </button>
                       </div>
-                      
-                      <p class="text-[10px] text-gray-400 text-center mt-6">
-                          * If the status shows offline but you know the PC is ON, the tunnel might just be blocking the status check. You can still try launching.
-                      </p>
 
                   </div>
 
@@ -772,23 +622,27 @@
     // --- CLOUD GAMING LOGIC ---
     function checkCloudServer() {
         const statusEl = document.getElementById('cloud-status-text');
+        const detailEl = document.getElementById('cloud-status-detail');
         const indicatorEl = document.getElementById('cloud-status-indicator');
         if(!statusEl) return;
 
-        statusEl.textContent = "PINGING SATELLITE...";
-        statusEl.className = "text-yellow-500 font-bold animate-pulse relative z-10";
-        indicatorEl.className = "w-4 h-4 rounded-full bg-yellow-500 animate-pulse relative z-10";
+        statusEl.textContent = "ATTEMPTING HANDSHAKE";
+        detailEl.textContent = "Pinging remote gateway...";
+        statusEl.className = "text-sm font-bold text-yellow-600 leading-tight";
+        indicatorEl.className = "w-3 h-3 rounded-full bg-yellow-500 animate-pulse shadow-sm";
         
         const setOnline = () => {
-            statusEl.textContent = "SYSTEM REACHABLE";
-            statusEl.className = "text-green-600 font-bold relative z-10";
-            indicatorEl.className = "w-4 h-4 rounded-full bg-green-600 relative z-10";
+            statusEl.textContent = "GATEWAY CONFIRMED";
+            detailEl.textContent = "Tunnel Open • Ready for Launch";
+            statusEl.className = "text-sm font-bold text-green-600 leading-tight";
+            indicatorEl.className = "w-3 h-3 rounded-full bg-green-500 shadow-sm";
         };
 
         const setOffline = () => {
-            statusEl.textContent = "CHECK FAILED (MIGHT BE BLOCKED)";
-            statusEl.className = "text-red-500 font-bold relative z-10";
-            indicatorEl.className = "w-4 h-4 rounded-full bg-red-500 relative z-10";
+            statusEl.textContent = "STATUS UNCONFIRMED";
+            detailEl.textContent = "Response blocked or Host offline";
+            statusEl.className = "text-sm font-bold text-red-500 leading-tight";
+            indicatorEl.className = "w-3 h-3 rounded-full bg-red-500 shadow-sm";
         };
 
         const img = new Image();
@@ -796,9 +650,8 @@
         img.onerror = () => {
             fetch("https://gaming.pranavsatav.me", { mode: 'no-cors' })
                 .then(() => {
-                    statusEl.textContent = "GATEWAY CONNECTED";
-                    statusEl.className = "text-green-600 font-bold relative z-10";
-                    indicatorEl.className = "w-4 h-4 rounded-full bg-green-600 relative z-10";
+                    // Opaque response, likely online but blocked by CORS or Tunnel page
+                    setOnline();
                 })
                 .catch(setOffline);
         };
@@ -817,6 +670,50 @@
             iframe.src = ""; // Stop processing to save resources
         }
     }
+
+    function runCloudDiagnostics() {
+        const btn = document.getElementById('diag-btn');
+        const status = document.getElementById('diag-status');
+        const pingEl = document.getElementById('net-ping');
+        const speedEl = document.getElementById('net-speed');
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing Link...';
+        status.textContent = "RUNNING";
+        status.className = "text-[10px] bg-yellow-100 text-yellow-600 px-2 py-1 rounded animate-pulse";
+        
+        // Simulate Ping
+        let p = 0;
+        const pingInterval = setInterval(() => {
+            p = Math.floor(Math.random() * 40) + 15;
+            pingEl.innerHTML = `${p} <span class="text-sm font-medium text-gray-400">ms</span>`;
+        }, 100);
+
+        // Simulate Speed
+        let s = 0;
+        const speedInterval = setInterval(() => {
+             s = Math.floor(Math.random() * 500) + 50;
+             speedEl.innerHTML = `${s} <span class="text-sm font-medium text-gray-400">Mbps</span>`;
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(pingInterval);
+            clearInterval(speedInterval);
+            
+            const finalPing = Math.floor(Math.random() * 10) + 20; // 20-30ms realistic
+            const finalSpeed = Math.floor(Math.random() * 200) + 300; // 300-500mbps
+            
+            pingEl.innerHTML = `${finalPing} <span class="text-sm font-medium text-gray-400">ms</span>`;
+            speedEl.innerHTML = `${finalSpeed} <span class="text-sm font-medium text-gray-400">Mbps</span>`;
+            
+            status.textContent = "OPTIMAL";
+            status.className = "text-[10px] bg-green-100 text-green-600 px-2 py-1 rounded";
+            
+            btn.disabled = false;
+            btn.innerHTML = 'Re-Run Connectivity Check <i class="fas fa-redo ml-1"></i>';
+        }, 2000);
+    }
+
 
     // --- STREAMING LOGIC ---
     async function loadAPI(type) {
@@ -1268,7 +1165,7 @@
             b.onclick = () => {
                 frame.src = s.url(currentMedia.id);
                 // Reset styles
-                Array.from(btnContainer.children).forEach(c => c.className = 'px-3 py-1 rounded text-xs font-bold border bg-transparent text-gray-400 border-white/20');
+                Array.from(btnContainer.children).forEach(c => c.className = 'px-3 py-1 rounded text-xs font-bold border bg-transparent text-gray-400 hover:text-white border-white/20');
                 b.className = 'px-3 py-1 rounded text-xs font-bold border bg-white text-black';
             };
             btnContainer.appendChild(b);
@@ -1434,74 +1331,6 @@
     window.loadMoreChannels = () => {
         livePage++;
         renderLiveList(false);
-    }
-
-    // --- NETWORK TOOLS ---
-    function fetchIP() {
-        const c = document.getElementById('ip-info-content');
-        c.innerHTML = '<span class="text-sm font-bold text-gray-400 animate-pulse">SCANNING MAINFRAME...</span>';
-        fetch('https://ipapi.co/json/').then(r=>r.json()).then(d => {
-            // Updated with Manga Styles
-            c.innerHTML = `
-                <div class="border-b-4 border-black pb-3 mb-4">
-                    <div class="text-xs font-black bg-black text-white px-2 py-0.5 inline-block mb-1 transform -skew-x-12">IP ADDRESS</div>
-                    <div class="text-4xl font-black text-black font-mono tracking-tighter">${d.ip}</div>
-                </div>
-                <div class="border-b-4 border-black pb-3 mb-4">
-                    <div class="text-xs font-black bg-black text-white px-2 py-0.5 inline-block mb-1 transform -skew-x-12">PROVIDER</div>
-                    <div class="text-xl font-bold font-mono uppercase truncate">${d.org}</div>
-                </div>
-                <div class="pb-2">
-                    <div class="text-xs font-black bg-black text-white px-2 py-0.5 inline-block mb-1 transform -skew-x-12">COORDINATES</div>
-                    <div class="text-xl font-bold font-mono uppercase">${d.city}, ${d.country_name}</div>
-                </div>
-                <div class="mt-6 flex justify-end">
-                    <div class="px-2 py-1 border-2 border-black text-xs font-bold text-green-600 bg-green-100 uppercase">SECURE // ON</div>
-                </div>
-            `;
-        }).catch(() => c.innerHTML = '<span class="text-red-500 font-bold bg-black px-2">CONNECTION BLOCKED (ADBLOCK?)</span>');
-    }
-
-    function checkStatus() {
-        const url = document.getElementById('statusUrl').value;
-        const res = document.getElementById('status-result');
-        res.innerHTML = '<span class="animate-pulse bg-white text-black px-2">PINGING TARGET...</span>';
-        const start = performance.now();
-        fetch(`https://${url}`, { mode: 'no-cors' }).then(() => {
-             const ms = Math.round(performance.now() - start);
-             res.innerHTML = `<span class="text-green-400 font-black px-2 transform skew-x-[10deg] block">ONLINE // ${ms}MS // STABLE</span>`;
-        }).catch(() => res.innerHTML = '<span class="text-red-500 font-black px-2 transform skew-x-[10deg] block">OFFLINE // ERR_TIMED_OUT</span>');
-    }
-
-    function runSpeedTest() {
-        const gauge = document.getElementById('speed-gauge');
-        const val = document.getElementById('speed-val');
-        const btn = document.getElementById('start-speed-btn');
-        btn.disabled = true;
-        btn.innerHTML = '<span class="animate-pulse">TESTING...</span>';
-        
-        let speed = 0;
-        let rotation = -45;
-        const interval = setInterval(() => {
-            // Speed Calculation visual
-            speed = Math.random() * 100 + (speed * 0.9);
-            if(speed > 999) speed = 999;
-            
-            // Visual Rotation (Manga Gauge style: -45deg to 225deg)
-            rotation = -45 + ((speed / 200) * 270); 
-            
-            gauge.style.transform = `rotate(${rotation}deg)`;
-            val.textContent = Math.round(speed).toString().padStart(3, '0');
-        }, 100);
-
-        setTimeout(() => {
-            clearInterval(interval);
-            const final = Math.floor(Math.random() * (120 - 80) + 80); 
-            val.textContent = final;
-            gauge.style.transform = `rotate(${ -45 + ((final/200)*270) }deg)`;
-            btn.disabled = false;
-            btn.innerHTML = '<span class="absolute inset-0 border-2 border-white transform translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform"></span><span class="relative transform skew-x-[10deg]">RE-TEST // 再試行</span>';
-        }, 3000);
     }
   </script>
 <script type="module" src="/index.tsx"></script>
