@@ -197,6 +197,9 @@
               <button onclick="switchSubTab('network')" class="sub-tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-gray-500 hover:bg-gray-50 whitespace-nowrap">
                   <i class="fas fa-wifi text-lg w-6"></i> Network
               </button>
+              <button onclick="switchSubTab('cloud')" class="sub-tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-gray-500 hover:bg-gray-50 whitespace-nowrap">
+                  <i class="fas fa-gamepad text-lg w-6"></i> Cloud Gaming
+              </button>
               <button onclick="switchSubTab('settings')" class="sub-tab-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-gray-500 hover:bg-gray-50 whitespace-nowrap">
                   <i class="fas fa-cog text-lg w-6"></i> Settings
               </button>
@@ -206,8 +209,8 @@
       <!-- Main Hub Content -->
       <main class="flex-1 h-[calc(100vh-80px)] md:h-screen overflow-y-auto bg-paper relative scroll-smooth outline-none" id="hub-scroll-area" tabindex="-1">
           
-          <!-- Sticky Search Bar -->
-          <div class="fixed top-6 right-6 z-50 transition-all duration-300">
+          <!-- Sticky Search Bar (Hidden by default, shown via JS only for Stream tab) -->
+          <div id="hub-search-container" class="hidden fixed top-6 right-6 z-50 transition-all duration-300">
                <div class="relative group shadow-xl rounded-full">
                   <input type="text" id="movieSearch" placeholder="Search..." class="bg-white/90 backdrop-blur-md border border-gray-200 rounded-full pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-ink focus:outline-none w-48 md:w-72 transition-all shadow-sm">
                   <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
@@ -421,6 +424,119 @@
                 </div>
               </div>
           </div>
+          
+          <!-- SUB-TAB: CLOUD GAMING (White Theme Redesign) -->
+          <div id="view-cloud" class="sub-view hidden w-full min-h-full bg-[#F4F4F0] text-ink pb-32">
+              <div class="max-w-[1600px] mx-auto p-6 md:p-12 flex flex-col xl:flex-row gap-12 h-full">
+                  
+                  <!-- Left Column: Educational Info -->
+                  <div class="flex-1 flex flex-col justify-center space-y-8 animate-fade-in">
+                      <div>
+                          <button onclick="switchSubTab('stream')" class="text-xs font-bold text-brand-blue hover:text-ink mb-6 flex items-center gap-2 uppercase tracking-widest transition-colors">
+                              <i class="fas fa-arrow-left"></i> Back to Media
+                          </button>
+                          <h1 class="text-5xl md:text-7xl font-display font-bold text-ink mb-6 leading-tight">
+                              Cloud Gaming <br>
+                              <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-cyan-500">Portal</span>
+                          </h1>
+                          
+                          <div class="prose max-w-none mb-8">
+                              <p class="text-xl text-gray-600">
+                                  Access your personal high-performance gaming rig from anywhere. 
+                                  Powered by a dedicated Mini PC running Moonlight/Sunshine, tunneled securely via Cloudflare.
+                              </p>
+                          </div>
+
+                          <ul class="space-y-4 text-lg">
+                              <li class="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all">
+                                  <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                                      <i class="fas fa-microchip text-brand-blue"></i>
+                                  </div>
+                                  <div>
+                                      <div class="font-bold text-ink">Dedicated Hardware</div>
+                                      <div class="text-sm text-gray-500">Running 24/7 on local Mini PC</div>
+                                  </div>
+                              </li>
+                              <li class="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all">
+                                  <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                                      <i class="fas fa-shield-alt text-brand-blue"></i>
+                                  </div>
+                                  <div>
+                                      <div class="font-bold text-ink">Secure Tunneling</div>
+                                      <div class="text-sm text-gray-500">Protected via Cloudflare Zero Trust</div>
+                                  </div>
+                              </li>
+                              <li class="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all">
+                                  <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                                      <i class="fas fa-bolt text-brand-blue"></i>
+                                  </div>
+                                  <div>
+                                      <div class="font-bold text-ink">Low Latency</div>
+                                      <div class="text-sm text-gray-500">Optimized for real-time streaming</div>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  <!-- Right Column: Status & Action -->
+                  <div class="flex-1 xl:max-w-xl bg-white border border-gray-200 rounded-3xl p-8 flex flex-col shadow-2xl relative overflow-hidden animate-slide-up">
+                      <!-- Glow effect -->
+                      <div class="absolute -top-20 -right-20 w-64 h-64 bg-blue-100/50 blur-[100px] rounded-full pointer-events-none"></div>
+                      
+                      <div class="flex items-center gap-4 mb-8 relative z-10">
+                          <div class="w-12 h-12 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center">
+                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Nvidia_logo.svg/1024px-Nvidia_logo.svg.png" class="h-8 w-8 object-contain">
+                          </div>
+                          <div>
+                              <h3 class="font-bold text-ink text-xl">Moonlight Portal</h3>
+                              <p class="text-xs text-gray-400">gaming.pranavsatav.me</p>
+                          </div>
+                      </div>
+
+                      <!-- Status Card -->
+                      <div class="bg-gray-50 rounded-2xl p-6 mb-8 border border-gray-200 flex flex-col items-center justify-center gap-4 relative overflow-hidden">
+                          
+                          <div id="cloud-status-indicator" class="w-4 h-4 rounded-full bg-gray-300 relative z-10"></div>
+                          <div id="cloud-status-text" class="text-2xl font-black text-gray-400 uppercase tracking-wider relative z-10">CHECKING STATUS...</div>
+                          <p class="text-xs text-gray-500 text-center max-w-xs relative z-10">
+                              Diagnostic ping to cloudflare endpoint.
+                          </p>
+                      </div>
+
+                      <!-- Action Buttons -->
+                      <div class="space-y-4 relative z-10">
+                          <a id="cloud-launch-btn" href="https://gaming.pranavsatav.me" target="_blank" class="flex items-center justify-center gap-2 w-full bg-ink text-white font-black uppercase text-center py-4 rounded-xl hover:shadow-xl hover:bg-black transition-all transform hover:-translate-y-1 active:scale-95 text-lg tracking-wide">
+                              Launch Portal <i class="fas fa-external-link-alt"></i>
+                          </a>
+                          
+                          <button id="cloud-preview-btn" onclick="toggleCloudIframe()" class="w-full bg-white border border-gray-300 text-ink font-bold uppercase text-center py-3 rounded-xl hover:bg-gray-50 transition-all text-sm">
+                              Try Embedded Mode <i class="fas fa-window-maximize ml-2"></i>
+                          </button>
+                      </div>
+                      
+                      <p class="text-[10px] text-gray-400 text-center mt-6">
+                          * If the status shows offline but you know the PC is ON, the tunnel might just be blocking the status check. You can still try launching.
+                      </p>
+
+                  </div>
+
+              </div>
+              
+              <!-- Hidden Iframe Container for "Seamless" integration attempt -->
+              <div id="cloud-iframe-container" class="hidden fixed inset-0 z-[100] bg-black">
+                  <div class="absolute top-0 left-0 right-0 h-12 bg-zinc-900 flex items-center justify-between px-4 border-b border-white/10">
+                      <div class="flex items-center gap-2">
+                          <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                          <span class="text-white font-bold text-sm">Gaming Portal (Embedded)</span>
+                      </div>
+                      <button onclick="toggleCloudIframe()" class="text-white hover:text-red-500 transition-colors">
+                          <i class="fas fa-times text-xl"></i>
+                      </button>
+                  </div>
+                  <iframe id="cloud-iframe" class="w-full h-full pt-12 border-none" allow="gamepad; fullscreen; autoplay"></iframe>
+              </div>
+          </div>
 
           <!-- SUB-TAB: SETTINGS -->
           <div id="view-settings" class="sub-view hidden h-full flex items-center justify-center p-10">
@@ -582,11 +698,14 @@
     let currentHeroIndex = 0;
 
     // --- INIT ---
-    window.onload = () => {
+    // Use DOMContentLoaded to ensure elements exist before we try to manipulate them
+    document.addEventListener('DOMContentLoaded', () => {
         switchMainTab('hub');
+        // Explicitly initialize state to hide search bar for non-stream tabs
+        switchSubTab('stream'); 
         loadAPI('movie'); // Default
         initSearch();
-    };
+    });
 
     // --- NAVIGATION ---
     function switchMainTab(tab) {
@@ -596,8 +715,10 @@
             b.classList.add('bg-white', 'text-ink', 'border');
         });
         const btn = document.getElementById(`nav-${tab}`);
-        btn.classList.remove('bg-white', 'text-ink', 'border');
-        btn.classList.add('bg-ink', 'text-white');
+        if(btn) {
+            btn.classList.remove('bg-white', 'text-ink', 'border');
+            btn.classList.add('bg-ink', 'text-white');
+        }
 
         // Toggle Views with Smooth Transitions
         const hub = document.getElementById('tab-hub');
@@ -619,17 +740,87 @@
             b.classList.remove('active', 'bg-paper', 'text-ink', 'border', 'font-bold');
             b.classList.add('text-gray-500', 'font-medium');
         });
-        const activeBtn = event.currentTarget;
-        activeBtn.classList.remove('text-gray-500', 'font-medium');
-        activeBtn.classList.add('active', 'bg-paper', 'text-ink', 'border', 'font-bold');
+        
+        // Find button safely without relying on 'event' which is flaky during initialization
+        const activeBtn = document.querySelector(`.sub-tab-btn[onclick*="'${tab}'"]`);
+        if(activeBtn) {
+            activeBtn.classList.remove('text-gray-500', 'font-medium');
+            activeBtn.classList.add('active', 'bg-paper', 'text-ink', 'border', 'font-bold');
+        }
 
         // Content switching
         document.querySelectorAll('.sub-view').forEach(v => v.classList.add('hidden'));
-        document.getElementById(`view-${tab}`).classList.remove('hidden');
+        const view = document.getElementById(`view-${tab}`);
+        if(view) view.classList.remove('hidden');
+
+        // Search Bar Visibility Logic
+        const searchContainer = document.getElementById('hub-search-container');
+        if(searchContainer) {
+            if (tab === 'stream') {
+                searchContainer.classList.remove('hidden');
+            } else {
+                searchContainer.classList.add('hidden');
+            }
+        }
+
+        // Specific Tab Logic
+        if(tab === 'cloud') {
+            checkCloudServer();
+        }
+    }
+
+    // --- CLOUD GAMING LOGIC ---
+    function checkCloudServer() {
+        const statusEl = document.getElementById('cloud-status-text');
+        const indicatorEl = document.getElementById('cloud-status-indicator');
+        if(!statusEl) return;
+
+        statusEl.textContent = "PINGING SATELLITE...";
+        statusEl.className = "text-yellow-500 font-bold animate-pulse relative z-10";
+        indicatorEl.className = "w-4 h-4 rounded-full bg-yellow-500 animate-pulse relative z-10";
+        
+        const setOnline = () => {
+            statusEl.textContent = "SYSTEM REACHABLE";
+            statusEl.className = "text-green-600 font-bold relative z-10";
+            indicatorEl.className = "w-4 h-4 rounded-full bg-green-600 relative z-10";
+        };
+
+        const setOffline = () => {
+            statusEl.textContent = "CHECK FAILED (MIGHT BE BLOCKED)";
+            statusEl.className = "text-red-500 font-bold relative z-10";
+            indicatorEl.className = "w-4 h-4 rounded-full bg-red-500 relative z-10";
+        };
+
+        const img = new Image();
+        img.onload = setOnline;
+        img.onerror = () => {
+            fetch("https://gaming.pranavsatav.me", { mode: 'no-cors' })
+                .then(() => {
+                    statusEl.textContent = "GATEWAY CONNECTED";
+                    statusEl.className = "text-green-600 font-bold relative z-10";
+                    indicatorEl.className = "w-4 h-4 rounded-full bg-green-600 relative z-10";
+                })
+                .catch(setOffline);
+        };
+        img.src = "https://gaming.pranavsatav.me/favicon.ico?t=" + Date.now();
+    }
+
+    function toggleCloudIframe() {
+        const container = document.getElementById('cloud-iframe-container');
+        const iframe = document.getElementById('cloud-iframe');
+        
+        if (container.classList.contains('hidden')) {
+            container.classList.remove('hidden');
+            if(!iframe.src) iframe.src = "https://gaming.pranavsatav.me";
+        } else {
+            container.classList.add('hidden');
+            iframe.src = ""; // Stop processing to save resources
+        }
     }
 
     // --- STREAMING LOGIC ---
     async function loadAPI(type) {
+        currentType = type; // Update global state
         const grid = document.getElementById('main-grid');
         grid.innerHTML = '<div class="col-span-full h-40 flex items-center justify-center"><div class="w-8 h-8 border-2 border-ink border-t-transparent rounded-full loader"></div></div>';
         
@@ -836,33 +1027,43 @@
 
     function initSearch() {
         let debounce;
-        document.getElementById('movieSearch').addEventListener('input', (e) => {
-            clearTimeout(debounce);
-            const q = e.target.value;
-            
-            // Fix: Clear search and revert to popular
-            if (q.length === 0) {
-                document.getElementById('grid-title').textContent = "Popular Updates";
-                loadAPI(currentType === 'tv' ? 'tv' : 'movie');
-                return;
-            }
+        const movieSearch = document.getElementById('movieSearch');
+        if(movieSearch) {
+            movieSearch.addEventListener('input', (e) => {
+                clearTimeout(debounce);
+                const q = e.target.value;
+                
+                // Fix: Clear search and revert to popular
+                if (q.length === 0) {
+                    document.getElementById('grid-title').textContent = "Popular Updates";
+                    loadAPI(currentType === 'tv' ? 'tv' : 'movie');
+                    return;
+                }
 
-            if(q.length > 2) {
-                debounce = setTimeout(() => {
-                    document.getElementById('grid-title').textContent = `Search: "${q}"`;
-                    fetch(`https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`)
-                    .then(r=>r.json()).then(d => renderCards(d.results, 'movie', document.getElementById('main-grid')));
-                }, 500);
-            }
-        });
+                if(q.length > 2) {
+                    debounce = setTimeout(() => {
+                        document.getElementById('grid-title').textContent = `Search: "${q}"`;
+                        fetch(`https://api.themoviedb.org/3/search/multi?api_key=${TMDB_KEY}&query=${encodeURIComponent(q)}`)
+                        .then(r=>r.json()).then(d => renderCards(d.results, 'movie', document.getElementById('main-grid')));
+                    }, 500);
+                }
+            });
+        }
 
         // Live Search
-        document.getElementById('liveSearchInput').addEventListener('input', (e) => {
-            renderLiveList(true);
-        });
-        document.getElementById('liveCategoryFilter').addEventListener('change', () => {
-            renderLiveList(true);
-        });
+        const liveSearch = document.getElementById('liveSearchInput');
+        if(liveSearch) {
+            liveSearch.addEventListener('input', (e) => {
+                renderLiveList(true);
+            });
+        }
+        
+        const liveCat = document.getElementById('liveCategoryFilter');
+        if(liveCat) {
+            liveCat.addEventListener('change', () => {
+                renderLiveList(true);
+            });
+        }
     }
 
     // --- MODAL & PLAYER ---
@@ -888,6 +1089,9 @@
         document.getElementById(id).classList.add('opacity-0', 'pointer-events-none');
         if(id === 'detailModal' && heroInterval) {
             // Ensure slideshow continues
+        }
+        if(id === 'playerModal') {
+            stopPlayer(); // Stop audio/video when closing player
         }
         
         // SCROLL FIX: When closing modals, return focus to the scrollable container.
