@@ -134,7 +134,7 @@
   <!-- =========================== -->
   <!-- FLOATING NAV SWITCHER (Global) -->
   <!-- =========================== -->
-  <div class="fixed bottom-6 left-6 z-[60] flex gap-2">
+  <div id="global-nav" class="fixed bottom-6 left-6 z-[60] flex gap-2">
       <button onclick="switchMainTab('hub')" id="nav-hub" class="nav-pill active bg-ink text-white shadow-xl px-5 py-3 rounded-full font-bold text-xs flex items-center gap-2 hover:scale-105 transition-all">
           <i class="fas fa-home"></i> <span>Hub</span>
       </button>
@@ -661,13 +661,16 @@
     function toggleCloudIframe() {
         const container = document.getElementById('cloud-iframe-container');
         const iframe = document.getElementById('cloud-iframe');
+        const nav = document.getElementById('global-nav');
         
         if (container.classList.contains('hidden')) {
             container.classList.remove('hidden');
             if(!iframe.src) iframe.src = "https://gaming.pranavsatav.me";
+            if(nav) nav.classList.add('hidden');
         } else {
             container.classList.add('hidden');
             iframe.src = ""; // Stop processing to save resources
+            if(nav) nav.classList.remove('hidden');
         }
     }
 
