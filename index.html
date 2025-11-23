@@ -151,7 +151,7 @@
       <!-- White Sidebar -->
       <aside class="w-full md:w-64 bg-white border-r border-gray-200 flex flex-col shrink-0 z-40 h-auto md:h-screen sticky top-0">
           <!-- Profile Header -->
-          <div class="p-6 flex items-center gap-4">
+          <div class="p-4 md:p-6 flex items-center gap-4">
               <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-black/20">
                   <i class="fas fa-infinity"></i>
               </div>
@@ -179,10 +179,10 @@
       <main class="flex-1 h-[calc(100vh-80px)] md:h-screen overflow-y-auto bg-paper relative scroll-smooth outline-none" id="hub-scroll-area" tabindex="-1">
           
           <!-- Sticky Search Bar (Hidden by default, shown via JS only for Stream tab) -->
-          <div id="hub-search-container" class="hidden fixed top-6 right-6 z-50 transition-all duration-300">
+          <div id="hub-search-container" class="hidden fixed top-4 right-4 md:top-6 md:right-6 z-50 transition-all duration-300">
                <div class="relative group shadow-xl rounded-full">
-                  <input type="text" id="movieSearch" placeholder="Search..." class="bg-white/90 backdrop-blur-md border border-gray-200 rounded-full pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-ink focus:outline-none w-48 md:w-72 transition-all shadow-sm">
-                  <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                  <input type="text" id="movieSearch" placeholder="Search..." class="bg-white/90 backdrop-blur-md border border-gray-200 rounded-full pl-10 pr-4 py-2 md:py-3 text-sm focus:ring-2 focus:ring-ink focus:outline-none w-28 md:w-72 focus:w-48 md:focus:w-80 transition-all shadow-sm">
+                  <i class="fas fa-search absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-gray-500 text-xs md:text-sm"></i>
               </div>
           </div>
 
@@ -238,8 +238,8 @@
                           <div class="flex items-center justify-between mb-6">
                               <h3 id="grid-title" class="font-bold text-ink text-xl">Popular Updates</h3>
                               <div class="flex gap-2">
-                                  <button onclick="loadAPI('movie')" class="text-xs font-bold px-3 py-1 rounded-full bg-ink text-white shadow-md">Movies</button>
-                                  <button onclick="loadAPI('tv')" class="text-xs font-bold px-3 py-1 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-ink hover:shadow-sm">TV Shows</button>
+                                  <button id="btn-movie" onclick="loadAPI('movie')" class="text-xs font-bold px-3 py-1 rounded-full bg-ink text-white border border-transparent shadow-md transition-all">Movies</button>
+                                  <button id="btn-tv" onclick="loadAPI('tv')" class="text-xs font-bold px-3 py-1 rounded-full bg-white text-gray-500 border border-gray-200 hover:text-ink hover:shadow-sm transition-all">TV Shows</button>
                               </div>
                           </div>
                           <div id="main-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-8">
@@ -721,6 +721,7 @@
     // --- STREAMING LOGIC ---
     async function loadAPI(type) {
         currentType = type; // Update global state
+        updateTypeButtons(type);
         const grid = document.getElementById('main-grid');
         grid.innerHTML = '<div class="col-span-full h-40 flex items-center justify-center"><div class="w-8 h-8 border-2 border-ink border-t-transparent rounded-full loader"></div></div>';
         
@@ -734,6 +735,26 @@
             startHeroSlideshow(type);
 
         } catch(e) { console.error(e); }
+    }
+
+    function updateTypeButtons(type) {
+        const btnMovie = document.getElementById('btn-movie');
+        const btnTv = document.getElementById('btn-tv');
+        
+        // Base classes
+        const base = "text-xs font-bold px-3 py-1 rounded-full border transition-all";
+        
+        // Active/Inactive states
+        const active = "bg-ink text-white border-transparent shadow-md";
+        const inactive = "bg-white text-gray-500 border-gray-200 hover:text-ink hover:shadow-sm";
+
+        if(type === 'movie') {
+            if(btnMovie) btnMovie.className = `${base} ${active}`;
+            if(btnTv) btnTv.className = `${base} ${inactive}`;
+        } else {
+            if(btnMovie) btnMovie.className = `${base} ${inactive}`;
+            if(btnTv) btnTv.className = `${base} ${active}`;
+        }
     }
 
     function renderStreamingUI(items, type) {
