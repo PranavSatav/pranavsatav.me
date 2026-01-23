@@ -299,6 +299,9 @@ header {
     overflow-y: scroll;
     scrollbar-width: none;
     /* Firefox */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth on iOS */
 }
 
 .slider-container::-webkit-scrollbar {
@@ -310,6 +313,8 @@ section {
     height: 100vh;
     width: 100vw;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
+    /* Force stop at each section */
     position: relative;
     display: flex;
     justify-content: center;
