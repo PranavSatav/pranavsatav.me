@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>GTA VI Countdown</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #000;
+      color: #fff;
+
+      min-height: 100dvh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding:
+        max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+
+      max-width: 430px;
+      margin: 0 auto;
+
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* =========================
+       BACKGROUND VIDEO
+       ========================= */
+
+    .bg-video {
+      position: fixed;
+      inset: 0;
+
+      width: 100vw;
+      height: 100dvh;
+
+      object-fit: cover;
+      object-position: center center;
+
+      z-index: -3;
+      pointer-events: none;
+
+      background: #000;
+    }
+
+    /* Dark cinematic overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+
+      background:
+        linear-gradient(to bottom,
+          rgba(0, 0, 0, 0.55),
+          rgba(0, 0, 0, 0.30) 45%,
+          rgba(0, 0, 0, 0.65));
+
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* Slight blur/glass layer */
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 5vw, 1.7rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 5px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+    }
+
+    .sub {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #ddd;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    /* =========================
+       COUNTDOWN
+       ========================= */
+
+    .timer {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin: 20px 0;
+    }
+
+    .box {
+      border: 1px solid rgba(255, 255, 255, 0.28);
+
+      background: rgba(0, 0, 0, 0.42);
+
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+
+      padding: 12px 3px;
+
+      text-align: center;
+      border-radius: 6px;
+
+      box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .val {
+      font-size: clamp(1.25rem, 6vw, 1.5rem);
+      font-weight: 700;
+      font-family: monospace;
+      letter-spacing: -1px;
+    }
+
+    .lbl {
+      font-size: 0.62rem;
+      color: #ccc;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* =========================
+       COUNTRY LIST
+       ========================= */
+
+    .list {
+      border: 1px solid rgba(255, 255, 255, 0.25);
+
+      background: rgba(0, 0, 0, 0.45);
+
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      border-radius: 6px;
+      padding: 12px;
+
+      box-shadow:
+        0 5px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .list h2 {
+      font-size: 0.84rem;
+      margin-bottom: 9px;
+      color: #eee;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 7px 0;
+
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+      font-size: 0.78rem;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .country {
+      white-space: nowrap;
+    }
+
+    .diff {
+      color: #ddd;
+      font-family: monospace;
+      font-size: 0.72rem;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+
+      text-align: center;
+      font-size: 0.72rem;
+      color: #ccc;
+
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    /* =========================
+       SMALL PHONES
+       ========================= */
+
+    @media (max-height: 700px) {
+      body {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      .timer {
+        margin: 12px 0;
+      }
+
+      .box {
+        padding: 9px 3px;
+      }
+
+      .row {
+        padding: 5px 0;
+      }
+    }
+
+    /* =========================
+       DESKTOP
+       ========================= */
+
+    @media (min-width: 600px) {
+      body {
+        max-width: 430px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       BACKGROUND VIDEO
+       ========================= -->
+
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="">
+    <source src="https://github.com/PranavSatav/pranavsatav.me/raw/refs/heads/main/video1.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+
+  <!-- =========================
+       HEADER
+       ========================= -->
+
+  <header class="content">
+    <h1>GTA VI Countdown</h1>
+    <div class="sub">
+      Release Date: November 19, 2026
+    </div>
+  </header>
+
+
+  <!-- =========================
+       MAIN
+       ========================= -->
+
+  <main class="content">
+
+    <!-- COUNTDOWN -->
+
+    <div class="timer">
+
+      <div class="box">
+        <div class="val" id="days">0</div>
+        <div class="lbl">Days</div>
+      </div>
+
+      <div class="box">
+        <div class="val" id="hours">00</div>
+        <div class="lbl">Hours</div>
+      </div>
+
+      <div class="box">
+        <div class="val" id="mins">00</div>
+        <div class="lbl">Mins</div>
+      </div>
+
+      <div class="box">
+        <div class="val" id="secs">00</div>
+        <div class="lbl">Secs</div>
+      </div>
+
+    </div>
+
+
+    <!-- COUNTRY RELEASE TIMES -->
+
+    <div class="list">
+
+      <h2>🌎 Release Times Around the World</h2>
+
+      <div class="row">
+        <span class="country">1. 🇳🇿 New Zealand</span>
+        <span class="diff" id="nz"></span>
+      </div>
+
+      <div class="row">
+        <span class="country">2. 🇦🇺 Australia</span>
+        <span class="diff" id="au"></span>
+      </div>
+
+      <div class="row">
+        <span class="country">3. 🇯🇵 Japan</span>
+        <span class="diff" id="jp"></span>
+      </div>
+
+      <div class="row">
+        <span class="country">4. 🇰🇷 South Korea</span>
+        <span class="diff" id="kr"></span>
+      </div>
+
+      <div class="row">
+        <span class="country">5. 🇸🇬 Singapore</span>
+        <span class="diff" id="sg"></span>
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
+
+  <footer>
+    PS5 & Xbox Series X|S
+  </footer>
+
+
+  <script>
+
+    /*
+      ==========================================
+      RELEASE TIME
+      ==========================================
+
+      Set the official global release time here.
+
+      This example assumes:
+      November 19, 2026 at 00:00 UTC.
+
+      Change this if the actual GTA VI release
+      schedule uses another time.
+    */
+
+    const target = new Date("2026-11-19T00:00:00Z");
+
+
+    /*
+      ==========================================
+      COUNTDOWN
+      ==========================================
+    */
+
+    function tick() {
+
+      const now = new Date();
+
+      const diff = target - now;
+
+
+      if (diff <= 0) {
+
+        document.getElementById("days").textContent = "0";
+        document.getElementById("hours").textContent = "00";
+        document.getElementById("mins").textContent = "00";
+        document.getElementById("secs").textContent = "00";
+
+        return;
+      }
+
+
+      const days =
+        Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      const hours =
+        Math.floor((diff / (1000 * 60 * 60)) % 24);
+
+      const minutes =
+        Math.floor((diff / (1000 * 60)) % 60);
+
+      const seconds =
+        Math.floor((diff / 1000) % 60);
+
+
+      /*
+        IMPORTANT:
+
+        Days is NOT padded with zero.
+
+        62 instead of 062
+        9 instead of 009
+        1 instead of 001
+      */
+
+      document.getElementById("days").textContent =
+        days;
+
+      document.getElementById("hours").textContent =
+        String(hours).padStart(2, "0");
+
+      document.getElementById("mins").textContent =
+        String(minutes).padStart(2, "0");
+
+      document.getElementById("secs").textContent =
+        String(seconds).padStart(2, "0");
+    }
+
+
+    /*
+      ==========================================
+      COUNTRY RELEASE TIMES
+      ==========================================
+
+      These are calculated automatically from
+      the UTC release time.
+
+      No hardcoded "21h Early" values.
+    */
+
+    const countries = [
+
+      {
+        id: "nz",
+        name: "New Zealand",
+        timeZone: "Pacific/Auckland"
+      },
+
+      {
+        id: "au",
+        name: "Australia",
+        timeZone: "Australia/Sydney"
+      },
+
+      {
+        id: "jp",
+        name: "Japan",
+        timeZone: "Asia/Tokyo"
+      },
+
+      {
+        id: "kr",
+        name: "South Korea",
+        timeZone: "Asia/Seoul"
+      },
+
+      {
+        id: "sg",
+        name: "Singapore",
+        timeZone: "Asia/Singapore"
+      }
+
+    ];
+
+
+    /*
+      Get timezone offset in hours.
+    */
+
+    function getTimeZoneOffset(date, timeZone) {
+
+      const parts = new Intl.DateTimeFormat(
+        "en-US",
+        {
+          timeZone: timeZone,
+          timeZoneName: "longOffset"
+        }
+      ).formatToParts(date);
+
+      const offset =
+        parts.find(
+          part => part.type === "timeZoneName"
+        )?.value;
+
+      if (!offset || offset === "GMT") {
+        return 0;
+      }
+
+      const match =
+        offset.match(/GMT([+-])(\d{2}):?(\d{2})?/);
+
+      if (!match) {
+        return 0;
+      }
+
+      const sign =
+        match[1] === "+" ? 1 : -1;
+
+      const hours =
+        Number(match[2]);
+
+      const minutes =
+        Number(match[3] || 0);
+
+      return sign * (hours + minutes / 60);
+    }
+
+
+    /*
+      Display country release information.
+    */
+
+    function updateCountryTimes() {
+
+      const releaseDate = target;
+
+
+      countries.forEach(country => {
+
+        const offset =
+          getTimeZoneOffset(
+            releaseDate,
+            country.timeZone
+          );
+
+
+        /*
+          Release time relative to UTC.
+        */
+
+        const hoursAhead =
+          offset;
+
+
+        let text;
+
+
+        if (hoursAhead > 0) {
+
+          const wholeHours =
+            Math.floor(hoursAhead);
+
+          const minutes =
+            Math.round(
+              (hoursAhead - wholeHours) * 60
+            );
+
+
+          text =
+            `${wholeHours}h${minutes ? " " + minutes + "m" : ""} Early`;
+
+        } else if (hoursAhead < 0) {
+
+          const wholeHours =
+            Math.abs(Math.floor(hoursAhead));
+
+          text =
+            `${wholeHours}h Late`;
+
+        } else {
+
+          text = "At release";
+
+        }
+
+
+        document.getElementById(country.id)
+          .textContent = text;
+
+      });
+
+    }
+
+
+    /*
+      Start countdown.
+    */
+
+    setInterval(tick, 1000);
+
+    tick();
+
+    updateCountryTimes();
+
+  </script>
+
+</body>
+
+</html>
